@@ -3,7 +3,7 @@ sap.ui.define([
 ], function(Controller) {
 	"use strict";
 
-	return Controller.extend("com.diageo.csd.bulkuploadZDLT_CSD_BULK_UPLOAD.controller.View1", {
+	return Controller.extend("com.diageo.csd.indentuploadzindentupload.controller.View1", {
 
 	});
 });

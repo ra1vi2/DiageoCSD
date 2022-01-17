@@ -1,7 +1,7 @@
 {
 	"_version": "1.7.0",
 	"sap.app": {
-		"id": "com.diageo.csd.indentuploadZDLT_CSD_INDENT_UPLOAD",
+		"id": "com.diageo.csd.indentuploadzindentupload",
 		"type": "application",
 		"i18n": "i18n/i18n.properties",
 		"applicationVersion": {
@@ -39,7 +39,7 @@
 
 	"sap.ui5": {
 		"rootView": {
-			"viewName": "com.diageo.csd.indentuploadZDLT_CSD_INDENT_UPLOAD.view.View1",
+			"viewName": "com.diageo.csd.indentuploadzindentupload.view.View1",
 			"type": "XML"
 		},
 		"dependencies": {
@@ -62,7 +62,7 @@
 			"i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {
-					"bundleName": "com.diageo.csd.indentuploadZDLT_CSD_INDENT_UPLOAD.i18n.i18n"
+					"bundleName": "com.diageo.csd.indentuploadzindentupload.i18n.i18n"
 				}
 			}
 		},

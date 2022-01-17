@@ -1,11 +1,11 @@
 sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/Device",
-	"com/diageo/csd/saleinvoiceZDLT_CSD_SALEINVOICE/model/models"
+	"com/diageo/csd/indentuploadzindentupload/model/models"
 ], function(UIComponent, Device, models) {
 	"use strict";
 
-	return UIComponent.extend("com.diageo.csd.saleinvoiceZDLT_CSD_SALEINVOICE.Component", {
+	return UIComponent.extend("com.diageo.csd.indentuploadzindentupload.Component", {
 
 		metadata: {
 			manifest: "json"

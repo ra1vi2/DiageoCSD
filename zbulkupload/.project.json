@@ -7,12 +7,12 @@
     {
       "templateId": "ui5template.basicSAPUI5ApplicationProjectCommon",
       "templateVersion": "1.32.0",
-      "dateTimeStamp": "Mon, 17 Jan 2022 07:45:54 GMT"
+      "dateTimeStamp": "Mon, 17 Jan 2022 08:03:45 GMT"
     },
     {
       "templateId": "ui5template.basicSAPUI5ApplicationProject",
       "templateVersion": "1.40.12",
-      "dateTimeStamp": "Mon, 17 Jan 2022 07:45:54 GMT"
+      "dateTimeStamp": "Mon, 17 Jan 2022 08:03:45 GMT"
     }
   ],
   "codeCheckingTriggers": {
@@ -33,12 +33,5 @@
       "xml": "fioriXmlAnalysis",
       "js": "fioriJsValidator"
     }
-  },
-  "build": {
-    "buildRequired": true,
-    "sourceFolder": "webapp",
-    "targetFolder": "dist",
-    "excludedFolders": [],
-    "excludedFiles": []
   }
 }

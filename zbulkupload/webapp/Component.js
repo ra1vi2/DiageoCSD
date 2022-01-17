@@ -1,11 +1,11 @@
 sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/Device",
-	"com/diageo/csd/bulkuploadZDLT_CSD_BULK_UPLOAD/model/models"
+	"com/diageo/csd/bulkuploadzbulkupload/model/models"
 ], function(UIComponent, Device, models) {
 	"use strict";
 
-	return UIComponent.extend("com.diageo.csd.bulkuploadZDLT_CSD_BULK_UPLOAD.Component", {
+	return UIComponent.extend("com.diageo.csd.bulkuploadzbulkupload.Component", {
 
 		metadata: {
 			manifest: "json"
