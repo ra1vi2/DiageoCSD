@@ -33,5 +33,17 @@
     "notifyBeforePushLevel": "Error",
     "blockPush": false,
     "blockPushLevel": "Error"
+  },
+  "build": {
+    "buildRequired": false,
+    "sourceFolder": "webapp",
+    "targetFolder": "dist",
+    "excludedFolders": [],
+    "excludedFiles": [],
+    "lastBuildDateTime": "Mon, 17 Jan 2022 08:05:16 GMT"
+  },
+  "deploy": {
+    "destination": "UWD",
+    "name": "zindentupload"
   }
 }

@@ -33,5 +33,17 @@
       "xml": "fioriXmlAnalysis",
       "js": "fioriJsValidator"
     }
+  },
+  "build": {
+    "buildRequired": false,
+    "sourceFolder": "webapp",
+    "targetFolder": "dist",
+    "excludedFolders": [],
+    "excludedFiles": [],
+    "lastBuildDateTime": "Mon, 17 Jan 2022 08:07:02 GMT"
+  },
+  "deploy": {
+    "destination": "UWD",
+    "name": "zbulkupload"
   }
 }
