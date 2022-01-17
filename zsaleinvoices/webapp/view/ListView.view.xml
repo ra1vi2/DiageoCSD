@@ -30,6 +30,7 @@
 								</fb:FilterGroupItem>
 							</fb:filterGroupItems>
 						</fb:FilterBar>
+						<core:Fragment fragmentName="com.diageo.csd.saleinvoiceszsaleinvoices.view.fragments.OrderView" type="XML"/>
 					</l:VerticalLayout>
 				</content>
 			</Page>
