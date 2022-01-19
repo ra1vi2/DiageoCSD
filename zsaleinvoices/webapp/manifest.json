@@ -16,6 +16,7 @@
 	},
 	"sap.ui": {
 		"technology": "UI5",
+		 "fullWidth": true,
 		"icons": {
 			"icon": "",
 			"favIcon": "",
@@ -36,7 +37,7 @@
 	},
 	"sap.ui5": {
 		"rootView": {
-			"viewName": "com.diageo.csd.saleinvoiceszsaleinvoices.view.ListView",
+			"viewName": "com.diageo.csd.saleinvoiceszsaleinvoices.invoicedetail.InvoiceDetail", 
 			"type": "XML"
 		},
 		"dependencies": {

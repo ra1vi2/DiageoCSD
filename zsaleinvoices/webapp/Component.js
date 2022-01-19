@@ -8,7 +8,10 @@ sap.ui.define([
 	return UIComponent.extend("com.diageo.csd.saleinvoiceszsaleinvoices.Component", {
 
 		metadata: {
-			manifest: "json"
+			manifest: "json",
+			config: {
+				fullWidth : true
+			}
 		},
 
 		/**

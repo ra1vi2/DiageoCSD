@@ -1,0 +1,142 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
+	<f:Form id="idOederDetailHeaderForm" editable="true" binding="{this>/CustomerProfile/data}">
+		<f:layout>
+			<f:ResponsiveGridLayout id="idOederDetailHeaderFormLayout" columnsM="2" columnsL="3" columnsXL="3" labelSpanM="12" labelSpanL="12"
+				labelSpanXL="12" emptySpanXL="1" emptySpanL="3" emptySpanM="1"/>
+		</f:layout>
+		<f:title>
+			<core:Title id="idOederDetailHeaderFormTitle" text="Order Header"/>
+		</f:title>
+		<f:formContainers>
+			<f:FormContainer id="idOederDetailHeaderFormContainer">
+				<f:FormElement id="idOederDetailHeaderFormElement" label="Plant">
+					<f:fields>
+						<VBox id="idOederDetailHeaderFormPlantVBox">
+							<Input id="idOederDetailHeaderFormPlant" value="{this>AccountName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
+								maxLength="{= parseInt(${/#CustomerProfile/AccountName/@maxLength}) }"/>
+						</VBox>
+					</f:fields>
+				</f:FormElement>
+				<f:FormElement label="Invoice Date">
+					<f:fields>
+						<VBox id="idFormCompanyNameVBox">
+							<Input id="idFormCompanyName" value="{this>AccountName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
+								maxLength="{= parseInt(${/#CustomerProfile/AccountName/@maxLength}) }"/>
+						</VBox>
+					</f:fields>
+				</f:FormElement>
+				<f:FormElement label="Customer">
+					<f:fields>
+						<Input id="idHeaderFormCustomer" value="{this>LastName}" change="onChangeCustomerName" fieldGroupIds="idCustomerProfileValidationGroupNames"
+							visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }" maxLength="{= parseInt(${/#CustomerProfile/LastName/@maxLength}) }"/>
+					</f:fields>
+				</f:FormElement>
+				<f:FormElement label="Customer Name">
+					<f:fields>
+						<Input id="idHeaderFormCustomerName" value="{this>AccountName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
+							maxLength="{= parseInt(${/#CustomerProfile/AccountName/@maxLength}) }"/>
+					</f:fields>
+				</f:FormElement>
+				<f:FormElement label="TP/ Permit Number">
+					<f:fields>
+						<VBox >
+							<Input id="idHeaderFormTPPermitNumber" value="{this>LastName}" change="onChangeCustomerName"
+								fieldGroupIds="idCustomerProfileValidationGroupNames" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
+								maxLength="{= parseInt(${/#CustomerProfile/LastName/@maxLength}) }"/>
+						</VBox>
+					</f:fields>
+				</f:FormElement>
+				<f:FormElement label="Order Number">
+					<f:fields>
+						<VBox >
+							<Input id="idHederFormOrderNo" value="{this>AccountName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
+								maxLength="{= parseInt(${/#CustomerProfile/AccountName/@maxLength}) }"/>
+						</VBox>
+					</f:fields>
+				</f:FormElement>
+				<f:FormElement label="Export Number">
+					<f:fields>
+						<Input id="idHeaderFormExportNo" value="{this>AccountName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
+							maxLength="{= parseInt(${/#CustomerProfile/AccountName/@maxLength}) }"/>
+					</f:fields>
+				</f:FormElement>
+				<f:FormElement label="Remarks">
+					<f:fields>
+						<Input id="idHeaderFormRemarks" value="{this>AccountName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
+							maxLength="{= parseInt(${/#CustomerProfile/AccountName/@maxLength}) }"/>
+					</f:fields>
+				</f:FormElement>
+			</f:FormContainer>
+			<f:FormContainer >
+				<f:FormElement label="Sales Organization">
+					<f:fields>
+						<Input id="idHeaderFormSalesOrg" value="{this>AccountName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
+							maxLength="{= parseInt(${/#CustomerProfile/AccountName/@maxLength}) }"/>
+					</f:fields>
+				</f:FormElement>
+				<f:FormElement label="Distribution Channel">
+					<f:fields>
+						<Input id="idHeaderFormDC" value="{this>AccountName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
+							maxLength="{= parseInt(${/#CustomerProfile/AccountName/@maxLength}) }"/>
+					</f:fields>
+				</f:FormElement>
+				<f:FormElement label="Division">
+					<f:fields>
+						<Input id="idHeaderFormDivision" value="{this>LastName}" change="onChangeCustomerName" fieldGroupIds="idCustomerProfileValidationGroupNames"
+							visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }" maxLength="{= parseInt(${/#CustomerProfile/LastName/@maxLength}) }"/>
+					</f:fields>
+				</f:FormElement>
+				<f:FormElement label="Sales Group">
+					<f:fields>
+						
+							<Input id="idHeaderFormSalesGroup" value="{this>LastName}" change="onChangeCustomerName"
+								fieldGroupIds="idCustomerProfileValidationGroupNames" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
+								maxLength="{= parseInt(${/#CustomerProfile/LastName/@maxLength}) }"/>
+						
+					</f:fields>
+				</f:FormElement>
+				<f:FormElement label="TP/Permit Date">
+					<f:fields>
+						
+							<Input id="idHederFormTPDate" value="{this>AccountName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
+								maxLength="{= parseInt(${/#CustomerProfile/AccountName/@maxLength}) }"/>
+					
+					</f:fields>
+				</f:FormElement>
+				<f:FormElement label="TP/Expiry Date">
+					<f:fields>
+						<Input id="idHeaderFormTPExpiryDate" value="{this>AccountName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
+							maxLength="{= parseInt(${/#CustomerProfile/AccountName/@maxLength}) }"/>
+					</f:fields>
+				</f:FormElement>
+				<f:FormElement label="Export Order Date">
+					<f:fields>
+						<Input id="idHeaderFormExportOrderdate" value="{this>AccountName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
+							maxLength="{= parseInt(${/#CustomerProfile/AccountName/@maxLength}) }"/>
+					</f:fields>
+				</f:FormElement>
+				<f:FormElement label="Price List">
+					<f:fields>
+						<Input id="idHeaderFormPriceList" value="{this>AccountName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
+							maxLength="{= parseInt(${/#CustomerProfile/AccountName/@maxLength}) }"/>
+					</f:fields>
+				</f:FormElement>
+				<f:FormElement label="Cash Discount">
+					<f:fields>
+						<Input id="idHeaderFormCashDiscount" value="{this>AccountName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
+							maxLength="{= parseInt(${/#CustomerProfile/AccountName/@maxLength}) }"/>
+					</f:fields>
+				</f:FormElement>
+				<f:FormElement label="Token No">
+					<f:fields>
+						<Input id="idHeaderFormExportTokenNo" value="{this>AccountName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
+							maxLength="{= parseInt(${/#CustomerProfile/AccountName/@maxLength}) }"/>
+					</f:fields>
+				</f:FormElement>
+			</f:FormContainer>
+			<f:FormContainer>
+				
+			</f:FormContainer>
+		</f:formContainers>
+	</f:Form>
+</core:FragmentDefinition>

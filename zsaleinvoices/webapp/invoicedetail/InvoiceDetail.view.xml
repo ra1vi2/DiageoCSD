@@ -1,0 +1,6 @@
+<mvc:View controllerName="com.diageo.csd.saleinvoiceszsaleinvoices.invoicedetail.InvoiceDetail" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:fb="sap.ui.comp.filterbar" xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+	<core:Fragment fragmentName="com.diageo.csd.saleinvoiceszsaleinvoices.invoicedetail.subsections.OrderHeader" type="XML"/>
+	<core:Fragment fragmentName="com.diageo.csd.saleinvoiceszsaleinvoices.invoicedetail.subsections.OrderItem" type="XML"/>
+</mvc:View>
