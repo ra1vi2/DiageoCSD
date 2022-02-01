@@ -1,31 +1,38 @@
 <mvc:View controllerName="com.diageo.csd.saleinvoiceszsaleinvoices.controller.ListView" xmlns:html="http://www.w3.org/1999/xhtml"
 	xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:fb="sap.ui.comp.filterbar" xmlns:l="sap.ui.layout"
 	xmlns:core="sap.ui.core">
-	<App>
+	<App id="app">
 		<pages>
 			<Page title="{i18n>title}">
 				<content>
 					<l:VerticalLayout width="100%">
-						<fb:FilterBar reset="onReset" showRestoreButton="true" showClearButton="true">
+						<fb:FilterBar reset="onReset" showRestoreButton="true" showClearButton="true" search="onSearchOrders">
 							<fb:filterGroupItems>
 								<fb:FilterGroupItem groupName="__$INTERNAL$" name="A" label="Plant" visibleInFilterBar="true" mandatory="true">
 									<fb:control>
-										<Input id="idFilterPlant" submit="onFilterValueChange"/>
-									</fb:control>
-								</fb:FilterGroupItem>
-								<fb:FilterGroupItem groupName="__$INTERNAL$" name="B" label="Date" mandatory="true" visibleInFilterBar="true">
-									<fb:control>
-										<DateRangeSelection id="idFilterFromToDate" change="onFilterValueChange"/>
+										<Select id="idFilterPlant" items="{path : 'plantVH>/'}" change="onFilterValueChange">
+											<core:Item key="{plantVH>Plant}" text="{plantVH>Plant}"/>
+										</Select>
 									</fb:control>
 								</fb:FilterGroupItem>
 								<fb:FilterGroupItem groupName="__$INTERNAL$" name="A1" label="DC" visibleInFilterBar="true" mandatory="true">
 									<fb:control>
-										<Input id="idFilterDC" submit="onFilterValueChange"/>
+										<Select id="idFilterDC" change="onFilterValueChange">
+											<core:Item key="11" text="11 - Direct Sale"/>
+											<core:Item key="12" text="12 - CSD"/>
+										</Select>
+									</fb:control>
+								</fb:FilterGroupItem>
+								<fb:FilterGroupItem groupName="__$INTERNAL$" name="B" label="Date" mandatory="true" visibleInFilterBar="true">
+									<fb:control>
+										<DateRangeSelection id="idFilterFromToDate" change="onFilterValueChange" />
 									</fb:control>
 								</fb:FilterGroupItem>
 								<fb:FilterGroupItem groupName="__$INTERNAL$" name="B1" label="Customer" visibleInFilterBar="true">
 									<fb:control>
-										<ComboBox/>
+										<Select id="idFilterCustomer" items="{path : 'customerVH>/'}">
+											<core:Item key="{Plant}" text="{Plant}"/>
+										</Select>
 									</fb:control>
 								</fb:FilterGroupItem>
 							</fb:filterGroupItems>
@@ -33,6 +40,13 @@
 						<core:Fragment fragmentName="com.diageo.csd.saleinvoiceszsaleinvoices.view.fragments.OrderView" type="XML"/>
 					</l:VerticalLayout>
 				</content>
+				<footer visible="{=${message>/}.length > 0}">
+					<OverflowToolbar id="otbFooter">
+						<Button id="idMessagePopOver" icon="sap-icon://alert" text="{=${message>/}.length}" visible="{=${message>/}.length > 0}" type="Emphasized"
+							press="onMessagePopoverPress"></Button>
+						<ToolbarSpacer/>
+					</OverflowToolbar>
+				</footer>
 			</Page>
 		</pages>
 	</App>

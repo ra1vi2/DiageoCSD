@@ -1,0 +1,129 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:t="sap.ui.table">
+	<Dialog id="iDialog" title="Invoice List" resizable="true" draggable="true" width="900px">
+	<!--<Dialog title="Invoice List">-->
+		<!--
+	<List 
+class="sapUiResponsiveMargin"
+width="auto"
+items="{/InvoiceListCollection}" >
+<items>
+<ObjectListItem
+title="{DocketNum}"  number="{SoDocno}" /> 
+</items>
+</List>	
+          <content>
+            <t:SimpleForm id="EditFormId" editable="true" >
+                <t:content>
+                    <Label id="DocketNum" text="Docket Number" labelFor="DocketNum" />
+                    <Input id="DocketNum" value="{DocketNum}"/>
+                </t:content>
+            </t:SimpleForm>
+        </content>
+
+<core:FragmentDefinition
+xmlns="sap.m"
+xmlns:f="sap.ui.layout.form"
+xmlns:l="sap.ui.layout"
+xmlns:core="sap.ui.core"
+id="inputdialog">
+    <Dialog id="openDialog" title="List Display">
+    <VBox class="sapUiSmallMargin">
+    <f:SimpleForm
+         id="SimpleFormDisplay354"
+         editable="true"
+         layout="ResponsiveGridLayout"
+         title="Change the data"
+         labelSpanXL="3"
+     labelSpanL="3"
+         labelSpanM="3"
+         labelSpanS="12"
+         adjustLabelSpan="false"
+         emptySpanXL="4"
+         emptySpanL="4"
+         emptySpanM="4"
+         emptySpanS="0"
+     columnsXL="1"
+         columnsL="1"
+         columnsM="1"
+         singleContainerFullSize="false">
+    <f:content>
+    <Label text="Docket Number"/>
+    <Text id="DocketNum" text="{sample>DocketNum}"/>
+    <Label text="SO Number"/>
+    <Input id="SoDocno" value="{sample>SoDocno}"/>
+    </f:content>
+    </f:SimpleForm>
+    </VBox>
+<buttons>
+ <Button text="Close" press="onCloseDialog"/>
+</buttons>
+</Dialog>
+</core:FragmentDefinition>
+        
+        
+-->
+		<t:Table id="detailList" items="{'/ldata'}" rows="{/ldata}" selectionMode="Single" suspend="true" visibleRowCount="5" growingScrollToLoad="true"
+			growing="true" ariaLabelledBy="title" fixedColumnCount="7">
+<!--<t:Table id="detailList" items="{'/HouListSet'}" rows="{/HouListSet}"  visibleRowCount="6" growingScrollToLoad="true"-->
+			<t:extension>
+				<OverflowToolbar>
+					<Title id="title" text="Invoice List"/>
+					<ToolbarSpacer/>
+				</OverflowToolbar>
+			</t:extension>
+			<t:columns>
+				<t:Column width="9rem" id="DocketNumber">
+					<Label text="Docket Number"/>
+					<t:template>
+						<Text text="{DocketNum}"/>
+						<!--<Text text="{items}"/>-->
+					</t:template>
+				</t:Column>
+
+				<t:Column width="9rem" id="SalesOrder">
+					<Label text="Sales Order Number"/>
+					<t:template>
+						<!--<Text text="{DocketNum}"/>-->
+						<Text text="{SoDocno}"/>
+					</t:template>
+				</t:Column>
+				
+				<t:Column width="8rem" id="DeliveryNum">
+					<Label text="Delivery Number"/>
+					<t:template>
+						<Text text="{DelDocno}"/>
+					</t:template>
+				</t:Column>
+
+				<t:Column width="8rem" id="ShipNum">
+					<Label text="Shipment Number"/>
+					<t:template>
+						<Text text="{ShipDocno}"/>
+					</t:template>
+				</t:Column>
+				<t:Column width="8rem" id="PgiDocNum">
+					<Label text="PGI Document Number"/>
+					<t:template>
+						<Text text="{PgiDocno}"/>
+					</t:template>
+				</t:Column>
+			
+				<t:Column width="8rem" id="InvoiceNum">
+					<Label text="Invoice Document Number"/>
+					<t:template>
+						<Text text="{InvDocno}"/>
+					</t:template>
+				</t:Column>	
+				<t:Column width="8rem" id="Remarks" visible="false">
+					<Label text="Remarks" visible="false"/>
+					<t:template>
+						<Text text="{Remarks}"/>
+					</t:template>
+				</t:Column>	
+				</t:columns>
+		</t:Table>
+		<beginButton>
+			<Button text="Close" press="onCloseDialog"/>
+		</beginButton>
+	</Dialog>
+</core:FragmentDefinition>

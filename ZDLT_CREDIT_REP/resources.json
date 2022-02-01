@@ -1,0 +1,52 @@
+{
+    "resources": [
+        {
+            "name": ".project.json"
+        },
+        {
+            "name": "localService/metadata.xml"
+        },
+        {
+            "name": "manifest.json"
+        },
+        {
+            "name": "Component.js"
+        },
+        {
+            "name": "i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "model/models.js"
+        },
+        {
+            "name": "Component-preload.js",
+            "merged": true
+        },
+        {
+            "name": "resources.json",
+            "merged": true
+        },
+        {
+            "name": "controller/Main_View.controller.js"
+        },
+        {
+            "name": "css/style.css"
+        },
+        {
+            "name": "images/DIAGEO-LOGO.png"
+        },
+        {
+            "name": "index.html"
+        },
+        {
+            "name": ".user.project.json"
+        },
+        {
+            "name": "neo-app.json"
+        },
+        {
+            "name": "view/Main_View.view.xml"
+        }
+    ]
+}

@@ -1,0 +1,264 @@
+<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core" xmlns:custom="ZDLT_UI5_DIS_INV.customControl" xmlns:l="sap.ui.layout" xmlns:m="sap.m" xmlns:u="sap.ui.unified"
+	xmlns:dropdown="sap.ui.commons" xmlns:t="sap.ui.table" controllerName="ZDLT_UI5_DIS_INV.controller.Main_view" displayBlock="true">
+	<App class="sapUiSizeCompact" id="AppID">
+		<pages>
+			<Page class="sapUiContentPadding" icon="../webapp/images/DIAGEO-LOGO.png">
+				<customHeader>
+					<Toolbar>
+						<Image class="sapUiLargeMarginTop sapUiLargeMarginBottom" width="100px" height="30px" src="../webapp/images/DIAGEO-LOGO.png"/>
+						<ToolbarSpacer/>
+						<Text text="Distillery Invoice" id="Idtexth"/>
+						<ToolbarSpacer/>
+					</Toolbar>
+				</customHeader>
+				<content>
+					<f:SimpleForm xmlns:sap.ui.layout.form="sap.ui.layout.form" editable="true" layout="ResponsiveGridLayout" id="__form0" labelMinWidth="100"
+						labelSpanL="4" columnsL="4" emptySpanL="4" class="editableForm">
+						<f:content>
+							<Label text="Plant" required="true">
+								<layoutData>
+									<l:GridData span="L5"/>
+								</layoutData>
+							</Label>
+							<ComboBox items="{ path: '/GetPlantsSet', sorter: { path: 'Plant' } }" id="Combplant" change="onEnterPlant" width="50%">
+								<core:Item key="{Plant}" text="{path:'Plant'} "/>
+							</ComboBox>
+						</f:content>
+					</f:SimpleForm>
+					<!--Header Details-->
+					<Panel expandable="false" width="auto" headerText="Header Details" class="sapUiResponsiveMargin">
+						<!--Startof tabstrip	-->
+						<IconTabBar selectedKey="__filter0" id="__bar0" select="onSelectChanged" expandable="false" headerMode="Inline">
+							<items>
+								<!--Tabstrip Invoice-->
+								<IconTabFilter text="Invoice" showAll="true" id="__filter0" design="Horizontal" press="onEnterInvoice">
+									<content>
+										<f:SimpleForm id="SimpleFormChange1" editable="true" layout="ResponsiveGridLayout" labelSpanL="4" labelSpanM="4" labelSpanS="12"
+											adjustLabelSpan="false" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsL="2" columnsM="1" singleContainerFullSize="false">
+											<f:content>
+												<!--Container1-->
+												<core:Title text=""/>
+												<Label text="Company Code" id="LblCompNam"/>
+												<Input id="InpCompNam" value="" editable="false" maxLength="12" required="true"/>
+												<Label text="Plant Name" id="Lblplntnam"/>
+												<Input id="Inpplntnam" value="" editable="false" maxLength="40" required="true"/>
+												<Label text="Invoice Date" id="Lblinvdate"/>
+												<DatePicker id="Inpinvdate" valueFormat="yyyy-MM-dd" displayFormat="long" change="onEnterInvDate" required="true"/>
+												<Label text="Customer" id="Lblcust"/>
+												<Input id="Inpcust" value="" maxLength="20" submit="onCustInput" change="onCustInput" required="true"/>
+												<Label text="TP/Permit Number" id="Lbltpnum"/>
+												<Input id="Inptpnum" value="" maxLength="35" submit="onEnterTPPermit" change="onEnterTPPermit" required="true"/>
+												<Label text="Order Number" id="Lblordnum"/>
+												<Input id="Inpordnum" value="" maxLength="100"/>
+												<Label text="Export Number" id="Lblexpnum"/>
+												<Input id="Inpexpnum" value="" maxLength="35"/>
+												<Label text="Remarks" id="Lblremarks"/>
+												<Input id="Inpremarks" value="" maxLength="180"/>
+												<Label text="Customer Name" id="Lblcustnam"/>
+												<Input id="Inpcustname" value="" editable="false" maxLength="40"/>
+												<!--Container2-->
+												<core:Title text=""/>
+												<Label text="Sales Organization" id="Lblslsorg"/>
+												<Input id="Inpslsorg" value="" editable="false" maxLength="12" required="true"/>
+												<Label text="Distribution Channel" id="Lbldistrchn" required="true"/>
+												<ComboBox selectedKey="11" id="Combdistr" change="onEnterDistrchn">
+													<core:Item text="11-DirectSale" key="11"/>
+													<core:Item text="12-CSD" key="12"/>
+												</ComboBox>
+												<Label text="Division" id="Lbldiv" required="true"/>
+												<ComboBox selectedKey="11" value="" id="Combdiv" change="onEnterDiv">
+													<core:Item text="11-IMFL" key="11"/>
+													<core:Item text="18-Wine" key="18"/>
+												</ComboBox>
+												<Label text="Sales Group" id="Lblslsgrp"/>
+												<ComboBox selectedKey="015" value="" id="Combslsgrp" change="onEnterSlsgrp">
+													<core:Item text="011" key="011"/>
+													<core:Item text="012" key="012"/>
+													<core:Item text="013" key="013"/>
+													<core:Item text="014" key="014"/>
+													<core:Item text="015" key="015"/>
+												</ComboBox>
+												<Label text="TP/Permit Date" id="Lbltpdat"/>
+												<DatePicker id="Inptpdat" value="" valueFormat="yyyy-MM-dd" displayFormat="long" change="onEnterTPPermitDate" required="true"/>
+												<Label text="TP/Expiry Date" id="Lblexdat"/>
+												<DatePicker id="Inpexdat" change="onEnterExpdate" valueFormat="yyyy-MM-dd" displayFormat="long" required="true"/>
+												<Label text="Export Order Date" id="Lblexporddat"/>
+												<DatePicker id="Inpexporddat" valueFormat="yyyy-MM-dd" displayFormat="long" value=""/>
+												<Label text="PriceList" id="Lblprclst"/>
+												<ComboBox id="Combprclst" items="{ path: '/GetPriceListSet', sorter: { path: 'PriceListID' } }" width="100%">
+													<core:Item key="{PriceListID}" text="{path:'PriceListID'} {path:'PriceListName'}"/>
+												</ComboBox>
+												<Label text="CashDiscount" id="Lblcashdcnt"/>
+												<Input id="Inpcashdcnt" value="0.00" maxLength="12" change="onEnterCash" submit="onEnterCash"/>
+												<Label text="Token No" id="idLabelToken" required="true" visible="{this>/IsCSDTokenFieldsVisible}"/>
+												<Input id="idToken" maxLength="25" visible="{this>/IsCSDTokenFieldsVisible}"/>
+											</f:content>
+										</f:SimpleForm>
+									</content>
+								</IconTabFilter>
+								<!--Tabstrip Transport-->
+								<!--Commented by Ramesh D as part of new changes-->
+								<IconTabFilter text="Transport" visible="false" showAll="false" id="__filter1" design="Horizontal" textDirection="RTL">
+									<content>
+										<f:SimpleForm id="SimpleFormChange3" visible="false" layout="ResponsiveGridLayout" labelSpanL="4" labelSpanM="4" labelSpanS="12"
+											adjustLabelSpan="false" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsL="2" columnsM="1" singleContainerFullSize="false">
+											<f:content>
+												<Label text="Transport Order Number" id="Lbltrpordnum"/>
+												<Input id="Inptrpordnum" value="" editable="false" maxLength="50"/>
+												<Label text="Transport Order Date" id="Lbltrporddate"/>
+												<DatePicker id="Inptrporddate" valueFormat="yyyy-MM-dd" displayFormat="long" value="" editable="false"/>
+												<Label text="Transporter" id="Lbltrpter"/>
+												<Input id="Inptrpter" value="" editable="false" maxLength="12" submit="onTransporterInput" change="onTransporterInput"/>
+												<Label text="Transporter Name" id="Lbltrpternam"/>
+												<Input id="Inptrpternam" value="" editable="false" maxLength="40"/>
+												<Label text="Truck Type" id="Lbltrcktyp"/>
+												<ComboBox id="Combtrcktyp" editable="false" items="{namedmodel>/}">
+													<items>
+														<core:Item key="{namedmodel>TruckTypee}" text="{path: 'namedmodel>TruckTypee'} {path: 'namedmodel>TruckTypeText'} "/>
+													</items>
+												</ComboBox>
+												<Label text="Truck Number" id="Lbltrcknum"/>
+												<Input id="Inptrcknum" value="" editable="false" maxLength="10" change="onTruckNumber"/>
+												<Label text="LR Number" id="Lbllrknum"/>
+												<Input id="Inplrnum" value="" editable="false" maxLength="20" change="onLRNumber"/>
+												<Label text="MilkRun" id="Lblmlkrun"/>
+												<ComboBox id="Combmilkrun" editable="false" selectedKey="0001" change="onEnterMilkrun">
+													<core:Item text="No" key="0001"/>
+													<core:Item text="Yes" key="0002"/>
+												</ComboBox>
+											</f:content>
+										</f:SimpleForm>
+									</content>
+								</IconTabFilter>
+								<!--End of change by Ramesh D-->
+							</items>
+						</IconTabBar>
+					</Panel>
+					<!--Item Details-->
+					<Panel expandable="false" width="auto" headerText="Item Details" class="sapUiResponsiveMargin">
+						<!--Start of Horizontal Box1-->
+						<HBox alignContent="Stretch">
+							<VBox>
+								<Label text="Material Code" id="LblMatcode1"/>
+								<Input id="InpMatcode1" value="" maxLength="12" required="true" width="100%" submit="onMatInput" change="onMatInput" fieldWidth="200%"/>
+							</VBox>
+							<VBox>
+								<Label text="Material Description" id="LblMatdesc1" width="325px"/>
+								<Input id="InpMatdesc1" value="" editable="false" fieldWidth="100%" maxLength="40" required="true" width="100%"/>
+							</VBox>
+							<VBox>
+								<Label text="Brand" id="LblBrand1" width="70px"/>
+								<Input id="InpBrand1" value="" editable="false" maxLength="12" required="true" width="100%"/>
+							</VBox>
+							<VBox>
+								<Label text="Pack" id="Pack1"/>
+								<Input id="InpPack1" value="" editable="false" maxLength="12" required="true" width="200%" fieldWidth="200%"/>
+							</VBox>
+							<VBox>
+								<Label text="Quantity" id="Lblqty1"/>
+								<Input id="InpQty1" value="" maxLength="12" required="true" width="100%" fieldWidth="100%"/>
+							</VBox>
+							<VBox>
+								<Label text="Uom" id="Lbluom1" width="60px"/>
+								<ComboBox id="combuom1" selectedKey="CS" width="75%">
+									<core:Item text="Cases" key="CS"/>
+									<core:Item text="Each" key="EA"/>
+								</ComboBox>
+							</VBox>
+							<VBox>
+								<Label text="Bottle/Case" id="LblUmren" visible="false"/>
+								<Input id="InpUmren" value="" maxLength="12" required="true" width="100%" fieldWidth="100%" visible="false"/>
+							</VBox>
+							<VBox>
+								<Label text="" id="empty1"/>
+								<!--<Toolbar height="4rem">-->
+								<Button id="Btadd" activeIcon="sap-icon://add" text="Add" icon="sap-icon://add" textDirection="LTR" press="onItemAdd"/>
+								<!--</Toolbar>-->
+							</VBox>
+						</HBox>
+						<!--End of Horizontal Box1	-->
+						<!--Horizontal Box for space line-->
+						<HBOX>
+							<Label text="" id="empty2"/>
+						</HBOX>
+						<!--Start of Item List table   -->
+						<t:Table id="table1" items="{/data}" rows="{/data}" selectionMode="MultiToggle" visibleRowCount="5" growingScrollToLoad="true"
+							growing="true" ariaLabelledBy="title">
+							<t:extension>
+								<OverflowToolbar>
+									<Title id="title" text="Item List"/>
+									<ToolbarSpacer/>
+									<!--<Button id="Btadd" activeIcon="sap-icon://add" text="Add" icon="sap-icon://add" textDirection="RTL" press="onItemAdd"/>-->
+									<Button text="Delete" id="Btdelete" type="Reject" activeIcon="sap-icon://delete" icon="sap-icon://delete" textDirection="RTL"
+										press="onItemDelete"/>
+								</OverflowToolbar>
+							</t:extension>
+							<t:columns>
+								<t:Column width="11rem">
+									<Label text="Material Code"/>
+									<t:template>
+										<Text text="{MaterialCode}"/>
+									</t:template>
+								</t:Column>
+								<t:Column width="22rem">
+									<Label text="Material Description"/>
+									<t:template>
+										<Text text="{MaterialDesc}"/>
+									</t:template>
+								</t:Column>
+								<t:Column width="11rem">
+									<Label text="Brand"/>
+									<t:template>
+										<Text text="{Brand}"/>
+									</t:template>
+								</t:Column>
+								<t:Column width="9rem">
+									<Label text="Pack"/>
+									<t:template>
+										<Text text="{Pack}"/>
+									</t:template>
+								</t:Column>
+								<t:Column width="8rem">
+									<Label text="Quantity"/>
+									<t:template>
+										<Text text="{Quantity}"/>
+									</t:template>
+								</t:Column>
+								<t:Column width="6rem">
+									<Label text="Uom"/>
+									<t:template>
+										<Text text="{Uom}"/>
+									</t:template>
+								</t:Column>
+								<t:Column width="8rem">
+									<Label text="Bottle/Case"/>
+									<t:template>
+										<Text text="{Umren}"/>
+									</t:template>
+								</t:Column>
+							</t:columns>
+							<t:footer>
+								<OverflowToolbar>
+									<ToolbarSpacer/>
+									<Label text="Total Quantity:" design="Bold" width="100px"/>
+									<!--<ToolbarSpacer/>-->
+									<Input id="Txt1" value="" editable="false" textDirection="LTR" width="11rem"/>
+									<ToolbarSpacer/>
+									<!--<ToolbarSpacer/>-->
+								</OverflowToolbar>
+							</t:footer>
+						</t:Table>
+					</Panel>
+				</content>
+				<footer>
+					<OverflowToolbar>
+						<ToolbarSpacer/>
+						<Button id="Idsubmit" text="Submit" type="Accept" press="onSubmit"/>
+					</OverflowToolbar>
+				</footer>
+				<!--End of Item List table-->
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

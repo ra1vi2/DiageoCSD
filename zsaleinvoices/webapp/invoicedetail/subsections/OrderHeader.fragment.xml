@@ -1,131 +1,116 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
-	<f:Form id="idOederDetailHeaderForm" editable="true" binding="{this>/CustomerProfile/data}">
+	<f:Form id="idOrderDetailHeaderForm" editable="true" binding="{BulkOrderHeader/>}">
 		<f:layout>
-			<f:ResponsiveGridLayout id="idOederDetailHeaderFormLayout" columnsM="2" columnsL="3" columnsXL="3" labelSpanM="12" labelSpanL="12"
+			<f:ResponsiveGridLayout id="idOrderDetailHeaderFormLayout" columnsM="2" columnsL="3" columnsXL="3" labelSpanM="12" labelSpanL="12"
 				labelSpanXL="12" emptySpanXL="1" emptySpanL="3" emptySpanM="1"/>
 		</f:layout>
 		<f:title>
-			<core:Title id="idOederDetailHeaderFormTitle" text="Order Header"/>
+			<core:Title id="idOrderDetailHeaderFormTitle" text="Order Header"/>
 		</f:title>
 		<f:formContainers>
-			<f:FormContainer id="idOederDetailHeaderFormContainer">
-				<f:FormElement id="idOederDetailHeaderFormElement" label="Plant">
+			<f:FormContainer id="idOrderDetailHeaderFormContainer">
+				<f:FormElement id="idOrderDetailHeaderFormElement" label="Plant">
 					<f:fields>
-						<VBox id="idOederDetailHeaderFormPlantVBox">
-							<Input id="idOederDetailHeaderFormPlant" value="{this>AccountName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
-								maxLength="{= parseInt(${/#CustomerProfile/AccountName/@maxLength}) }"/>
+						<VBox id="idOrderDetailHeaderFormPlantVBox">
+							<Input id="idOrderDetailHeaderFormPlant" value="{BulkOrderHeader>Plant}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
 						</VBox>
 					</f:fields>
 				</f:FormElement>
 				<f:FormElement label="Invoice Date">
 					<f:fields>
 						<VBox id="idFormCompanyNameVBox">
-							<Input id="idFormCompanyName" value="{this>AccountName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
-								maxLength="{= parseInt(${/#CustomerProfile/AccountName/@maxLength}) }"/>
+							<Input id="idFormCompanyName" value="{BulkOrderHeader>InvDate}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
 						</VBox>
 					</f:fields>
 				</f:FormElement>
 				<f:FormElement label="Customer">
 					<f:fields>
-						<Input id="idHeaderFormCustomer" value="{this>LastName}" change="onChangeCustomerName" fieldGroupIds="idCustomerProfileValidationGroupNames"
-							visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }" maxLength="{= parseInt(${/#CustomerProfile/LastName/@maxLength}) }"/>
+						<Input id="idHeaderFormCustomer" value="{BulkOrderHeader>Customer}" change="onChangeCustomerName" fieldGroupIds="idCustomerProfileValidationGroupNames"
+							visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
 					</f:fields>
 				</f:FormElement>
 				<f:FormElement label="Customer Name">
 					<f:fields>
-						<Input id="idHeaderFormCustomerName" value="{this>AccountName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
-							maxLength="{= parseInt(${/#CustomerProfile/AccountName/@maxLength}) }"/>
+						<Input id="idHeaderFormCustomerName" value="{BulkOrderHeader>CustName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
 					</f:fields>
 				</f:FormElement>
 				<f:FormElement label="Order Number">
 					<f:fields>
 						<VBox >
-							<Input id="idHederFormOrderNo" value="{this>AccountName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
-								maxLength="{= parseInt(${/#CustomerProfile/AccountName/@maxLength}) }"/>
+							<Input id="idHederFormOrderNo" value="{BulkOrderHeader>OrderNum}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
 						</VBox>
 					</f:fields>
 				</f:FormElement>
 				<f:FormElement label="Export Number">
 					<f:fields>
-						<Input id="idHeaderFormExportNo" value="{this>AccountName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
-							maxLength="{= parseInt(${/#CustomerProfile/AccountName/@maxLength}) }"/>
+						<Input id="idHeaderFormExportNo" value="{BulkOrderHeader>ExpNum}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
 					</f:fields>
 				</f:FormElement>
 			</f:FormContainer>
 			<f:FormContainer >
 				<f:FormElement label="Sales Organization">
 					<f:fields>
-						<Input id="idHeaderFormSalesOrg" value="{this>AccountName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
-							maxLength="{= parseInt(${/#CustomerProfile/AccountName/@maxLength}) }"/>
+						<Input id="idHeaderFormSalesOrg" value="{BulkOrderHeader>SalesOrganization}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
 					</f:fields>
 				</f:FormElement>
 				<f:FormElement label="Distribution Channel">
 					<f:fields>
-						<Input id="idHeaderFormDC" value="{this>AccountName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
-							maxLength="{= parseInt(${/#CustomerProfile/AccountName/@maxLength}) }"/>
+						<Input id="idHeaderFormDC" value="{BulkOrderHeader>DistributChanId}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
 					</f:fields>
 				</f:FormElement>
 				<f:FormElement label="Division">
 					<f:fields>
-						<Input id="idHeaderFormDivision" value="{this>LastName}" change="onChangeCustomerName" fieldGroupIds="idCustomerProfileValidationGroupNames"
-							visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }" maxLength="{= parseInt(${/#CustomerProfile/LastName/@maxLength}) }"/>
+						<Input id="idHeaderFormDivision" value="{BulkOrderHeader>DivisionId}" change="onChangeCustomerName" fieldGroupIds="idCustomerProfileValidationGroupNames"
+							visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
 					</f:fields>
 				</f:FormElement>
 				<f:FormElement label="Sales Group">
 					<f:fields>
-						<Input id="idHeaderFormSalesGroup" value="{this>LastName}" change="onChangeCustomerName"
-							fieldGroupIds="idCustomerProfileValidationGroupNames" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
-							maxLength="{= parseInt(${/#CustomerProfile/LastName/@maxLength}) }"/>
+						<Input id="idHeaderFormSalesGroup" value="{BulkOrderHeader>SalesGrp}" change="onChangeCustomerName"
+							fieldGroupIds="idCustomerProfileValidationGroupNames" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
 					</f:fields>
 				</f:FormElement>
 				<f:FormElement label="Export Order Date">
 					<f:fields>
-						<Input id="idHeaderFormExportOrderdate" value="{this>AccountName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
-							maxLength="{= parseInt(${/#CustomerProfile/AccountName/@maxLength}) }"/>
+						<Input id="idHeaderFormExportOrderdate" value="{BulkOrderHeader>ExportOrderDate}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
 					</f:fields>
 				</f:FormElement>
 				<f:FormElement label="Price List">
 					<f:fields>
-						<Input id="idHeaderFormPriceList" value="{this>AccountName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
-							maxLength="{= parseInt(${/#CustomerProfile/AccountName/@maxLength}) }"/>
+						<Input id="idHeaderFormPriceList" value="{BulkOrderHeader>Pricelist}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
 					</f:fields>
 				</f:FormElement>
 			</f:FormContainer>
 			<f:FormContainer>
 				<f:FormElement label="TP/ Permit Number">
 					<f:fields>
-						<Input id="idHeaderFormTPPermitNumber" value="{this>LastName}" change="onChangeCustomerName"
-							fieldGroupIds="idCustomerProfileValidationGroupNames" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
-							maxLength="{= parseInt(${/#CustomerProfile/LastName/@maxLength}) }"/>
+						<Input id="idHeaderFormTPPermitNumber" value="{BulkOrderHeader>TpPermitNum}" change="onChangeCustomerName"
+							fieldGroupIds="idCustomerProfileValidationGroupNames" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
 					</f:fields>
 				</f:FormElement>
 				<f:FormElement label="TP/Permit Date">
 					<f:fields>
-						<Input id="idHederFormTPDate" value="{this>AccountName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
-							maxLength="{= parseInt(${/#CustomerProfile/AccountName/@maxLength}) }"/>
+						<Input id="idHederFormTPDate" value="{BulkOrderHeader>TpPermitDate}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
 					</f:fields>
 				</f:FormElement>
 				<f:FormElement label="TP/Expiry Date">
 					<f:fields>
-						<Input id="idHeaderFormTPExpiryDate" value="{this>AccountName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
-							maxLength="{= parseInt(${/#CustomerProfile/AccountName/@maxLength}) }"/>
+						<Input id="idHeaderFormTPExpiryDate" value="{BulkOrderHeader>TpExpDate}" visible="{= ${BulkOrderHeader>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
 					</f:fields>
 				</f:FormElement>
 				<f:FormElement label="Cash Discount">
 					<f:fields>
-						<Input id="idHeaderFormCashDiscount" value="{this>AccountName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
-							maxLength="{= parseInt(${/#CustomerProfile/AccountName/@maxLength}) }"/>
+						<Input id="idHeaderFormCashDiscount" value="{BulkOrderHeader>CashDiscount}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
 					</f:fields>
 				</f:FormElement>
 				<f:FormElement label="Token No">
 					<f:fields>
-						<Input id="idHeaderFormExportTokenNo" value="{this>AccountName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"
-							maxLength="{= parseInt(${/#CustomerProfile/AccountName/@maxLength}) }"/>
+						<Input id="idHeaderFormExportTokenNo" value="{BulkOrderHeader>TokenNo}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
 					</f:fields>
 				</f:FormElement>
 				<f:FormElement label="Remarks">
 					<f:fields>
-						<TextArea id="idHeaderFormRemarks" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
+						<TextArea id="idHeaderFormRemarks" value="{BulkOrderHeader>Remarks}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
 					</f:fields>
 				</f:FormElement>
 			</f:FormContainer>

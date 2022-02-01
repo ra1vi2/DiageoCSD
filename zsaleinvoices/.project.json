@@ -13,6 +13,11 @@
       "templateId": "ui5template.basicSAPUI5ApplicationProject",
       "templateVersion": "1.40.12",
       "dateTimeStamp": "Mon, 17 Jan 2022 08:00:45 GMT"
+    },
+    {
+      "templateId": "servicecatalog.connectivityComponent",
+      "templateVersion": "0.0.0",
+      "dateTimeStamp": "Mon, 24 Jan 2022 10:07:59 GMT"
     }
   ],
   "codeCheckingTriggers": {
@@ -40,10 +45,17 @@
     "targetFolder": "dist",
     "excludedFolders": [],
     "excludedFiles": [],
-    "lastBuildDateTime": "Mon, 17 Jan 2022 08:01:52 GMT"
+    "lastBuildDateTime": "Tue, 25 Jan 2022 11:19:29 GMT"
   },
   "deploy": {
     "destination": "UWD",
-    "name": "zsaleinvoices"
+    "name": "ZSALEINVOICES"
+  },
+  "mockpreview": {
+    "mockUri": "/sap/opu/odata/sap/ZDLT_INDBLK_INVOICE_SRV",
+    "metadataFilePath": "",
+    "loadJSONFiles": false,
+    "loadCustomRequests": false,
+    "mockRequestsFilePath": ""
   }
 }

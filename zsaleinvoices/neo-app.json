@@ -7,7 +7,7 @@
         "type": "service",
         "name": "sapui5",
         "entryPath": "/resources",
-        "version": "1.52.13"
+        "version": "1.60.40"
       },
       "description": "SAPUI5 Resources"
     },
@@ -17,9 +17,18 @@
         "type": "service",
         "name": "sapui5",
         "entryPath": "/test-resources",
-        "version": "1.52.13"
+        "version": "1.60.40"
       },
       "description": "SAPUI5 Test Resources"
+    },
+    {
+      "path": "/sap/opu/odata",
+      "target": {
+        "type": "destination",
+        "name": "UWD",
+        "entryPath": "/sap/opu/odata"
+      },
+      "description": "UWD"
     }
   ],
   "sendWelcomeFileRedirect": true

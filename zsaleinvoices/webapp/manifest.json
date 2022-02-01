@@ -10,13 +10,23 @@
 		"title": "{{appTitle}}",
 		"description": "{{appDescription}}",
 		"sourceTemplate": {
-			"id": "ui5template.basicSAPUI5ApplicationProject",
-			"version": "1.40.12"
+			"id": "servicecatalog.connectivityComponent",
+			"version": "0.0.0"
+		},
+		"dataSources": {
+			"ZDLT_INDBLK_INVOICE_SRV": {
+				"uri": "/sap/opu/odata/sap/ZDLT_INDBLK_INVOICE_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/metadata.xml"
+				}
+			}
 		}
 	},
 	"sap.ui": {
 		"technology": "UI5",
-		 "fullWidth": true,
+		"fullWidth": true,
 		"icons": {
 			"icon": "",
 			"favIcon": "",
@@ -30,25 +40,22 @@
 			"tablet": true,
 			"phone": true
 		},
-		"supportedThemes": [
-			"sap_hcb",
-			"sap_belize"
-		]
+		"supportedThemes": ["sap_hcb", "sap_belize"]
 	},
 	"sap.ui5": {
 		"rootView": {
-			"viewName": "com.diageo.csd.saleinvoiceszsaleinvoices.invoicedetail.InvoiceDetail", 
+			"viewName": "com.diageo.csd.saleinvoiceszsaleinvoices.view.ListView",
 			"type": "XML"
 		},
 		"dependencies": {
 			"minUI5Version": "1.30.0",
 			"libs": {
-				"sap.ui.core": {},
+				"sap.collaboration": {},
 				"sap.m": {},
+				"sap.ui.comp": {},
+				"sap.ui.core": {},
 				"sap.ui.layout": {},
 				"sap.ushell": {},
-				"sap.collaboration": {},
-				"sap.ui.comp": {},
 				"sap.uxap": {}
 			}
 		},
@@ -62,14 +69,59 @@
 				"settings": {
 					"bundleName": "com.diageo.csd.saleinvoiceszsaleinvoices.i18n.i18n"
 				}
+			},
+			"": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "TwoWay",
+					"defaultCountMode": "Inline"
+				},
+				"dataSource": "ZDLT_INDBLK_INVOICE_SRV",
+				"preload": true
 			}
 		},
 		"resources": {
-			"css": [
-				{
-					"uri": "css/style.css"
+			"css": [{
+				"uri": "css/style.css"
+			}]
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"async": true,
+				"viewPath": "com.diageo.csd.saleinvoiceszsaleinvoices",
+				"controlAggregation": "pages",
+				"controlId": "app",
+				"clearControlAggregation": false
+			},
+			"routes": [{
+				"name": "OrdersList",
+				"pattern": "",
+				"target": [
+					"ordersList"
+				]
+			}, {
+				"name": "GenerateDocket",
+				"pattern": "generateSaleDocket",
+				"target": [
+					"GenerateDocket"
+				]
+			}],
+			"targets": {
+				"GenerateDocket": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewId": "invoicedetail.InvoiceDetail",
+					"viewName": "invoicedetail.InvoiceDetail"
+				},
+				"ordersList": {
+					"viewType": "XML",
+					"viewName": "view.ListView"
 				}
-			]
+			}
 		}
 	},
 	"sap.platform.abap": {

@@ -1,51 +1,48 @@
 <core:FragmentDefinition xmlns:m="sap.m" xmlns:core="sap.ui.core" xmlns="sap.ui.table">
-	<Table id="table1" rows="{/ProductCollection}" selectionMode="MultiToggle" visibleRowCount="7" ariaLabelledBy="title">
+	<Table id="idOrdersListTable" rows="{OrdersListModel>/}" selectionMode="MultiToggle" visibleRowCount="12" ariaLabelledBy="title" rowSelectionChange="onOrdersRowSelectionChange">
 		<extension>
 			<m:OverflowToolbar>
-				<m:Title id="title" text="Orders"/>
+				<m:Title id="title" text="Orders({= ${OrdersListModel>/}.length})"/>
 				<m:ToolbarSpacer/>
-				<m:Button icon="sap-icon://my-sales-order" tooltip="Generate Sales Docket" press="onGenerateSalesDocket" text="Generate Sales Docket" 
-				          enabled="{= ${this>/selectedOrders}.length > 0}"/>
+				<m:Button icon="sap-icon://my-sales-order" tooltip="Generate Sales Docket" press="onGenerateSalesDocket" text="Generate Sales Docket"
+					enabled="{= ${this>/selectedOrderIndex}.length > 0}"/>
 			</m:OverflowToolbar>
 		</extension>
 		<columns>
 			<Column width="11rem">
 				<m:Label text="Bulk Order No"/>
 				<template>
-					<m:Text text="{Name}" wrapping="false"/>
+					<m:Text text="{OrdersListModel>BulkOrderNo}" wrapping="false"/>
 				</template>
 			</Column>
-			<Column width="11rem">
+			<Column >
 				<m:Label text=" Date"/>
 				<template>
-					<m:Input value="{ProductId}"/>
+					<m:Text text="{OrdersListModel>Date}" wrapping="false" />
 				</template>
 			</Column>
-			<Column width="6rem" hAlign="End">
+			<Column hAlign="End">
 				<m:Label text="Customer"/>
 				<template>
-					<m:Label text="{Quantity}"/>
-					<m:Text text="{Name}" wrapping="false"/>
+					<m:Text text="{OrdersListModel>Customer}" />
 				</template>
 			</Column>
-			<Column width="9rem">
+			<Column >
 				<m:Label text="Order Ref No"/>
 				<template>
-					<m:ObjectStatus text="{Status}" state="{ path: 'Available', formatter: '.formatAvailableToObjectState' }"/>
+					<m:Text text="{OrdersListModel>OrderRefNo}" />
 				</template>
 			</Column>
-			<Column width="9rem">
+			<Column >
 				<m:Label text="Order Date"/>
 				<template>
-					<m:Text text="{Name}" wrapping="false"/>
+					<m:Text text="{OrdersListModel>OrderDate}" wrapping="false"/>
 				</template>
 			</Column>
 			<Column width="12rem">
 				<m:Label text="Balance Quantity"/>
 				<template>
-					<m:ComboBox value="{SupplierName}" items="{/Suppliers}">
-						<core:Item text="{Name}"/>
-					</m:ComboBox>
+					<m:Text text="{OrdersListModel>BalanceQuantity}" wrapping="false"/>
 				</template>
 			</Column>
 		</columns>

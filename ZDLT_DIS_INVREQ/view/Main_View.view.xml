@@ -1,0 +1,284 @@
+<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns:t="sap.ui.table"
+	xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns="sap.m" xmlns:lt="sap.ui.commons.layout"
+	controllerName="ZDLT_UI5_DIS_INV_REQ.controller.Main_View" displayBlock="true">
+	<!--<core:Fragment   fragmentName="InvoiceList" type="XML" />-->
+	<!--<core:Fragment   fragmentName="ZDLT_UI5_DIS_INV_REQ.view.detailList" type="XML" />-->
+	<App class="sapUiSizeCompact" id="AppID">
+		<pages>
+			<!--<Page title="Request Invoice">-->
+			<Page id="idPage1" class="sapUiContentPadding" icon="../webapp/images/DIAGEO-LOGO.png">
+				<customHeader>
+					<Toolbar>
+						<Image class="sapUiLargeMarginTop sapUiLargeMarginBottom" width="100px" height="30px" src="../webapp/images/DIAGEO-LOGO.png"/>
+						<ToolbarSpacer/>
+						<Text text="Request Invoice"/>
+						<ToolbarSpacer/>
+					</Toolbar>
+				</customHeader>
+				<content>
+					<l:Grid defaultSpan="L12 M12 S12" width="auto">
+						<f:SimpleForm xmlns:sap.ui.layout.form="sap.ui.layout.form" editable="true" layout="ResponsiveGridLayout" id="__form0" labelMinWidth="100"
+							labelSpanL="4" columnsL="4" emptySpanL="4" class="editableForm">
+							<f:content>
+								<Label text="Plant">
+									<layoutData>
+										<l:GridData span="L5"/>
+									</layoutData>
+								</Label>
+								<ComboBox items="{ path: '/GetPlantsSet', sorter: { path: 'Plant' } }" change="onEnterPlant" width="60%" id="Combplant">
+									<core:Item key="{Plant}" text="{Plant}"/>
+								</ComboBox>
+								<Label text="Status" id="Lblstatus">
+									<layoutData>
+										<l:GridData span="L5"/>
+									</layoutData>
+								</Label>
+								<ComboBox selectedKey="0" value="" id="Combstatus" change="onEnterStatus" width="60%" class="form-control">
+									<core:Item text="Open" key="0"/>
+									<core:Item text="Invoice" key="2"/>
+									<core:Item text="Re-Request" key="9"/>
+									<core:Item text="In-Process TMS" key="12"/>
+									<!--Added on 29th June by Ramesh -->
+									<core:Item text="Credit Check Rejected" key="10"/>
+									<core:Item text="Cancelled Invoice" key="20"/>
+								</ComboBox>
+								<!--Added by Ramesh on 27-07-2021-->
+								<Label text="Distribution Channel" id="Lbldistrchn">
+									<layoutData>
+										<l:GridData span="L5"/>
+									</layoutData>
+								</Label>
+								<ComboBox selectedKey="1" id="Combdistr" change="onEnterDistrchn" width="60%" class="form-control">
+									<core:Item text="All" key="1"/>
+									<core:Item text="11-DirectSale" key="11"/>
+									<core:Item text="12-CSD" key="12"/>
+								</ComboBox>
+								<!--End of change-->
+							</f:content>
+						</f:SimpleForm>
+					</l:Grid>
+				</content>
+				<content>
+					<!-- Radio Button Logic-->
+					<HBox>
+						<VBox>
+							<Label text="" width="50px"/>
+							<Label text="" width="50px"/>
+						</VBox>
+						<VBox>
+							<Label text="" width="60px"/>
+							<Label text="" width="60px"/>
+						</VBox>
+						<VBox>
+							<Label text="" width="60px"/>
+							<Label text="" width="60px"/>
+						</VBox>
+						<VBox>
+							<Label text="" width="60px"/>
+							<Label text="" width="60px"/>
+						</VBox>
+						<VBox>
+							<Label text="" width="40px"/>
+							<Label text="" width="40px"/>
+						</VBox>
+						<VBox>
+							<Label text="" width="60px"/>
+							<Label text="" width="60px"/>
+						</VBox>
+						<VBox>
+							<Label text="" width="40px"/>
+							<Label text="" width="40px"/>
+						</VBox>
+						<VBox>
+							<Label text="" width="60px"/>
+							<Label text="" width="60px"/>
+						</VBox>
+						<VBox>
+							<Label text="" width="40px"/>
+							<Label text="" width="40px"/>
+						</VBox>
+						<RadioButtonGroup id="rbg3" columns="2" class="sapUiMediumMarginBottom" select='handleSelect' >
+							<RadioButton id="RB3-1" text="TMS Process"/>
+							<RadioButton id="RB3-2" text="Non-TMS Process"/>
+						</RadioButtonGroup>
+					</HBox>
+					<!--Empty rows-->
+					<HBox>
+						<VBox>
+							<Label text="" width="50px"/>
+							<Label text="" width="50px"/>
+						</VBox>
+						<VBox>
+							<Label text="" width="60px"/>
+							<Label text="" width="60px"/>
+						</VBox>
+						<VBox>
+							<Label text="" width="60px"/>
+							<Label text="" width="60px"/>
+						</VBox>
+						<VBox>
+							<Label text="" width="60px"/>
+							<Label text="" width="60px"/>
+						</VBox>
+						<VBox>
+							<Label text="" width="40px"/>
+							<Label text="" width="40px"/>
+						</VBox>
+						<Label text="Invoice From: " textAlign="Center" width="100px" class="sapUiTinyMarginTop"/>
+						<DatePicker id="Inpreqfrmdat" value="" valueFormat="yyyy-MM-dd" displayFormat="long" required="true" width="80%"/>
+						<Label text="Invoice To: " textAlign="Center" width="80px" class="sapUiTinyMarginTop"/>
+						<DatePicker id="Inpreqtodat" value="" valueFormat="yyyy-MM-dd" displayFormat="long" required="true" width="80%"/>
+						<VBox>
+							<!--<Label text="" width="40px"></Label>-->
+							<Button id="BtGo" activeIcon="sap-icon://add" text="GO" width="100%" textDirection="LTR" press="onSubmit"/>
+						</VBox>
+					</HBox>
+					<!--selectionMode="MultiToggle"-->
+				</content>
+				<t:Table id="table1" items="{/data}" rows="{/data}" selectionMode="Single" selectionBehavior="Row" visibleRowCount="10"
+					growingScrollToLoad="true" growing="true" ariaLabelledBy="title" fixedColumnCount="6">
+					<t:extension>
+						<OverflowToolbar>
+							<!--<Title id="title" text="Request List"/>-->
+							<Button id="btRqinv" activeIcon="sap-icon://process" icon="sap-icon://process" textDirection="RTL" press="onRqinv" text="Process Document"/>
+							<Button id="btRqtms" activeIcon="sap-icon://process" icon="sap-icon://process" textDirection="RTL" press="onRqinv" text="Process Document"/>
+							<ToolbarSpacer/>
+							<Button id="btInvldis" activeIcon="sap-icon://step" icon="sap-icon://step" textDirection="RTL" press="onInvlist"
+								text="Document Flow"/>
+							<Button id="btReqapprvl" activeIcon="sap-icon://approvals" icon="sap-icon://approvals" textDirection="RTL" press="onReqapprvl"
+								text="Request for Approval"/>
+							<Button id="btPrint" activeIcon="sap-icon://print" icon="sap-icon://print" textDirection="RTL" press="onItemPrint" text="Print"/>
+							<Button id="btEdit" activeIcon="sap-icon://user-edit" icon="sap-icon://user-edit" textDirection="RTL" press="onItemEdit"
+								text="Edit / Display"/>
+							<Button text="Delete" id="Btdelete" activeIcon="sap-icon://delete" icon="sap-icon://delete" textDirection="RTL" press="onItemDelete"/>
+							<Button id="btRefresh" activeIcon="sap-icon://refresh" icon="sap-icon://refresh" textDirection="RTL" press="onItemRefresh" text="Refresh"
+								visible="false"/>
+						</OverflowToolbar>
+					</t:extension>
+					<t:columns>
+						<t:Column width="9rem" id="DocketNumber">
+							<Label text="Docket Number"/>
+							<t:template>
+								<Text text="{DocketNum}"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="8rem" id="TPermitNumber">
+							<Label text="TP Permit Number"/>
+							<t:template>
+								<Text text="{TPermitNum}"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="9rem" id="InvoiceDate">
+							<Label text="Invoice Date"/>
+							<t:template>
+								<!--<Text text="{InvDate}"/>-->
+								<DatePicker value="{ path: 'InvDate', type: 'sap.ui.model.type.Date', formatOptions: {source: {pattern: 'timestamp'}} }" editable="false"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="8rem" id="RequestInvoice">
+							<Label text="Status / Invoice"/>
+							<t:template>
+								<Text text="{ReqInv}"/>
+								<!--Commented by Ramesh on 25-07-2021-->
+								<!--<Link text="{ReqInv}"/> -->
+								<!--press="onRequest"/>-->
+								<!--end of comment by Ramesh on 25-07-2021-->
+							</t:template>
+						</t:Column>
+						<t:Column width="9rem" id="TruckNumber">
+							<Label text="Truck Number"/>
+							<t:template>
+								<Text text="{TruckNumber}"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="11rem" id="TruckType">
+							<Label text="Truck Type"/>
+							<t:template>
+								<Text text="{TruckTypeTxt}"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="11rem" id="RequestType">
+							<!--<Label text="Request Type"/>-->
+							<!--Changed on 29th June by Ramesh - Changed to Remarks from Request Type-->
+							<Label text="Remarks"/>
+							<t:template>
+								<Text text="{RequestType}"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="9rem" id="TPermitDate">
+							<Label text="TP Permit Date"/>
+							<t:template>
+								<!--<Text text="{TPermitDate}"/>-->
+								<DatePicker value="{ path: 'TPermitDate', type: 'sap.ui.model.type.Date', formatOptions: {source: {pattern: 'timestamp'}} }"
+									editable="false"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="5rem" id="MilkRun">
+							<Label text="Milk Run"/>
+							<t:template>
+								<Text text="{MilkRun}"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="8rem" id="VendorCode">
+							<Label text="Vendor Code"/>
+							<t:template>
+								<Text text="{VendorCode}"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="8rem" id="Customer">
+							<Label text="Customer"/>
+							<t:template>
+								<Text text="{Customer}"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="19rem" id="CustName">
+							<Label text="Customer Name"/>
+							<t:template>
+								<Text text="{CustName}"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="11rem" id="CreditCheck">
+							<Label text="Credit Check Status"/>
+							<t:template>
+								<Text text="{CrdCheck}"/>
+								<!--Commented by Ramesh on 25-07-2021-->
+								<!--<Link text="{CrdCheck}" press="onCrdCheck"/>-->
+								<!--end of comment by Ramesh on 25-07-2021-->
+								<!--<Text text="{CrdCheck}"/>-->
+							</t:template>
+						</t:Column>
+						<t:Column width="8rem" id="ProformaInvoice" visible="false">
+							<Label text="Proforma Invoice" visible="false"/>
+							<t:template>
+								<Link text="{Profermaind}" press="onProrequest"/>
+								<!-- press="onProfermaind"/> -->
+								<!--<Text text="{Profermaind}"/>-->
+							</t:template>
+						</t:Column>
+						<!--						<t:Column width="11rem" id="RequestType">-->
+						<!--<Label text="Request Type"/>-->
+						<!--Changed on 29th June by Ramesh - Changed to Remarks from Request Type-->
+						<!--							<Label text="Remarks"/>-->
+						<!--							<t:template>-->
+						<!--								<Text text="{RequestType}"/>-->
+						<!--							</t:template>-->
+						<!--						</t:Column>-->
+						<t:Column width="8rem" id="SaleOrder" visible="false">
+							<Label text="Sale Order" visible="false"/>
+							<t:template>
+								<Text text="{SoDocno}"/>
+							</t:template>
+						</t:Column>
+						
+						<t:Column width="8rem" id="idColumnTokenNo">
+							<Label text="Form 38"/>
+							<t:template>
+								<Text text="{Form38}"/>
+							</t:template>
+						</t:Column>
+					</t:columns>
+				</t:Table>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

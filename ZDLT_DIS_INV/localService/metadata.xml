@@ -1,0 +1,136 @@
+<edmx:Edmx
+    xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+    xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
+    xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema
+            xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZDLT_SALES_INVOICE_SRV" xml:lang="en" sap:schema-version="1">
+            <EntityType Name="DcktInvDstl" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="InvId"/>
+                </Key>
+                <Property Name="InvId" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Sales Document" sap:updatable="false"/>
+                <Property Name="InvDate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Invoice Date" sap:updatable="false"/>
+                <Property Name="DocketNum" Type="Edm.String" MaxLength="16" sap:unicode="false" sap:label="Docket Number" sap:updatable="false"/>
+                <Property Name="Plant" Type="Edm.String" MaxLength="4" sap:unicode="false" sap:label="Plant" sap:updatable="false"/>
+                <Property Name="DistributChanId" Type="Edm.String" MaxLength="2" sap:unicode="false" sap:label="Distr. Channel" sap:updatable="false"/>
+                <Property Name="DivisionId" Type="Edm.String" MaxLength="2" sap:unicode="false" sap:label="Division" sap:updatable="false"/>
+                <Property Name="Customer" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="Customer" sap:updatable="false"/>
+                <Property Name="TpPermitNum" Type="Edm.String" MaxLength="50" sap:unicode="false" sap:label="Transport Permit Num" sap:updatable="false"/>
+                <Property Name="TpPermitDate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="TP Permit Date" sap:updatable="false"/>
+                <Property Name="ExpDate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Export Date" sap:updatable="false"/>
+                <Property Name="Transporter" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="Service agent" sap:updatable="false"/>
+                <Property Name="TruckNumber" Type="Edm.String" MaxLength="20" sap:unicode="false" sap:label="Container ID" sap:updatable="false"/>
+                <Property Name="LrNumber" Type="Edm.String" MaxLength="20" sap:unicode="false" sap:label="External ID 1" sap:updatable="false"/>
+                <Property Name="TruckType" Type="Edm.String" MaxLength="2" sap:unicode="false" sap:label="Shipping type" sap:updatable="false"/>
+                <Property Name="MilkRun" Type="Edm.Boolean" sap:unicode="false" sap:label="Checkbox" sap:updatable="false"/>
+                <Property Name="CashDiscount" Type="Edm.Decimal" Precision="13" Scale="3" sap:unicode="false" sap:label="Cash Discount" sap:updatable="false"/>
+                <Property Name="HisId" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="His Id" sap:updatable="false"/>
+                <Property Name="Remarks" Type="Edm.String" MaxLength="180" sap:unicode="false" sap:label="Remarks" sap:updatable="false"/>
+                <Property Name="Status" Type="Edm.Byte" sap:unicode="false" sap:label="Header Status" sap:updatable="false"/>
+                <Property Name="RequestType" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="Document Number" sap:updatable="false"/>
+                <Property Name="SalesOrganization" Type="Edm.String" MaxLength="4" sap:unicode="false" sap:label="Sales Org." sap:updatable="false"/>
+                <Property Name="SalesGrp" Type="Edm.String" MaxLength="3" sap:unicode="false" sap:label="Sales Group" sap:updatable="false"/>
+                <Property Name="CustName" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="Cust Name" sap:updatable="false"/>
+                <Property Name="TrpName" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="TRP Name" sap:updatable="false"/>
+                <Property Name="OrderNum" Type="Edm.String" MaxLength="50" sap:unicode="false" sap:label="Order Number" sap:updatable="false"/>
+                <Property Name="TpOrderNum" Type="Edm.String" MaxLength="50" sap:unicode="false" sap:label="Order Number" sap:updatable="false"/>
+                <Property Name="TpOrderDate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="TP Order Date" sap:updatable="false"/>
+                <Property Name="ExpNum" Type="Edm.String" MaxLength="50" sap:unicode="false" sap:label="EXP Number" sap:updatable="false"/>
+                <Property Name="ExpOrdDate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Exp Date" sap:updatable="false"/>
+                <Property Name="EmpCode" Type="Edm.String" MaxLength="12" sap:unicode="false" sap:label="Created by" sap:updatable="false"/>
+                <Property Name="BimId" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="Character Field Length = 10" sap:updatable="false"/>
+                <Property Name="Pricelist" Type="Edm.String" MaxLength="2" sap:unicode="false" sap:label="Price List" sap:updatable="false"/>
+                <Property Name="ArrvDt" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Arrival Date" sap:updatable="false"/>
+                <Property Name="UnldcmnceDt" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="date" sap:updatable="false"/>
+                <Property Name="UnldcmpldDt" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="date" sap:updatable="false"/>
+                <Property Name="GraNo" Type="Edm.String" MaxLength="25" sap:unicode="false" sap:label="GRA No" sap:updatable="false"/>
+                <Property Name="GraDt" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="GRA Date" sap:updatable="false"/>
+                <Property Name="ExciseCh" Type="Edm.String" MaxLength="20" sap:unicode="false" sap:label="Excise Challan" sap:updatable="false"/>
+                <Property Name="ExciseDt" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Excise Challan date" sap:updatable="false"/>
+                <Property Name="VendCh" Type="Edm.String" MaxLength="20" sap:unicode="false" sap:label="Vendor challan" sap:updatable="false"/>
+                <Property Name="VendDt" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Vendor challanen dat" sap:updatable="false"/>
+                <Property Name="Haltrate" Type="Edm.Decimal" Precision="13" Scale="3" sap:unicode="false" sap:label="Halt Rate" sap:updatable="false"/>
+                <Property Name="EvcDt" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="EVC Date" sap:updatable="false"/>
+                <Property Name="EvcNo" Type="Edm.String" MaxLength="25" sap:unicode="false" sap:label="EVC Number" sap:updatable="false"/>
+                <Property Name="AcctDt" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Acct Date" sap:updatable="false"/>
+                <Property Name="DocketCrtdt" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Docket Creation Date" sap:updatable="false"/>
+                <Property Name="PlacementNo" Type="Edm.String" MaxLength="20" sap:unicode="false" sap:label="Placement Number" sap:updatable="false"/>
+                <Property Name="MasterinvoiceNumber" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="masterinvoice_number" sap:updatable="false"/>
+                <NavigationProperty Name="DcktInvNavItem" Relationship="ZDLT_SALES_INVOICE_SRV.DcktInvToItem" FromRole="FromRole_DcktInvToItem" ToRole="ToRole_DcktInvToItem"/>
+            </EntityType>
+            <EntityType Name="DcktInvItmDstl" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="MaterialCode"/>
+                    <PropertyRef Name="Quantity"/>
+                    <PropertyRef Name="Uom"/>
+                </Key>
+                <Property Name="MaterialCode" Type="Edm.String" Nullable="false" MaxLength="18" sap:unicode="false" sap:label="Material" sap:updatable="false"/>
+                <Property Name="Quantity" Type="Edm.Decimal" Nullable="false" Precision="15" Scale="3" sap:unicode="false" sap:label="Quantity" sap:updatable="false"/>
+                <Property Name="Uom" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Base Unit" sap:updatable="false"/>
+                <Property Name="MaterialDesc" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="Description" sap:updatable="false"/>
+                <Property Name="CashDiscount" Type="Edm.Decimal" Precision="11" Scale="3" sap:unicode="false" sap:label="Cash Discount" sap:updatable="false"/>
+            </EntityType>
+            <EntityType Name="HWerks" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Werks"/>
+                </Key>
+                <Property Name="Werks" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Plant" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Name1" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="Name 1" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="HTvtw" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Vtweg"/>
+                </Key>
+                <Property Name="Vtweg" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Distr. Channel" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Vtext" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="HTspa" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Spart"/>
+                </Key>
+                <Property Name="Spart" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Division" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Vtext" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="CustCheck" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Companycode"/>
+                    <PropertyRef Name="Customer"/>
+                </Key>
+                <Property Name="Return" Type="ZDLT_SALES_INVOICE_SRV.Return" Nullable="false"/>
+                <Property Name="Companycode" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Company Code" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Customer" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Customer" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <ComplexType Name="Return">
+                <Property Name="Type" Type="Edm.String" Nullable="false" MaxLength="1" sap:label="Message type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Code" Type="Edm.String" Nullable="false" MaxLength="5" sap:label="Message code" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Message" Type="Edm.String" Nullable="false" MaxLength="220" sap:label="Message text" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="LogNo" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="Log number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MessageV1" Type="Edm.String" Nullable="false" MaxLength="50" sap:label="Message Variable" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MessageV2" Type="Edm.String" Nullable="false" MaxLength="50" sap:label="Message Variable" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MessageV3" Type="Edm.String" Nullable="false" MaxLength="50" sap:label="Message Variable" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MessageV4" Type="Edm.String" Nullable="false" MaxLength="50" sap:label="Message Variable" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </ComplexType>
+            <Association Name="DcktInvToItem" sap:content-version="1">
+                <End Type="ZDLT_SALES_INVOICE_SRV.DcktInvDstl" Multiplicity="1" Role="FromRole_DcktInvToItem"/>
+                <End Type="ZDLT_SALES_INVOICE_SRV.DcktInvItmDstl" Multiplicity="*" Role="ToRole_DcktInvToItem"/>
+            </Association>
+            <EntityContainer Name="ZDLT_SALES_INVOICE_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="CustCheckSet" EntityType="ZDLT_SALES_INVOICE_SRV.CustCheck" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="DcktInvDstlSet" EntityType="ZDLT_SALES_INVOICE_SRV.DcktInvDstl" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="DcktInvItmDstlSet" EntityType="ZDLT_SALES_INVOICE_SRV.DcktInvItmDstl" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="HWerksSet" EntityType="ZDLT_SALES_INVOICE_SRV.HWerks" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="HTvtwSet" EntityType="ZDLT_SALES_INVOICE_SRV.HTvtw" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="HTspaSet" EntityType="ZDLT_SALES_INVOICE_SRV.HTspa" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <AssociationSet Name="DcktInvToItemSet" Association="ZDLT_SALES_INVOICE_SRV.DcktInvToItem" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="DcktInvDstlSet" Role="FromRole_DcktInvToItem"/>
+                    <End EntitySet="DcktInvItmDstlSet" Role="ToRole_DcktInvToItem"/>
+                </AssociationSet>
+            </EntityContainer>
+            <atom:link
+                xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="./sap/ZDLT_SALES_INVOICE_SRV/$metadata"/>
+                <atom:link
+                    xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="./sap/ZDLT_SALES_INVOICE_SRV/$metadata"/>
+                </Schema>
+            </edmx:DataServices>
+        </edmx:Edmx>

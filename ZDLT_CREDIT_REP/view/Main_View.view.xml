@@ -1,0 +1,266 @@
+<mvc:View controllerName="ZDLT_UI5_CREDIT_APPREP.controller.Main_View" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc"
+	displayBlock="true" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:t="sap.ui.table" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+	<App class="sapUiSizeCompact" id="AppID">
+		<pages>
+			<Page id="idPage1" class="sapUiContentPadding" icon="../webapp/images/DIAGEO-LOGO.png">
+				<customHeader>
+					<Toolbar>
+						<Image class="sapUiLargeMarginTop sapUiLargeMarginBottom" width="100px" height="30px" src="../webapp/images/DIAGEO-LOGO.png"/>
+						<ToolbarSpacer/>
+						<Text text="Credit Approval Report"/>
+						<ToolbarSpacer/>
+					</Toolbar>
+				</customHeader>
+				<content>
+					<!--2ndline	-->
+					<HBox>
+						<!--				<VBox>
+							<Label text="" width="50px"/>
+							<Label text="" width="50px"/>
+						</VBox>
+						<VBox>
+							<Label text="" width="60px"/>
+							<Label text="" width="60px"/>
+						</VBox>
+						<VBox>
+							<Label text="" width="60px"/>
+							<Label text="" width="60px"/>
+						</VBox>
+						<VBox>
+							<Label text="" width="60px"/>
+							<Label text="" width="60px"/>
+						</VBox>
+						<VBox>
+							<Label text="" width="55px"/>
+							<Label text="" width="55px"/>
+						</VBox>
+	-->
+						<Label text="Region: " id="LblRegion" class="sapUiTinyMarginTop"></Label>
+						<VBox>
+							<Label text="" width="10px"/>
+							<Label text="" width="10px"/>
+						</VBox>
+						<!--<ComboBox value="" id="CombRegion" width="75%" class="form-control" change="onEnterRegion">-->
+						<!--	<core:Item text="North" key="1"/>-->
+						<!--	<core:Item text="East" key="2"/>-->
+						<!--	<core:Item text="West" key="3"/>-->
+						<!--	<core:Item text="South" key="4"/>-->
+						<!--	<core:Item text="CSD" key="5"/>-->
+						<!--	<core:Item text="HO" key="6"/>-->
+						<!--</ComboBox>-->
+						<ComboBox items="{ path: '/RegionListSet', sorter: { path: 'Region' } }" change="onEnterRegion" id="CombRegion" width="80%"
+							class="form-control" busy="true">
+							<core:Item key="{Region}" text=" {path:'Region'} {path:'Description'}"/>
+						</ComboBox>
+						<Label text="SalesOffice: " id="LblSlsOff" class="sapUiTinyMarginTop"></Label>
+						<VBox>
+							<Label text="" width="10px"/>
+							<Label text="" width="10px"/>
+						</VBox>
+						<!--<ComboBox selectedKey="0" value="" id="CombSlsOff" width="75%" class="form-control">-->
+						<!--	<core:Item text="KA" key="0"/>-->
+						<!--	<core:Item text="AP" key="2"/>-->
+						<!--	<core:Item text="Tel" key="9"/>-->
+						<!--</ComboBox>-->
+						<!--		<ComboBox items="{ path: '/SalesOfficeSet', sorter: { path: 'Salesoffice' } }" change="onEnterSlsOff"  id="CombSlsOff"
+							width="80%" class="form-control">
+							<core:Item key="{Salesoffice}" text=" {path:'Salesoffice'} {path:'Description'}"/>
+						</ComboBox>
+			    -->
+						<ComboBox id="CombSlsOff" items="{namedmodel>/}" width="80%" busy="true">
+							<items>
+								<core:Item key="{namedmodel>Salesoffice}" text="{path: 'namedmodel>Salesoffice'} {path: 'namedmodel>Description'} "/>
+							</items>
+						</ComboBox>
+						<VBox>
+							<Label text="" width="20px"/>
+							<Label text="" width="20px"/>
+						</VBox>
+						<Label text="Status: " id="Lblstatus" class="sapUiTinyMarginTop">
+							<!--<layoutData>-->
+							<!--	<l:GridData span="L5"/>-->
+							<!--</layoutData>-->
+						</Label>
+						<VBox>
+							<Label text="" width="20px"/>
+							<Label text="" width="20px"/>
+						</VBox>
+						<ComboBox selectedKey="forApproval" value="" id="CombStatus" change="onEnterStatus" width="80%" class="form-control">
+							<core:Item text="For Approval" key="forApproval"/>
+							<core:Item text="Approved" key="Approved"/>
+							<core:Item text="Rejected" key="Rejected"/>
+						</ComboBox>
+						<!--<VBox>-->
+						<!--	<Button id="BtGo" activeIcon="sap-icon://add" text="GO" width="100%" textDirection="LTR" press="onSubmit"/>-->
+						<!--</VBox>-->
+					</HBox>
+					<!--Empty rows-->
+					<HBox>
+						<!--<VBox>-->
+						<!--	<Label text="" width="50px"/>-->
+						<!--	<Label text="" width="50px"/>-->
+						<!--</VBox>-->
+						<VBox>
+							<Label text="" width="87px"/>
+							<Label text="" width="87px"/>
+						</VBox>
+						<VBox>
+							<Label text="" width="60px"/>
+							<Label text="" width="60px"/>
+						</VBox>
+						<VBox>
+							<Label text="" width="60px"/>
+							<Label text="" width="60px"/>
+						</VBox>
+						<VBox>
+							<Label text="" width="40px"/>
+							<Label text="" width="40px"/>
+						</VBox>
+						<Label text="From Date: " textAlign="Center" width="100px" class="sapUiTinyMarginTop"/>
+						<DatePicker id="InpCrdfrmdat" value="" valueFormat="yyyy-MM-dd" displayFormat="long" required="true" width="80%"/>
+						<Label text="To Date: " textAlign="Center" width="80px" class="sapUiTinyMarginTop"/>
+						<DatePicker id="InpCrdtodat" value="" valueFormat="yyyy-MM-dd" displayFormat="long" required="true" width="80%"/>
+						<VBox>
+							<Button id="BtGo" activeIcon="sap-icon://add" text="GO" width="100%" textDirection="LTR" press="onSubmit"/>
+						</VBox>
+					</HBox>
+				</content>
+				<t:Table id="table1" items="{/data}" rows="{/data}" selectionMode="Single" selectionBehavior="Row" visibleRowCount="10"
+					growingScrollToLoad="true" growing="true" ariaLabelledBy="title" fixedColumnCount="3">
+					<t:extension>
+						<OverflowToolbar>
+							<Title id="title" text="Credit Approval List"/>
+							<ToolbarSpacer/>
+							<!--<Button id="btLinkapprvl" activeIcon="sap-icon://approvals" icon="sap-icon://approvals" textDirection="RTL" press="onLinkapprvl" value="{RequestLink}" text="Link for Approval"/>-->
+							<Button id="btLinkapprvl" activeIcon="sap-icon://approvals" icon="sap-icon://approvals" textDirection="RTL" text="Approve"
+								press=".onLinkapprvl(${RequestLink})"/>
+							<Button id="idExport" text="Download" press="onExportToExcel" icon="sap-icon://download"/>
+							<!--<Button id="btEdit" activeIcon="sap-icon://user-edit" icon="sap-icon://user-edit" textDirection="RTL" press="onItemEdit" text="Edit"/>-->
+							<!--<Button id="btRefresh" activeIcon="sap-icon://refresh" icon="sap-icon://refresh" textDirection="RTL" press="onItemRefresh" text="Refresh"/>-->
+						</OverflowToolbar>
+					</t:extension>
+					<t:columns>
+						<t:Column width="9rem" id="CrInvDate">
+							<Label text="Date"/>
+							<t:template>
+								<!--<Text text="{TPermitDate}"/>-->
+								<DatePicker value="{ path: 'InvDate', type: 'sap.ui.model.type.Date', formatOptions: {source: {pattern: 'timestamp'}} }" editable="false"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="9rem" id="DocketNumber">
+							<Label text="Docket Number"/>
+							<t:template>
+								<Text text="{DocketNum}"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="11rem" id="RequestType">
+							<!--<Label text="Action Item"/>-->
+							<Label text="Status"/>
+							<t:template>
+								<!--<Link text="{RequestType}" href="{RequestLink}" target="_blank"/>-->
+								<Text text="{RequestType}"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="9rem" id="SalesOrder">
+							<Label text="SalesOrder"/>
+							<t:template>
+								<Text text="{SalesOrder}"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="8rem" id="InvDocno">
+							<Label text="Invoice No."/>
+							<t:template>
+								<Text text="{InvDocno}"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="8rem" id="Customer">
+							<Label text="Customer"/>
+							<t:template>
+								<Text text="{Customer}"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="19rem" id="CustName">
+							<Label text="CustomerName"/>
+							<t:template>
+								<Text text="{CustName}"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="8rem" id="SalesOffice">
+							<Label text="SalesOffice"/>
+							<t:template>
+								<Text text="{SalesOffice}"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="8rem" id="CreditLimit">
+							<Label text="CreditLimit"/>
+							<t:template>
+								<Text text="{CreditLimit}"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="8rem" id="Recievables">
+							<Label text="Recievables"/>
+							<t:template>
+								<Text text="{Recivables}"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="8rem" id="SaleSOrdValue">
+							<Label text="Order Value"/>
+							<t:template>
+								<Text text="{SalesOrdValue}"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="8rem" id="TotalAmount">
+							<Label text="Total Amount"/>
+							<t:template>
+								<Text text="{TotalAmount}"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="8rem" id="TotalVaiAmount">
+							<Label text="Violation Amount"/>
+							<t:template>
+								<Text text="{TotVaiAmount}"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="8rem" id="TotAmtOverDue">
+							<Label text="Amount Overdue"/>
+							<t:template>
+								<Text text="{TotAmtOverDue}"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="8rem" id="OverDueDays">
+							<Label text="Overdue Days"/>
+							<t:template>
+								<Text text="{OverDueDays}"/>
+							</t:template>
+						</t:Column>
+						<!--<t:Column width="11rem" id="RequestType">-->
+						<!--	<Label text="Request Type"/>-->
+						<!--	<t:template>-->
+						<!--		<Link text="{RequestType}" href="{RequestLink}" target="_blank"/>-->
+						<!--	</t:template>-->
+						<!--</t:Column>-->
+						<t:Column width="11rem" id="Status">
+							<Label text="Status"/>
+							<t:template>
+								<Text text="{Status}"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="8rem" id="ApprovedBy">
+							<Label text="ApprovedBy"/>
+							<t:template>
+								<Text text="{ApprovedBy}"/>
+							</t:template>
+						</t:Column>
+						<t:Column width="9rem" id="ApprovedOn">
+							<Label text="ApprovedOn"/>
+							<t:template>
+								<!--<Text text="{ApprovedOn}"/>-->
+								<DatePicker value="{ path: 'ApprovedOn', type: 'sap.ui.model.type.Date', formatOptions: {source: {pattern: 'timestamp'}} }" editable="false"/>
+							</t:template>
+						</t:Column>
+					</t:columns>
+				</t:Table>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>
