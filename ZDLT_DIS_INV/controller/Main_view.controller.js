@@ -64,6 +64,7 @@ sap.ui.define([
 					//if (odata.results.length === 1) { //Commented on 21st July 2021
 					that.getView().byId("Combplant").setSelectedKey(odata.results[0].Plant);
 					that.getView().getModel("this").setProperty("/TokenInd", odata.results[0].TokenInd);
+					that.getView().getModel("this").setProperty("/TruckInd", odata.results[0].TruckInd);
 					//-------------Added by Ramesh 23rd July---------------------//
 					var plant = odata.results[0].Plant;
 
@@ -134,6 +135,7 @@ sap.ui.define([
 
 					success: function(oData, oResponse) {
 						that.getView().getModel("this").setProperty("/TokenInd", oData.results[0].TokenInd);
+						that.getView().getModel("this").setProperty("/TruckInd", oData.results[0].TruckInd);
 						if (oData.results[0].PlantType === "DI") {
 							that.getView().byId("Idtexth").setText("Distillery Invoice");
 						}

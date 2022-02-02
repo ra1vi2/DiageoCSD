@@ -168,6 +168,71 @@ sap.ui.define([
 					template: {
 						content: "{InvDocno}"
 					}
+				}, {
+					name: "Customer",
+					template: {
+						content: "{Customer}"
+					}
+				}, {
+					name: "CustomerName",
+					template: {
+						content: "{CustName}"
+					}
+				}, {
+					name: "SalesOffice",
+					template: {
+						content: "{SalesOffice}"
+					}
+				}, {
+					name: "CreditLimit",
+					template: {
+						content: "{CreditLimit}"
+					}
+				}, {
+					name: "Recivables",
+					template: {
+						content: "{Recivables}"
+					}
+				}, {
+					name: "SalesOrdValue",
+					template: {
+						content: "{SalesOrdValue}"
+					}
+				}, {
+					name: "TotalAmount",
+					template: {
+						content: "{TotalAmount}"
+					}
+				}, {
+					name: "Violation Amount",
+					template: {
+						content: "{TotVaiAmount}"
+					}
+				}, {
+					name: "Amount Overdue",
+					template: {
+						content: "{TotAmtOverDue}"
+					}
+				}, {
+					name: "SalesOrdValue",
+					template: {
+						content: "{SalesOrdValue}"
+					}
+				}, {
+					name: "Status",
+					template: {
+						content: "{Status}"
+					}
+				}, {
+					name: "ApprovedBy",
+					template: {
+						content: "{ApprovedBy}"
+					}
+				}, {
+					name: "ApprovedOn",
+					template: {
+						content: "{ApprovedOnStr}"
+					}
 				}]
 			});
 			oExport.saveFile("Credit Report").catch(function() {}).then(function() {

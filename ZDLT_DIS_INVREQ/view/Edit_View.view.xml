@@ -99,37 +99,34 @@
 											<Label text="CashDiscount" id="Lblcashdcnt"/>
 											<Input id="Inpcashdcnt" value="0.00" maxLength="12" change="onEnterCash"/>
 											<Label text="Token No" id="idLabelToken" required="true" visible="{this>/IsCSDTokenNoVisible}"/>
-											<Input id="idToken" maxLength="25" visible="{this>/IsCSDTokenNoVisible}" />
+											<Input id="idToken" maxLength="25" visible="{this>/IsCSDTokenNoVisible}"/>
 										</f:content>
 									</f:SimpleForm>
 								</content>
 							</IconTabFilter>
 							<!--Tabstrip Transport-->
-							<IconTabFilter text="Transport" showAll="true" id="__filter1" design="Horizontal" textDirection="RTL">
+							<IconTabFilter text="Transport" showAll="true"  visible="{= ${this>/TruckInd} === 'P' }" id="__filter1" design="Horizontal" textDirection="RTL">
 								<content>
-									<f:SimpleForm id="SimpleFormChange3" editable="false" layout="ResponsiveGridLayout" labelSpanL="4" labelSpanM="4" labelSpanS="12"
+									<f:SimpleForm id="SimpleFormChange3" editable="true" layout="ResponsiveGridLayout" labelSpanL="4" labelSpanM="4" labelSpanS="12"
 										adjustLabelSpan="false" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsL="2" columnsM="1" singleContainerFullSize="false">
 										<f:content>
-											<Label text="Transport Order Number" id="Lbltrpordnum" visible="false"/>
-											<Input id="Inptrpordnum" editable="false" value="" maxLength="50" visible="false"/>
-											<Label text="Transport Order Date" id="Lbltrporddate" visible="false"/>
-											<DatePicker id="Inptrporddate" valueFormat="yyyy-MM-dd" displayFormat="long" value="" editable="false" visible="false"/>
-											<Label text="Transporter" id="Lbltrpter"/>
-											<Input id="Inptrpter" value="" editable="false" maxLength="12" submit="onTransporterInput" change="onTransporterInput"/>
-											<Label text="Transporter Name" id="Lbltrpternam"/>
-											<Input id="Inptrpternam" value="" editable="false" maxLength="40"/>
+											<Label text="Transport Order Number" id="Lbltrpordnum" visible="true"/>
+											<Label text="Vendor" id="Lbltrpter"/>
+											<Input id="Inptrpter" value="" editable="{this>/TruckEditable}" maxLength="12" submit="onTransporterInput" change="onTransporterInput"/>
+											<Label text="Vendor Name" id="Lbltrpternam"/>
+											<Input id="Inptrpternam" value="" editable="{this>/TruckEditable}" maxLength="40"/>
 											<Label text="Truck Type" id="Lbltrcktyp"/>
-											<ComboBox id="Combtrcktyp" editable="false" items="{namedmodel>/}">
+											<ComboBox id="Combtrcktyp" editable="{this>/TruckEditable}" items="{namedmodel>/}">
 												<items>
 													<core:Item key="{namedmodel>TruckTypee}" text="{path: 'namedmodel>TruckTypee'} {path: 'namedmodel>TruckTypeText'}"/>
 												</items>
 											</ComboBox>
 											<Label text="Truck Number" id="Lbltrcknum"/>
-											<Input id="Inptrcknum" value="" editable="false" maxLength="10" change="onTruckNumber"/>
+											<Input id="Inptrcknum" value="" editable="{this>/TruckEditable}" maxLength="10" change="onTruckNumber"/>
 											<Label text="LR Number" id="Lbllrknum"/>
-											<Input id="Inplrnum" value="" editable="false" maxLength="20" change="onLRNumber"/>
+											<Input id="Inplrnum" value="" editable="{this>/TruckEditable}" maxLength="20" change="onLRNumber"/>
 											<Label text="MilkRun" id="Lblmlkrun"/>
-											<ComboBox id="Combmilkrun" editable="false" selectedKey="0001" change="onEnterMilkrun">
+											<ComboBox id="Combmilkrun" editable="{this>/TruckEditable}" selectedKey="0001" change="onEnterMilkrun">
 												<core:Item text="No" key="0001"/>
 												<core:Item text="Yes" key="0002"/>
 											</ComboBox>
@@ -191,11 +188,10 @@
 									</f:SimpleForm>
 								</content>
 							</IconTabFilter>
-							<IconTabFilter text="CSD" showAll="true" id="idIconTabCSD" design="Horizontal" textDirection="RTL"
-								visible="{this>/IsCSDTokenFieldsVisible}">
+							<IconTabFilter text="CSD" showAll="true" id="idIconTabCSD" design="Horizontal" textDirection="RTL" visible="{this>/IsCSDTokenFieldsVisible}">
 								<content>
-									<f:SimpleForm id="idCSDForm" editable="true" labelSpanL="2" labelSpanM="2" labelSpanS="2"
-										adjustLabelSpan="false" columnsL="2" columnsM="2" singleContainerFullSize="false">
+									<f:SimpleForm id="idCSDForm" editable="true" labelSpanL="2" labelSpanM="2" labelSpanS="2" adjustLabelSpan="false" columnsL="2" columnsM="2"
+										singleContainerFullSize="false">
 										<f:content>
 											<!--Container1-->
 											<core:Title text=""/>
@@ -204,14 +200,13 @@
 											<Label labelFor="idForm38Input" text="Form 38" required="true"/>
 											<Input id="idForm38Input" enabled="{=! ${this>/IsInvoiceCreated}}" maxLength="25"/>
 											<Label labelFor="idTokenFileUploader" text="Upload File" visible="{!={this>/IsInvoiceCreated}}"/>
-											<u:FileUploader id="idTokenFileUploader" uploadUrl="upload/" uploadComplete="onUploadComplete" 
-											uploadStart="onBeforeUploadStart" visible="{=! ${this>/IsInvoiceCreated}}" />
+											<u:FileUploader id="idTokenFileUploader" uploadUrl="upload/" uploadComplete="onUploadComplete" uploadStart="onBeforeUploadStart"
+												visible="{=! ${this>/IsInvoiceCreated}}"/>
 											<core:Title text=""/>
 											<Label text="" labelFor="idSaveBtn"/>
 											<Button text="Save" id="idSaveBtn" press="onPressSaveFileButton" width="40%" visible="{=! ${this>/IsInvoiceCreated}}"/>
-											
 											<Label text="" labelFor="idDownloadBtn" visible="{this>/IsInvoiceCreated}"/>
-										    <Button id="idDownloadBtn" text="Download Attachement" press="onPressDownloadAttachment" width="70%" visible="{this>/IsInvoiceCreated}"/>
+											<Button id="idDownloadBtn" text="Download Attachement" press="onPressDownloadAttachment" width="70%" visible="{this>/IsInvoiceCreated}"/>
 										</f:content>
 									</f:SimpleForm>
 								</content>

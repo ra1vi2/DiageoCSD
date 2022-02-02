@@ -13,6 +13,11 @@
       "templateId": "ui5template.basicSAPUI5ApplicationProject",
       "templateVersion": "1.40.12",
       "dateTimeStamp": "Tue, 01 Feb 2022 06:40:26 GMT"
+    },
+    {
+      "templateId": "ui5template.basicSAPUI5ApplicationComponent",
+      "templateVersion": "1.4.0",
+      "dateTimeStamp": "Wed, 02 Feb 2022 08:05:11 GMT"
     }
   ],
   "translation": {
@@ -35,10 +40,15 @@
     "blockPushLevel": "Error"
   },
   "build": {
-    "buildRequired": true,
+    "buildRequired": false,
     "sourceFolder": "webapp",
     "targetFolder": "dist",
     "excludedFolders": [],
-    "excludedFiles": []
+    "excludedFiles": [],
+    "lastBuildDateTime": "Wed, 02 Feb 2022 10:52:50 GMT"
+  },
+  "deploy": {
+    "destination": "UWD",
+    "name": "ZINDACTREP"
   }
 }

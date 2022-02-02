@@ -35,10 +35,15 @@
     }
   },
   "build": {
-    "buildRequired": true,
+    "buildRequired": false,
     "sourceFolder": "webapp",
     "targetFolder": "dist",
     "excludedFolders": [],
-    "excludedFiles": []
+    "excludedFiles": [],
+    "lastBuildDateTime": "Wed, 02 Feb 2022 07:07:09 GMT"
+  },
+  "deploy": {
+    "destination": "UWD",
+    "name": "zbulkactre"
   }
 }

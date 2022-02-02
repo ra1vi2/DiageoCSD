@@ -99,31 +99,32 @@
 								</IconTabFilter>
 								<!--Tabstrip Transport-->
 								<!--Commented by Ramesh D as part of new changes-->
-								<IconTabFilter text="Transport" visible="false" showAll="false" id="__filter1" design="Horizontal" textDirection="RTL">
+								<IconTabFilter text="Placement" visible="{= ${this>/TruckInd} === 'P' }" showAll="true" id="__filter1" design="Horizontal" textDirection="RTL">
 									<content>
-										<f:SimpleForm id="SimpleFormChange3" visible="false" layout="ResponsiveGridLayout" labelSpanL="4" labelSpanM="4" labelSpanS="12"
+										<f:SimpleForm id="SimpleFormChange3" visible="true" layout="ResponsiveGridLayout" labelSpanL="4" labelSpanM="4" labelSpanS="12"
 											adjustLabelSpan="false" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsL="2" columnsM="1" singleContainerFullSize="false">
 											<f:content>
-												<Label text="Transport Order Number" id="Lbltrpordnum"/>
+											<!--	<Label text="Transport Order Number" id="Lbltrpordnum"/>
 												<Input id="Inptrpordnum" value="" editable="false" maxLength="50"/>
 												<Label text="Transport Order Date" id="Lbltrporddate"/>
 												<DatePicker id="Inptrporddate" valueFormat="yyyy-MM-dd" displayFormat="long" value="" editable="false"/>
-												<Label text="Transporter" id="Lbltrpter"/>
-												<Input id="Inptrpter" value="" editable="false" maxLength="12" submit="onTransporterInput" change="onTransporterInput"/>
-												<Label text="Transporter Name" id="Lbltrpternam"/>
-												<Input id="Inptrpternam" value="" editable="false" maxLength="40"/>
+												-->
+												<Label text="Vendor" id="Lbltrpter"/>
+												<Input id="Inptrpter" value="" editable="true" maxLength="12" submit="onTransporterInput" change="onTransporterInput"/>
+												<Label text="Vendor Name" id="Lbltrpternam"/>
+												<Input id="Inptrpternam" value="" editable="true" maxLength="40"/>
 												<Label text="Truck Type" id="Lbltrcktyp"/>
-												<ComboBox id="Combtrcktyp" editable="false" items="{namedmodel>/}">
+												<ComboBox id="Combtrcktyp" editable="true" items="{namedmodel>/}">
 													<items>
 														<core:Item key="{namedmodel>TruckTypee}" text="{path: 'namedmodel>TruckTypee'} {path: 'namedmodel>TruckTypeText'} "/>
 													</items>
 												</ComboBox>
 												<Label text="Truck Number" id="Lbltrcknum"/>
-												<Input id="Inptrcknum" value="" editable="false" maxLength="10" change="onTruckNumber"/>
+												<Input id="Inptrcknum" value="" editable="true" maxLength="10" change="onTruckNumber"/>
 												<Label text="LR Number" id="Lbllrknum"/>
-												<Input id="Inplrnum" value="" editable="false" maxLength="20" change="onLRNumber"/>
+												<Input id="Inplrnum" value="" editable="true" maxLength="20" change="onLRNumber"/>
 												<Label text="MilkRun" id="Lblmlkrun"/>
-												<ComboBox id="Combmilkrun" editable="false" selectedKey="0001" change="onEnterMilkrun">
+												<ComboBox id="Combmilkrun" editable="true" selectedKey="0001" change="onEnterMilkrun">
 													<core:Item text="No" key="0001"/>
 													<core:Item text="Yes" key="0002"/>
 												</ComboBox>

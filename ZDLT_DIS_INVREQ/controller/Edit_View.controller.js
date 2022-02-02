@@ -136,6 +136,11 @@ sap.ui.define([
 					that.getView().byId("Inpinvdate").setValue(oData.results[0].InvDateStr);
 					v_Plant = oData.results[0].Plant;
 
+					that.getView().getModel("this").setProperty("/TruckInd", oData.results[0].TruckInd);
+					if (oData.results[0].TruckInd === 'P' && oData.results[0].Status === 0) {
+						that.getView().getModel("this").setProperty("/TruckEditable", true);
+					}
+
 					//ra1vi2 for token38
 					if (oData.results[0].DistributChanId === '12' && oData.results[0].TokenInd === 'Y') {
 

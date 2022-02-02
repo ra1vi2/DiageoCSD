@@ -12,9 +12,18 @@
 		"sourceTemplate": {
 			"id": "ui5template.basicSAPUI5ApplicationProject",
 			"version": "1.40.12"
+		},
+		"dataSources": {
+			"ZDLT_SALES_INVOICE_SRV": {
+				"uri": "/sap/opu/odata/sap/ZDLT_SALES_INVOICE_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/metadata.xml"
+				}
+			}
 		}
 	},
-
 	"sap.ui": {
 		"technology": "UI5",
 		"icons": {
@@ -33,13 +42,11 @@
 		"supportedThemes": [
 			"sap_hcb",
 			"sap_belize"
-
 		]
 	},
-
 	"sap.ui5": {
 		"rootView": {
-			"viewName": "com.diageo.csdzindactrep.view.View1",
+			"viewName": "com.diageo.csdzindactrep.view.App",
 			"type": "XML"
 		},
 		"dependencies": {
@@ -62,14 +69,30 @@
 			"i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {
-					"bundleName": "com.diageo.csdzindactrep.i18n.i18n"
+					"bundleName": "ZDLT_UI5_DIS_INV_REQ.i18n.i18n"
 				}
+			},
+			"": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "TwoWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "ZDLT_SALES_INVOICE_SRV",
+				"preload": true
 			}
 		},
 		"resources": {
-			"css": [{
-				"uri": "css/style.css"
-			}]
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
 		}
+	},
+	"sap.platform.abap": {
+		"uri": "/sap/bc/ui5_ui5/sap/zindactrep/webapp",
+		"_version": "1.1.0"
 	}
 }

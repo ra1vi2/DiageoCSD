@@ -95,6 +95,10 @@ sap.ui.define([
 				success: function(odata, oResponse) {
 					//if (odata.results.length === 1) {
 					that.getView().byId("Combplant").setSelectedKey(odata.results[0].Plant);
+					if (odata.results[0].TruckInd === 'P' || odata.results[0].TruckInd === 'N') {
+						that.getView().byId("rbg3").setEnabled(false);
+						that.getView().byId("rbg3").setSelectedButton(that.getView().byId("RB3-2"));
+					}
 					//	}
 				},
 				error: function(oError) {
@@ -112,6 +116,18 @@ sap.ui.define([
 			});
 
 		}, //end of on it
+		onEnterPlant: function(oEvent) {
+			var oContext = this.byId("Combplant").getSelectedItem().getBindingInfo("key").binding.getContext();
+			var sPath = oContext.getPath();
+			var oData = oContext.getObject(sPath);
+			if (oData.TruckInd === 'P' || oData.TruckInd === 'N') {
+				that.getView().byId("rbg3").setEnabled(false);
+				that.getView().byId("rbg3").setSelectedButton(that.getView().byId("RB3-2"));
+			} else {
+				that.getView().byId("rbg3").setEnabled(true);
+				that.getView().byId("rbg3").setSelectedButton(that.getView().byId("RB3-1"));
+			}
+		},
 		//----------------------------Radio button changes----------------------------------------//
 		handleSelect: function(oEvent) {
 			debugger;
@@ -170,7 +186,7 @@ sap.ui.define([
 			var oModel = new sap.ui.model.odata.v2.ODataModel(vSrvUrl, {
 				defaultBindingMode: sap.ui.model.BindingMode.TwoWay
 			});
-		//	this.getView().setModel(oModel);
+			//	this.getView().setModel(oModel);
 			// added on 22 June
 			var opdfViewer = new PDFViewer();
 			this.getView().addDependent(opdfViewer);
@@ -282,12 +298,13 @@ sap.ui.define([
 				v_bPrint.setVisible(true);
 				v_bInvdis.setVisible(true);
 				//}
-			} 
-			else if(v_Status === '0' || v_Status === '9'){
+			} else if (v_Status === '0' || v_Status === '9') {
 				this.getView().byId("rbg3").setVisible(true);
-			}/*else if (v_Status == '12') {
-				v_bInvdis.setVisible(true);
-			}*/ else {
+			}
+			/*else if (v_Status == '12') {
+							v_bInvdis.setVisible(true);
+						}*/
+			else {
 				//if (v_bPrint.getVisible()) {
 				this.getView().byId("rbg3").setVisible(false);
 				v_bPrint.setVisible(false);
