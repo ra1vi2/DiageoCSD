@@ -14,8 +14,8 @@
 			"version": "1.40.12"
 		},
 		"dataSources": {
-			"ZDLT_SALES_INVOICE_SRV": {
-				"uri": "/sap/opu/odata/sap/ZDLT_SALES_INVOICE_SRV/",
+			"ZDLT_INDBLK_INVOICE_SRV": {
+				"uri": "/sap/opu/odata/sap/ZDLT_INDBLK_INVOICE_SRV/",
 				"type": "OData",
 				"settings": {
 					"odataVersion": "2.0",
@@ -69,7 +69,7 @@
 			"i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {
-					"bundleName": "ZDLT_UI5_DIS_INV_REQ.i18n.i18n"
+					"bundleName": "com.diageo.csdzindactrep.i18n.i18n"
 				}
 			},
 			"": {
@@ -79,7 +79,7 @@
 					"defaultBindingMode": "TwoWay",
 					"defaultCountMode": "Request"
 				},
-				"dataSource": "ZDLT_SALES_INVOICE_SRV",
+				"dataSource": "ZDLT_INDBLK_INVOICE_SRV",
 				"preload": true
 			}
 		},
@@ -89,6 +89,32 @@
 					"uri": "css/style.css"
 				}
 			]
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"async": true,
+				"viewPath": "com.diageo.csdzindactrep.view",
+				"controlId": "app",
+				"controlAggregation": "pages",
+				"clearControlAggregation": false
+			},
+			"routes": [
+				{
+					"name": "Indent",
+					"pattern": "",
+					"target": [
+						"Indent"
+					]
+				}
+			],
+			"targets": {
+				"Indent": {
+					"viewType": "XML",
+					"viewName": "IndentActual"
+				}
+			}
 		}
 	},
 	"sap.platform.abap": {
