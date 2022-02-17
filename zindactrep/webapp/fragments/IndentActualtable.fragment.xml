@@ -15,7 +15,8 @@
 	</Toolbar>
 	<ScrollContainer horizontal="true" vertical="true" height="77%">
 		<Table id="indentTableID" fixedLayout="false"
-			items="{path:'TableModel>/', sorter:[{path:'IndDocket', descending:true},{path:'IndRefno', descending:true},{path:'Customer', descending:true},{path:'OrderNum', descending:true}]}"
+			items="{path:'TableModel>/', sorter:[{path:'IndDocket', descending:false},{path:'IndRefno', descending:false},{path:'Customer', descending:false},{path:'OrderNum', descending:false},{path:'Werks', descending:false},
+			{path:'Brand', descending:false},{path:'Matnr', descending:false},{path:'BulkOrdNo', descending:false},{path:'RequestType', descending:false}]}"
 			noDataText="{i18n>FILTER_NODATA_MES}">
 			<columns>
 				<Column mergeDuplicates="true" hAlign="Center">

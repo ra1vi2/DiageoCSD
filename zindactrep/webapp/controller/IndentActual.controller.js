@@ -50,6 +50,11 @@ sap.ui.define([
 				}]
 			});
 			this.setModel(oLocalModel, "local");
+			
+			//Default the Date Range to current month
+			var date = new Date();
+            this.getView().byId("DateRangeID").setDateValue(new Date(date.getFullYear(), date.getMonth(), 1));
+            this.getView().byId("DateRangeID").setSecondDateValue(new Date(date.getFullYear(), date.getMonth() + 1, 0));
 
 			//Table model declared here to disable to Export button.
 			var oModel = new JSONModel();
