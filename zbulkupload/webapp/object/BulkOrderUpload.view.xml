@@ -1,0 +1,33 @@
+<mvc:View height="100%" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+	controllerName="com.diageo.csd.bulkuploadzbulkupload.object.BulkOrderUpload" xmlns:html="http://www.w3.org/1999/xhtml">
+	<NavContainer id="wizardNavContainer">
+		<pages>
+			<Page id="wizardContentPage" showHeader="false">
+				<content>
+					<Wizard id="UploadWizard" complete="wizardCompletedHandler" showNextButton="false">
+						<WizardStep id="UploadFileStep" title="Upload" validated="true" complete="onUploadCompleteStep">
+							<core:Fragment fragmentName="com.diageo.csd.bulkuploadzbulkupload.object.wizardsteps.UploadOrders" type="XML"/>
+							<Button text="Upload Data" id="idUploadStepCompleteButton" press="onUploadStepComplete" visible="false"/>
+						</WizardStep>
+						<WizardStep id="ValidateDataStep" validated="true" title="Validate Data" activate="additionalInfoValidation"
+							complete="onValidateCompleteStep">
+							<core:Fragment fragmentName="com.diageo.csd.bulkuploadzbulkupload.object.wizardsteps.ValidateOrders" type="XML"/>
+							<Button text="Validate Data" press="onValidateStepComplete"/>
+						</WizardStep>
+						<WizardStep id="SubmitDataStep" validated="true" activate="optionalStepActivation" title="Submit">
+							<core:Fragment fragmentName="com.diageo.csd.bulkuploadzbulkupload.object.wizardsteps.SubmitOrders" type="XML"/>
+						</WizardStep>
+					</Wizard>
+				</content>
+				<footer visible="{= ${message>/}.length > 0}">
+					<OverflowToolbar id="otbFooter">
+						<Button id="idMessagePopOver" icon="sap-icon://alert" text="{=${message>/}.length}" visible="{=${message>/}.length > 0}" type="Emphasized"
+							press="onMessagePopoverPress"></Button>
+						<ToolbarSpacer/>
+						<Button text="Cancel" press="handleWizardCancel"/>
+					</OverflowToolbar>
+				</footer>
+			</Page>
+		</pages>
+	</NavContainer>
+</mvc:View>

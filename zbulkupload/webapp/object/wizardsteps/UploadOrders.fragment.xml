@@ -1,0 +1,50 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:u="sap.ui.unified">
+	<f:Form id="idOrderDetailHeaderForm" editable="true" >
+		<f:layout>
+			<f:ResponsiveGridLayout id="idUploadFormLayout" columnsM="2" columnsL="3" columnsXL="3" labelSpanM="12" labelSpanL="12" labelSpanXL="12"
+				emptySpanXL="1" emptySpanL="3" emptySpanM="1"/>
+		</f:layout>
+		<f:title>
+			<core:Title id="idUploadFormTitle" text="Bulk Upload"/>
+		</f:title>
+		<f:formContainers>
+			<f:FormContainer id="idUploadFormContainer">
+				<f:FormElement label="Plant">
+					<f:fields>
+						<Select id="idUploadFormPlant" items="{/PlantSet}" change="onFilterValueChange">
+							<core:Item key="{Plant}" text="{Plant}"/>
+						</Select>
+					</f:fields>
+				</f:FormElement>
+				<f:FormElement label="Date">
+					<f:fields>
+						<DatePicker id="idUploadDate" placeholder="Enter Date ..." change="onUploadDateChange"/>
+					</f:fields>
+				</f:FormElement>
+			</f:FormContainer>
+			<f:FormContainer id="idUploadFormContainer2" class="sapUiMediumMarginTop">
+				<f:FormElement id="idUploadFormElement" label="DC" class="sapUiMediumMarginTop">
+					<f:fields>
+						<Select id="idUploadDC">
+							<core:Item key="11" text="11 - Direct Sale"/>
+							<core:Item key="12" text="12 - CSD"/>
+						</Select>
+					</f:fields>
+				</f:FormElement>
+				<f:FormElement label="Upload File" class="sapUiMediumMarginTop">
+					<f:fields>
+						<u:FileUploader id="idTokenFileUploader" fileType="XLSX,xlsx" change="onUpload" uploadComplete="onUploadComplete"
+							uploadStart="onBeforeUploadStart" />
+					</f:fields>
+				</f:FormElement>
+			</f:FormContainer>
+			<f:FormContainer>
+				<f:FormElement>
+					<f:fields>
+						<Button icon="sap-icon://download" text="Download Sample Format" press="onPressSampleDownload" type="Transparent"/>
+					</f:fields>
+				</f:FormElement>
+			</f:FormContainer>
+		</f:formContainers>
+	</f:Form>
+</core:FragmentDefinition>

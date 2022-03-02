@@ -1,94 +1,92 @@
 <core:FragmentDefinition xmlns:m="sap.m" xmlns:core="sap.ui.core" xmlns="sap.ui.table">
-	<Table id="table1" rows="{/ProductCollection}" selectionMode="MultiToggle" visibleRowCount="7" ariaLabelledBy="title">
+	<Table id="table1" rows="{orderdetailsItem>/}" selectionMode="Single" visibleRowCount="7" ariaLabelledBy="title">
 		<extension>
 			<m:OverflowToolbar>
 				<m:Title id="title" text="Order Item"/>
 				<m:ToolbarSpacer/>
 				<m:Button icon="sap-icon://my-sales-order" tooltip="Generate Sales Docket" press="onGenerateSalesDocket" text="Add"
-					enabled="{= ${this>/selectedOrders}.length > 0}"/>
+					enabled="{= ${this>/selectedOrders}.length > 0}" visible="{= ${this>/CurrViewMode} === ${constants>/VIEW_MODES/EDIT} }"/>
 				<m:Button icon="sap-icon://my-sales-order" tooltip="Generate Sales Docket" press="onGenerateSalesDocket" text="Delete"
-					enabled="{= ${this>/selectedOrders}.length > 0}"/>
+					enabled="{= ${this>/selectedOrders}.length > 0}" visible="{= ${this>/CurrViewMode} === ${constants>/VIEW_MODES/EDIT} }"/>
+				<m:Text text="Total Quantity : {Total>/totalQty}"/>
 			</m:OverflowToolbar>
 		</extension>
 		<columns>
 			<Column width="11rem">
-				<m:Label text="Ref No"/>
+				<m:Label text="Docket Number"/>
 				<template>
-					<m:Text text="{Name}" wrapping="false"/>
+					<m:Text text="{orderdetailsItem>DocketNum}" wrapping="false"/>
 				</template>
 			</Column>
 			<Column width="11rem">
 				<m:Label text="Material Code"/>
 				<template>
-					<m:Input value="{ProductId}"/>
+					<m:Text text="{orderdetailsItem>Material}" wrapping="false"></m:Text>
 				</template>
 			</Column>
 			<Column width="6rem" hAlign="End">
 				<m:Label text="Material Description"/>
 				<template>
-					<m:Label text="{Quantity}"/>
-					<m:Text text="{Name}" wrapping="false"/>
+					<m:Text text="{orderdetailsItem>MaterialDescription}" wrapping="false"/>
 				</template>
 			</Column>
 			<Column width="9rem">
 				<m:Label text="Brand"/>
 				<template>
-					<m:ObjectStatus text="{Status}" state="{ path: 'Available', formatter: '.formatAvailableToObjectState' }"/>
+					<m:Text text="{orderdetailsItem>Brand}" wrapping="false"/>
 				</template>
 			</Column>
 			<Column width="9rem">
 				<m:Label text="Pack"/>
 				<template>
-					<m:Text text="{Name}" wrapping="false"/>
+					<m:Text text="{orderdetailsItem>Pack}" wrapping="false"/>
 				</template>
 			</Column>
 			<Column width="12rem">
 				<m:Label text="Actual Quantity"/>
 				<template>
-					<m:ComboBox value="{SupplierName}" items="{/Suppliers}">
-						<core:Item text="{Name}"/>
-					</m:ComboBox>
-				</template>
-			</Column>
-			<Column width="12rem">
-				<m:Label text="Quantity"/>
-				<template>
-					<m:ComboBox value="{SupplierName}" items="{/Suppliers}">
-						<core:Item text="{Name}"/>
-					</m:ComboBox>
+					<m:Text text="{orderdetailsItem>ActualQuantity}" wrapping="false" visible="{= ${this>/CurrViewMode} === ${constants>/VIEW_MODES/GENERATE} }"/>
 				</template>
 			</Column>
 			<Column width="12rem">
 				<m:Label text="Balance Quantity"/>
 				<template>
-					<m:ComboBox value="{SupplierName}" items="{/Suppliers}">
-						<core:Item text="{Name}"/>
-					</m:ComboBox>
+					<m:Text text="{orderdetailsItem>BalanceQuantity}" wrapping="false"/>
+				</template>
+			</Column>
+			<Column width="12rem">
+				<m:Label text="Quantity"/>
+				<template>
+					<m:Text text="{orderdetailsItem>Quantity}" wrapping="false" visible="{= ${this>/CurrViewMode} === ${constants>/VIEW_MODES/EDIT} }"/>
+					<m:Input value="{orderdetailsItem>Quantity}" visible="{= ${this>/CurrViewMode} === ${constants>/VIEW_MODES/GENERATE} }"
+						change="onChangeItemQuantity"/>
+				</template>
+			</Column>
+			<Column width="12rem" visible="{= ${this>/CurrViewMode} === ${constants>/VIEW_MODES/EDIT} }">
+				<m:Label text="Release Quantity" visible="{= ${this>/CurrViewMode} === ${constants>/VIEW_MODES/EDIT} }"/>
+				<template>
+					<m:Text text="{orderdetailsItem>ReleaseQuantity}" wrapping="false" />
 				</template>
 			</Column>
 			<Column width="12rem">
 				<m:Label text="UOM"/>
 				<template>
-					<m:ComboBox value="{SupplierName}" items="{/Suppliers}">
-						<core:Item text="{Name}"/>
-					</m:ComboBox>
+					<m:Text text="{orderdetailsItem>UOM}" wrapping="false"/>
 				</template>
 			</Column>
-			<Column width="12rem">
-				<m:Label text="Release Quantity"/>
+			<Column width="11rem">
+				<m:Label text="Ref No"/>
 				<template>
-					<m:ComboBox value="{SupplierName}" items="{/Suppliers}">
-						<core:Item text="{Name}"/>
-					</m:ComboBox>
+					<m:Text text="{orderdetailsItem>RefNo}" wrapping="false"/>
 				</template>
 			</Column>
 		</columns>
-		<rowActionTemplate>
+		<!--	<rowActionTemplate>
 			<RowAction id="idOrderTableRowAction">
 				<items>
 					<RowActionItem id="idOrderTableRowActionItem" type="Navigation" press="onPressEditOrder"></RowActionItem>
 				</items>
 			</RowAction>
-		</rowActionTemplate>
+		</rowActionTemplate>-->
 	</Table>
 </core:FragmentDefinition>

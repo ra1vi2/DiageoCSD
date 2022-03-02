@@ -75,6 +75,20 @@ sap.ui.define([
 							that.getView().byId("Inpslsorg").setValue(odata.Vkorg);
 							that.getView().byId("InpCompNam").setValue(odata.Bukrs);
 							that.getView().byId("Inpplntnam").setValue(odata.Name1);
+
+							oModel.read("/TruckTypeSet", {
+								filters: [new sap.ui.model.Filter("Plant", sap.ui.model.FilterOperator.EQ, plant)],
+								success: function(oData, oResponse) {
+									var aFiltersComboBoxData = oResponse.data.results;
+									var oJModel3 = new sap.ui.model.json.JSONModel();
+									oJModel3.setData(aFiltersComboBoxData);
+									that.getView().byId("Combtrcktyp").setModel(oJModel3, "namedmodel");
+								},
+								error: function(oError) {
+									var _errMsg1 = JSON.parse(oError.response.body).error.message.value;
+									sap.m.MessageBox.show(_errMsg1, sap.m.MessageBox.Icon.ERROR, "Error");
+								}
+							});
 						},
 						error: function(oError) {
 
@@ -217,7 +231,8 @@ sap.ui.define([
 				this.byId("Combslsgrp").setSelectedKey("015");
 			}
 			if (sSelectedDistributionChannelKey === '12' &&
-				that.getView().getModel("this").getProperty("/TokenInd") === 'Y') {
+				that.getView().getModel("this").getProperty("/TokenInd") === 'Y' &&
+				that.getView().getModel("this").getProperty("/CustomerTokenInd") === 'Y') {
 				this.getView().getModel("this").setProperty("/IsCSDTokenFieldsVisible", true);
 			} else {
 				this.getView().getModel("this").setProperty("/IsCSDTokenFieldsVisible", false);
@@ -253,6 +268,7 @@ sap.ui.define([
 			var sls_org_cust = this.getView().byId("Inpslsorg").getValue();
 			var dist_chan_cust = this.getView().byId("Combdistr").getSelectedKey();
 			var div_cust = this.getView().byId("Combdiv").getSelectedKey();
+			var plant = this.getView().byId("Combplant").getSelectedKey();
 			if (customer === "") {
 				this.getView().byId("Inpcust").focus();
 				var _errMsg = "Enter Customer";
@@ -263,7 +279,7 @@ sap.ui.define([
 			var odataModel = this.getView().getModel();
 			//	var url = "/CustCheckSet(CompanyCode='" + compcode + "',Customer='" + customer + "')";
 			var url = "/CustCheckSet(CompanyCode='" + compcode + "',Customer='" + customer + "',Vkorg='" + sls_org_cust + "',Vtweg='" +
-				dist_chan_cust + "',Spart='" + div_cust + "')";
+				dist_chan_cust + "',Spart='" + div_cust + "',Plant='" + plant + "')";
 			//	var customerName = this.getView().byId("Inpcustname").getValue();
 			// /sap/opu/odata/sap/ZDLT_SALES_INVOICE_SRV/CustCheckSet(Customer='12354NA' ,CompanyCode='5000')
 
@@ -278,6 +294,15 @@ sap.ui.define([
 						return;
 					}
 					that.getView().byId("Inpcustname").setValue(odata.CustName);
+					that.getView().getModel("this").setProperty("/CustomerTokenInd", odata.CustTkInd);
+					if (that.byId("Combdistr").getProperty("selectedKey") === '12' &&
+						that.getView().getModel("this").getProperty("/TokenInd") === 'Y' &&
+						odata.CustTkInd === 'Y'
+					) {
+						that.getView().getModel("this").setProperty("/IsCSDTokenFieldsVisible", true);
+					} else {
+						that.getView().getModel("this").setProperty("/IsCSDTokenFieldsVisible", false);
+					}
 
 				},
 				error: function(oError) {
@@ -1113,6 +1138,23 @@ sap.ui.define([
 				sap.m.MessageBox.show(_errMsg, sap.m.MessageBox.Icon.ERROR, "Error");
 				return;
 			}
+			var bPlacementUsed = false;
+			if (this.byId("Inptrpter").getValue() ||
+				this.byId("Inptrcknum").getValue() ||
+				this.byId("Inplrnum").getValue()) {
+				bPlacementUsed = true;
+			}
+
+			if (bPlacementUsed) {
+				if (!this.byId("Inptrpter").getValue() ||
+					!this.byId("Inptrcknum").getValue() ||
+					!this.byId("Inplrnum").getValue()) {
+					BusyIndicator.hide();
+					var _errMsg = "Please provide all mandatory values for Placement tab";
+					sap.m.MessageBox.show(_errMsg, sap.m.MessageBox.Icon.ERROR, "Error");
+					return;
+				}
+			}
 
 			if (!this.byId("idToken").getValue() && this.byId("idToken").getVisible()) {
 				BusyIndicator.hide();
@@ -1325,6 +1367,8 @@ sap.ui.define([
 					that.getView().byId("Combplant").setEnabled(true);
 					that.getView().byId("Combdistr").setEnabled(true);
 					that.getView().byId("Combdiv").setEnabled(true);
+					that.getView().byId("idToken").setValue("");
+					that.getView().getModel("this").setProperty("/IsCSDTokenFieldsVisible", false);
 					v_total_qty = 0;
 					that.getView().byId("Txt1").setValue(v_total_qty);
 					setkey = view + "__filter0";

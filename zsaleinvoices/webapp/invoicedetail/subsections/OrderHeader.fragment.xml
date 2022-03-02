@@ -1,119 +1,140 @@
-<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
-	<f:Form id="idOrderDetailHeaderForm" editable="true" binding="{BulkOrderHeader/>}">
-		<f:layout>
-			<f:ResponsiveGridLayout id="idOrderDetailHeaderFormLayout" columnsM="2" columnsL="3" columnsXL="3" labelSpanM="12" labelSpanL="12"
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:form="sap.ui.layout.form">
+	<form:Form id="idOrderDetailHeaderForm" editable="true" binding="orderdetailsheader>/">
+		<form:layout>
+			<form:ResponsiveGridLayout id="idOrderDetailHeaderFormLayout" columnsM="2" columnsL="3" columnsXL="3" labelSpanM="12" labelSpanL="12"
 				labelSpanXL="12" emptySpanXL="1" emptySpanL="3" emptySpanM="1"/>
-		</f:layout>
-		<f:title>
+		</form:layout>
+		<form:title>
 			<core:Title id="idOrderDetailHeaderFormTitle" text="Order Header"/>
-		</f:title>
-		<f:formContainers>
-			<f:FormContainer id="idOrderDetailHeaderFormContainer">
-				<f:FormElement id="idOrderDetailHeaderFormElement" label="Plant">
-					<f:fields>
-						<VBox id="idOrderDetailHeaderFormPlantVBox">
-							<Input id="idOrderDetailHeaderFormPlant" value="{BulkOrderHeader>Plant}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
-						</VBox>
-					</f:fields>
-				</f:FormElement>
-				<f:FormElement label="Invoice Date">
-					<f:fields>
-						<VBox id="idFormCompanyNameVBox">
-							<Input id="idFormCompanyName" value="{BulkOrderHeader>InvDate}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
-						</VBox>
-					</f:fields>
-				</f:FormElement>
-				<f:FormElement label="Customer">
-					<f:fields>
-						<Input id="idHeaderFormCustomer" value="{BulkOrderHeader>Customer}" change="onChangeCustomerName" fieldGroupIds="idCustomerProfileValidationGroupNames"
-							visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
-					</f:fields>
-				</f:FormElement>
-				<f:FormElement label="Customer Name">
-					<f:fields>
-						<Input id="idHeaderFormCustomerName" value="{BulkOrderHeader>CustName}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
-					</f:fields>
-				</f:FormElement>
-				<f:FormElement label="Order Number">
-					<f:fields>
+		</form:title>
+		<form:formContainers>
+			<form:FormContainer id="idOrderDetailHeaderFormContainer">
+				<form:FormElement id="idOrderDetailHeaderFormElement" label="Plant">
+					<form:fields>
+						<!--<Input id="idOrderDetailHeaderFormPlant" value="{orderdetailsheader>/Plant}" enabled="false"/>-->
+						<Select id="idOrderDetailHeaderFormPlant" selectedKey="{orderdetailsheader>/Plant}" enabled="false" items="{path : 'PlantVH>/'}"
+							change="onEnterPlant">
+							<core:Item key="{PlantVH>Plant}" text="{PlantVH>Plant}"/>
+						</Select>
+					</form:fields>
+				</form:FormElement>
+				<form:FormElement label="Customer">
+					<form:fields>
+						<Input id="idHeaderFormCustomer" value="{orderdetailsheader>/Customer}" change="onChangeCustomerName"
+							fieldGroupIds="idCustomerProfileValidationGroupNames"/>
+					</form:fields>
+				</form:FormElement>
+				<form:FormElement label="TP/ Permit Number">
+					<form:fields>
+						<Input id="idHeaderFormTPPermitNumber" value="{orderdetailsheader>/TpPermitNum}" change="onChangeCustomerName"
+							fieldGroupIds="idCustomerProfileValidationGroupNames"/>
+					</form:fields>
+				</form:FormElement>
+				<form:FormElement label="Order Number">
+					<form:fields>
 						<VBox >
-							<Input id="idHederFormOrderNo" value="{BulkOrderHeader>OrderNum}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
+							<Input id="idHederFormOrderNo" value="{orderdetailsheader>/OrderNum}"/>
 						</VBox>
-					</f:fields>
-				</f:FormElement>
-				<f:FormElement label="Export Number">
-					<f:fields>
-						<Input id="idHeaderFormExportNo" value="{BulkOrderHeader>ExpNum}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
-					</f:fields>
-				</f:FormElement>
-			</f:FormContainer>
-			<f:FormContainer >
-				<f:FormElement label="Sales Organization">
-					<f:fields>
-						<Input id="idHeaderFormSalesOrg" value="{BulkOrderHeader>SalesOrganization}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
-					</f:fields>
-				</f:FormElement>
-				<f:FormElement label="Distribution Channel">
-					<f:fields>
-						<Input id="idHeaderFormDC" value="{BulkOrderHeader>DistributChanId}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
-					</f:fields>
-				</f:FormElement>
-				<f:FormElement label="Division">
-					<f:fields>
-						<Input id="idHeaderFormDivision" value="{BulkOrderHeader>DivisionId}" change="onChangeCustomerName" fieldGroupIds="idCustomerProfileValidationGroupNames"
-							visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
-					</f:fields>
-				</f:FormElement>
-				<f:FormElement label="Sales Group">
-					<f:fields>
-						<Input id="idHeaderFormSalesGroup" value="{BulkOrderHeader>SalesGrp}" change="onChangeCustomerName"
-							fieldGroupIds="idCustomerProfileValidationGroupNames" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
-					</f:fields>
-				</f:FormElement>
-				<f:FormElement label="Export Order Date">
-					<f:fields>
-						<Input id="idHeaderFormExportOrderdate" value="{BulkOrderHeader>ExportOrderDate}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
-					</f:fields>
-				</f:FormElement>
-				<f:FormElement label="Price List">
-					<f:fields>
-						<Input id="idHeaderFormPriceList" value="{BulkOrderHeader>Pricelist}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
-					</f:fields>
-				</f:FormElement>
-			</f:FormContainer>
-			<f:FormContainer>
-				<f:FormElement label="TP/ Permit Number">
-					<f:fields>
-						<Input id="idHeaderFormTPPermitNumber" value="{BulkOrderHeader>TpPermitNum}" change="onChangeCustomerName"
-							fieldGroupIds="idCustomerProfileValidationGroupNames" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
-					</f:fields>
-				</f:FormElement>
-				<f:FormElement label="TP/Permit Date">
-					<f:fields>
-						<Input id="idHederFormTPDate" value="{BulkOrderHeader>TpPermitDate}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
-					</f:fields>
-				</f:FormElement>
-				<f:FormElement label="TP/Expiry Date">
-					<f:fields>
-						<Input id="idHeaderFormTPExpiryDate" value="{BulkOrderHeader>TpExpDate}" visible="{= ${BulkOrderHeader>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
-					</f:fields>
-				</f:FormElement>
-				<f:FormElement label="Cash Discount">
-					<f:fields>
-						<Input id="idHeaderFormCashDiscount" value="{BulkOrderHeader>CashDiscount}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
-					</f:fields>
-				</f:FormElement>
-				<f:FormElement label="Token No">
-					<f:fields>
-						<Input id="idHeaderFormExportTokenNo" value="{BulkOrderHeader>TokenNo}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
-					</f:fields>
-				</f:FormElement>
-				<f:FormElement label="Remarks">
-					<f:fields>
-						<TextArea id="idHeaderFormRemarks" value="{BulkOrderHeader>Remarks}" visible="{= ${this>/CurrViewMode} === ${constant>/VIEW_MODES/EDIT} }"/>
-					</f:fields>
-				</f:FormElement>
-			</f:FormContainer>
-		</f:formContainers>
-	</f:Form>
+					</form:fields>
+				</form:FormElement>
+				<form:FormElement label="Export Number">
+					<form:fields>
+						<Input id="idHeaderFormExportNo" value="{orderdetailsheader>/ExpNum}"/>
+					</form:fields>
+				</form:FormElement>
+				<form:FormElement label="Remarks">
+					<form:fields>
+						<TextArea id="idHeaderFormRemarks" value="{orderdetailsheader>/Remarks}"/>
+					</form:fields>
+				</form:FormElement>
+			</form:FormContainer>
+			<form:FormContainer >
+				<form:FormElement label="Invoice Date">
+					<form:fields>
+						<VBox id="idFormCompanyNameVBox">
+							<!--	<Input id="idFormCompanyName" value="{orderdetailsheader>/InvDate}"/>-->
+							<DatePicker value="{path : 'orderdetailsheader>/InvDate' , type : 'sap.ui.model.type.Date'}"></DatePicker>
+						</VBox>
+					</form:fields>
+				</form:FormElement>
+				<form:FormElement label="Customer Name">
+					<form:fields>
+						<Input id="idHeaderFormCustomerName" value="{orderdetailsheader>/CustName}" enabled="false"/>
+					</form:fields>
+				</form:FormElement>
+				<form:FormElement label="TP/Permit Date">
+					<form:fields>
+						<!--	<Input id="idHederFormTPDate" value="{orderdetailsheader>/TpPermitDate}"/>-->
+						<DatePicker value="{path : 'orderdetailsheader>/TpPermitDate' , type : 'sap.ui.model.type.Date'}"></DatePicker>
+					</form:fields>
+				</form:FormElement>
+				<form:FormElement label="TP/Expiry Date">
+					<form:fields>
+						<!--<Input id="idHeaderFormTPExpiryDate" value="{orderdetailsheader>/TpExpDate}"/>-->
+						<DatePicker value="{path : 'orderdetailsheader>/TpExpDate' , type : 'sap.ui.model.type.Date'}"></DatePicker>
+					</form:fields>
+				</form:FormElement>
+				<form:FormElement label="Export Order Date">
+					<form:fields>
+						<!--<Input id="idHeaderFormExportOrderdate" value="{orderdetailsheader>/ExportOrderDate}"/>-->
+						<DatePicker value="{path : 'orderdetailsheader>/ExportOrderDate' , type : 'sap.ui.model.type.Date'}"></DatePicker>
+					</form:fields>
+				</form:FormElement>
+				<form:FormElement label="Token No" visible="{this>/IsCSDTokenFieldsVisible}">
+					<form:fields>
+						<Input id="idHeaderFormExportTokenNo" required="true" value="{orderdetailsheader>/TokenNo}" change="onChangeTokenNo"/>
+					</form:fields>
+				</form:FormElement>
+			</form:FormContainer>
+			<form:FormContainer>
+				<form:FormElement label="Sales Organization">
+					<form:fields>
+						<Input id="idHeaderFormSalesOrg" value="{orderdetailsheader>/SalesOrganization}" enabled="false"/>
+					</form:fields>
+				</form:FormElement>
+				<form:FormElement label="Distribution Channel">
+					<form:fields>
+						<!--	<Input id="idInputHeaderFormDC" value="{orderdetailsheader>/DistributChanId}"/>-->
+						<Select id="idSelectHeaderFormDC" items="{constants>/DistributionChannel}" selectedKey="{orderdetailsheader>/DistributChanId}"
+							change="onEnterDistributionChannel" enabled="false">
+							<core:Item key="{constants>key}" text="{constants>text}"/>
+						</Select>
+					</form:fields>
+				</form:FormElement>
+				<form:FormElement label="Division">
+					<form:fields>
+						<!--<Input id="idHeaderFormDivision" value="{orderdetailsheader>/DivisionId}" change="onChangeCustomerName"
+							fieldGroupIds="idCustomerProfileValidationGroupNames"/>-->
+						<Select id="idSelectHeaderFormDivision" items="{constants>/Division}" selectedKey="{orderdetailsheader>/DivisionId}"
+							change="onFilterValueChange" enabled="false">
+							<core:Item key="{constants>key}" text="{constants>text}"/>
+						</Select>
+					</form:fields>
+				</form:FormElement>
+				<form:FormElement label="Sales Group">
+					<form:fields>
+						<!--<Input id="idHeaderFormSalesGroup" value="{orderdetailsheader>/SalesGrp}" change="onChangeCustomerName"
+							fieldGroupIds="idCustomerProfileValidationGroupNames"/>-->
+						<Select id="idSelectHeaderFormSalesGroup" items="{constants>/SalesGroup}" selectedKey="{orderdetailsheader>/SalesGrp}"
+							change="onFilterValueChange">
+							<core:Item key="{constants>key}" text="{constants>text}"/>
+						</Select>
+					</form:fields>
+				</form:FormElement>
+				<form:FormElement label="Price List">
+					<form:fields>
+						<!--	<Input id="idHeaderFormPriceList" value="{orderdetailsheader>/Pricelist}"/>-->
+						<ComboBox id="idHeaderFormPriceList" items="{PriceListVH>/}" selectedKey="{orderdetailsheader>/Pricelist}" change="onFilterValueChange" busy="true">
+							<core:Item key="{PriceListVH>PriceListID}" text="{PriceListVH>PriceListName}"/>
+						</ComboBox>
+					</form:fields>
+				</form:FormElement>
+				<form:FormElement label="Cash Discount">
+					<form:fields>
+						<Input id="idHeaderFormCashDiscount" value="{orderdetailsheader>/CashDiscount}"/>
+					</form:fields>
+				</form:FormElement>
+			</form:FormContainer>
+		</form:formContainers>
+	</form:Form>
 </core:FragmentDefinition>

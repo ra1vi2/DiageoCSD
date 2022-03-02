@@ -218,12 +218,7 @@ sap.ui.define([
 					template: {
 						content: "{SalesOrdValue}"
 					}
-				}, {
-					name: "Status",
-					template: {
-						content: "{Status}"
-					}
-				}, {
+				},  {
 					name: "ApprovedBy",
 					template: {
 						content: "{ApprovedBy}"

@@ -1,9 +1,11 @@
 <core:FragmentDefinition xmlns:m="sap.m" xmlns:core="sap.ui.core" xmlns="sap.ui.table">
-	<Table id="idOrdersListTable" rows="{OrdersListModel>/}" selectionMode="MultiToggle" visibleRowCount="12" ariaLabelledBy="title" rowSelectionChange="onOrdersRowSelectionChange">
+	<Table id="idOrdersListTable" rows="{OrdersListModel>/}" selectionMode="MultiToggle" visibleRowCount="12" ariaLabelledBy="title"
+	rowSelectionChange="onOrdersRowSelectionChange" rowActionCount="0">
 		<extension>
 			<m:OverflowToolbar>
 				<m:Title id="title" text="Orders({= ${OrdersListModel>/}.length})"/>
 				<m:ToolbarSpacer/>
+				<m:Button text="Request Invoice" press="onPressRequestInvoice"/>
 				<m:Button icon="sap-icon://my-sales-order" tooltip="Generate Sales Docket" press="onGenerateSalesDocket" text="Generate Sales Docket"
 					enabled="{= ${this>/selectedOrderIndex}.length > 0}"/>
 			</m:OverflowToolbar>
@@ -16,9 +18,9 @@
 				</template>
 			</Column>
 			<Column >
-				<m:Label text=" Date"/>
+				<m:Label text="Date"/>
 				<template>
-					<m:Text text="{OrdersListModel>Date}" wrapping="false" />
+					<m:Text text="{path: 'OrdersListModel>Date' , type : 'sap.ui.model.type.Date'}" wrapping="false" />
 				</template>
 			</Column>
 			<Column hAlign="End">
@@ -36,7 +38,7 @@
 			<Column >
 				<m:Label text="Order Date"/>
 				<template>
-					<m:Text text="{OrdersListModel>OrderDate}" wrapping="false"/>
+					<m:Text text="{path: 'OrdersListModel>OrderDate', type : 'sap.ui.model.type.Date'}" wrapping="false"/>
 				</template>
 			</Column>
 			<Column width="12rem">

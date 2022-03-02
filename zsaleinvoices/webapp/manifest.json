@@ -22,6 +22,26 @@
 					"localUri": "localService/metadata.xml"
 				}
 			}
+		},
+		"crossNavigation": {
+			"inbounds": {
+				"manageSaleInvoice": {
+					"semanticObject": "zsaleinvoice",
+					"action": "manage",
+					"deviceTypes": {
+						"desktop": true,
+						"tablet": true,
+						"phone": false
+					}
+				}
+			},
+			"outbounds": {
+				"requestInvoice": {
+					"semanticObject": "ZDLTINVREQ_O",
+					"action": "display",
+					"additionalParameters": "ignored"
+				}
+			}
 		}
 	},
 	"sap.ui": {
@@ -40,11 +60,14 @@
 			"tablet": true,
 			"phone": true
 		},
-		"supportedThemes": ["sap_hcb", "sap_belize"]
+		"supportedThemes": [
+			"sap_hcb",
+			"sap_belize"
+		]
 	},
 	"sap.ui5": {
 		"rootView": {
-			"viewName": "com.diageo.csd.saleinvoiceszsaleinvoices.view.ListView",
+			"viewName": "com.diageo.csd.saleinvoiceszsaleinvoices.app.App",
 			"type": "XML"
 		},
 		"dependencies": {
@@ -79,6 +102,12 @@
 				},
 				"dataSource": "ZDLT_INDBLK_INVOICE_SRV",
 				"preload": true
+			},
+			"constants": {
+				"type": "sap.ui.model.json.JSONModel",
+				"settings": {},
+				"uri": "model/constants.json",
+				"preload": true
 			}
 		},
 		"resources": {
@@ -97,10 +126,10 @@
 				"clearControlAggregation": false
 			},
 			"routes": [{
-				"name": "OrdersList",
+				"name": "listView",
 				"pattern": "",
 				"target": [
-					"ordersList"
+					"listView"
 				]
 			}, {
 				"name": "GenerateDocket",
@@ -115,11 +144,15 @@
 					"transition": "slide",
 					"clearControlAggregation": false,
 					"viewId": "invoicedetail.InvoiceDetail",
-					"viewName": "invoicedetail.InvoiceDetail"
+					"viewName": "invoicedetail.InvoiceDetail",
+					"title": "Generate Docket"
 				},
-				"ordersList": {
+				"listView": {
 					"viewType": "XML",
-					"viewName": "view.ListView"
+					"viewName": "view.ListView",
+					"viewId": "ListView",
+					"viewLevel": 1,
+					"title": "Sale Invoices"
 				}
 			}
 		}

@@ -239,12 +239,12 @@
 						<!--		<Link text="{RequestType}" href="{RequestLink}" target="_blank"/>-->
 						<!--	</t:template>-->
 						<!--</t:Column>-->
-						<t:Column width="11rem" id="Status">
+					<!--	<t:Column width="11rem" id="Status">
 							<Label text="Status"/>
 							<t:template>
 								<Text text="{Status}"/>
 							</t:template>
-						</t:Column>
+						</t:Column>-->
 						<t:Column width="8rem" id="ApprovedBy">
 							<Label text="ApprovedBy"/>
 							<t:template>

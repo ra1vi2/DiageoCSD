@@ -13,6 +13,16 @@
       "templateId": "ui5template.basicSAPUI5ApplicationProject",
       "templateVersion": "1.40.12",
       "dateTimeStamp": "Mon, 17 Jan 2022 08:03:45 GMT"
+    },
+    {
+      "templateId": "ui5template.basicSAPUI5ApplicationComponent",
+      "templateVersion": "1.4.0",
+      "dateTimeStamp": "Sun, 06 Feb 2022 08:09:57 GMT"
+    },
+    {
+      "templateId": "servicecatalog.connectivityComponent",
+      "templateVersion": "0.0.0",
+      "dateTimeStamp": "Mon, 07 Feb 2022 08:33:05 GMT"
     }
   ],
   "codeCheckingTriggers": {
@@ -35,7 +45,7 @@
     }
   },
   "build": {
-    "buildRequired": false,
+    "buildRequired": true,
     "sourceFolder": "webapp",
     "targetFolder": "dist",
     "excludedFolders": [],
@@ -45,5 +55,12 @@
   "deploy": {
     "destination": "UWD",
     "name": "zbulkupload"
+  },
+  "mockpreview": {
+    "mockUri": "/sap/opu/odata/sap/ZDLT_INDBLK_INVOICE_SRV",
+    "metadataFilePath": "",
+    "loadJSONFiles": false,
+    "loadCustomRequests": false,
+    "mockRequestsFilePath": ""
   }
 }

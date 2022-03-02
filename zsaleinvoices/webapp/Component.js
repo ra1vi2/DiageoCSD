@@ -1,8 +1,9 @@
 sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/Device",
-	"com/diageo/csd/saleinvoiceszsaleinvoices/model/models"
-], function(UIComponent, Device, models) {
+	"com/diageo/csd/saleinvoiceszsaleinvoices/model/models",
+	"sap/ui/core/syncStyleClass"
+], function(UIComponent, Device, models, SyncStyleClass) {
 	"use strict";
 
 	return UIComponent.extend("com.diageo.csd.saleinvoiceszsaleinvoices.Component", {
@@ -10,7 +11,7 @@ sap.ui.define([
 		metadata: {
 			manifest: "json",
 			config: {
-				fullWidth : true
+				fullWidth: true
 			}
 		},
 
@@ -22,12 +23,66 @@ sap.ui.define([
 		init: function() {
 			// call the base component's init function
 			UIComponent.prototype.init.apply(this, arguments);
-			
+
 			// enable routing
 			this.getRouter().initialize();
 
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
-		}
+
+			this._oMessageManager = sap.ui.getCore().getMessageManager();
+
+			this.setModel(
+				sap.ui.getCore().getMessageManager().getMessageModel(),
+				"message");
+		},
+		initializeMessagePopover: function(oView, oButton) {
+			this._oMessageButton = oButton;
+			this._oMessagePopover = sap.ui.xmlfragment(
+				oView.getId(),
+				"com.diageo.csd.saleinvoiceszsaleinvoices.view.fragments.MessagePopover",
+				this
+			);
+
+			var oMessageModel = this._oMessageManager.getMessageModel();
+			this._oMessagePopover.setModel(oMessageModel, "message");
+			oView.addDependent(this._oMessagePopover);
+		},
+		getMessageModel: function() {
+			return this._oMessageManager.getMessageModel();
+		},
+		showMessagePopover: function(oMessageButton) {
+			var oButton = oMessageButton || this._oMessageButton,
+				aMessages = this._oMessageManager.getMessageModel().getData();
+
+			if (oButton.getDomRef()) {
+				if (aMessages.length > 0) {
+					this._openMessagePopover(oButton);
+				} else {
+					// Log.info("No messages found");
+				}
+			} else {
+				var oRenderingDelegate = {
+					onAfterRendering: function() {
+						// UI5 fires onAfterRendering before focus of the last focused element is restored
+						// One has to wait for focus to restore so that the the last element is still focused after closing a popover
+						setTimeout(this._openMessagePopover.bind(this), 0, oButton);
+						oButton.removeEventDelegate(oRenderingDelegate);
+					}
+				};
+
+				oButton.addEventDelegate(oRenderingDelegate, this);
+			}
+		},
+		_openMessagePopover: function(oMessageButton) {
+            // Sync the style class for mobiles & desktops as Popovers don't auto inherit it
+            SyncStyleClass(
+                "sapUiSizeCompact",
+                oMessageButton,
+                this._oMessagePopover
+            );
+            this._oMessagePopover.openBy(oMessageButton);
+        }
+
 	});
 });

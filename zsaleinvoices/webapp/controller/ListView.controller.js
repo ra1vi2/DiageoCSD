@@ -1,14 +1,14 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller",
+	"../app/BaseController",
 	"sap/ui/model/json/JSONModel",
 	"../util/Utility",
 	"./ListViewBO",
 	"sap/ui/core/BusyIndicator",
 	"sap/ui/core/Fragment"
-], function(Controller, JSONModel, Utility, BO, BusyIndicator, Fragment) {
+], function(BaseController, JSONModel, Utility, BO, BusyIndicator, Fragment) {
 	"use strict";
 
-	return Controller.extend("com.diageo.csd.saleinvoiceszsaleinvoices.controller.ListView", {
+	return BaseController.extend("com.diageo.csd.saleinvoiceszsaleinvoices.controller.ListView", {
 		onInit: function() {
 			this._loadVH();
 			this.getView().setModel(new JSONModel({}, true), "this");
@@ -17,11 +17,14 @@ sap.ui.define([
 			// set message model
 			var oMessageManager = sap.ui.getCore().getMessageManager();
 			this.getView().setModel(oMessageManager.getMessageModel(), "message");
+			this.getOwnerComponent().initializeMessagePopover(
+				this.getView(), this.getMessageIndicatorButton()
+			);
 
-			// activate automatic message generation for complete view
+			this.getOwnerComponent().setModel(new JSONModel({}), "SelectedOrders");
+
 			oMessageManager.registerObject(this.getView(), true);
 		},
-
 		onFilterValueChange: function() {
 			if (this.getView().getModel("/customerVH")) {
 				this.getView().getModel("/customerVH").setData(null);
@@ -31,13 +34,30 @@ sap.ui.define([
 		onGenerateSalesDocket: function(oEvent) {
 			//get selected Item
 			var that = this;
+			var bSameCustomerValidaiton = true;
+
 			var aSelectedIndices = this.byId("idOrdersListTable").getSelectedIndices();
-			//add items in model
-			this.getOwnerComponent().setModel(new JSONModel( Utility.readModelByIndex(aSelectedIndices,
-					this.byId("idOrdersListTable").getBindingInfo("rows").binding.getModel())),
-				"SelectedOrders");
-			//navigate
-			that.getOwnerComponent().getRouter().navTo("GenerateDocket");
+			var aSelectedOrders = Utility.readModelByIndex(aSelectedIndices,
+				this.byId("idOrdersListTable").getModel("OrdersListModel"));
+			var firstIndexOrder = aSelectedOrders[0].Customer;
+			aSelectedOrders.every(function(item) {
+				if (firstIndexOrder !== item.Customer) {
+					bSameCustomerValidaiton = false;
+					return false;
+				} else {
+					return true;
+				}
+			});
+			if (bSameCustomerValidaiton) {
+				//add items in model
+				this.getOwnerComponent().getModel("SelectedOrders").setData(aSelectedOrders);
+				//navigate
+				that.getOwnerComponent().getRouter().navTo("GenerateDocket");
+			} else {
+				this.removeAllMessages();
+				this.addMessage(this.getI18NModelText("sameCustomerValidationFail"));
+				this.showMessagePopover(this.getMessageIndicatorButton());
+			}
 		},
 		onPressEditOrder: function(oEvent) {
 			var sBulkOrderNo = oEvent.getSource().getBindingContext().getObject().BulkOrderNo;
@@ -48,16 +68,25 @@ sap.ui.define([
 			});
 		},
 		onSearchOrders: function() {
-		//	if(BO.validateFilterSelection(this.getView())){
+			//	if(BO.validateFilterSelection(this.getView())){
 			BusyIndicator.show();
-			BO.getOrdersList(this.getView(), this.getOwnerComponent().getModel()).then(function() {
-					this._handleOrderListLoadSuccess.apply(this, arguments);
-				}.bind(this))
-				.fail(function() {
-					BusyIndicator.hide();
-					//	that.onMessagePopoverPress();
-				}.bind(this));
-			
+			if (BO.validateFilters(this.getView())) {
+				BusyIndicator.hide();
+				var message = this.getI18NModelText(BO.validateFilters(this.getView()) + "requiredFieldError");
+				this.addMessage(message);
+				this.showMessagePopover(this.getMessageIndicatorButton());
+				return;
+			} else {
+				BO.getOrdersList(this.getView(),
+						this.getOwnerComponent().getModel())
+					.then(function() {
+						this._handleOrderListLoadSuccess.apply(this, arguments);
+					}.bind(this))
+					.fail(function() {
+						BusyIndicator.hide();
+						this.showMessagePopover();
+					}.bind(this));
+			}
 		},
 
 		onOrdersRowSelectionChange: function(oEvent) {
@@ -72,6 +101,10 @@ sap.ui.define([
 				this.getView().getModel("this").setProperty("/selectedOrderIndex", {});
 			}
 		},
+		onPressRequestInvoice:function(){
+			var oOutbound = this.getOwnerComponent().getManifestEntry("/sap.app/crossNavigation/outbounds/requestInvoice");
+				this.crossAppNav(oOutbound.semanticObject, oOutbound.action);
+		},
 
 		_handleOrderListLoadSuccess: function(oResponse) {
 			this.getView().setModel(new JSONModel(oResponse.results), "OrdersListModel");
@@ -80,31 +113,13 @@ sap.ui.define([
 
 		_loadVH: function(isCustomerToLoad) {
 			if (!isCustomerToLoad) {
-				BO.loadPlant(this.getView(), this.getOwnerComponent().getModel());
+				BO.loadPlant(this.getView(), this.getOwnerComponent().getModel(), this.getOwnerComponent());
 			} else {
 				BO.loadCustomer(this.getView(), this.getOwnerComponent().getModel());
 			}
 		},
-		onMessagePopoverPress: function(oEvent) {
-			var oSourceControl = oEvent.getSource();
-			this._getMessagePopover().then(function(oMessagePopover) {
-				oMessagePopover.openBy(oSourceControl);
-			});
-		},
-		_getMessagePopover: function() {
-			var oView = this.getView();
-
-			// create popover lazily (singleton)
-			if (!this._pMessagePopover) {
-				this._pMessagePopover = Fragment.load({
-					id: oView.getId(),
-					name: "com.diageo.csd.saleinvoiceszsaleinvoices.view.fragments.MessagePopover"
-				}).then(function(oMessagePopover) {
-					oView.addDependent(oMessagePopover);
-					return oMessagePopover;
-				});
-			}
-			return this._pMessagePopover;
+		getMessageIndicatorButton: function() {
+			return this.byId("idMessagePopOver");
 		}
 	});
 });

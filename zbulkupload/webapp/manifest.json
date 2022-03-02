@@ -10,12 +10,23 @@
 		"title": "{{appTitle}}",
 		"description": "{{appDescription}}",
 		"sourceTemplate": {
-			"id": "ui5template.basicSAPUI5ApplicationProject",
-			"version": "1.40.12"
+			"id": "servicecatalog.connectivityComponent",
+			"version": "0.0.0"
+		},
+		"dataSources": {
+			"ZDLT_INDBLK_INVOICE_SRV": {
+				"uri": "/sap/opu/odata/sap/ZDLT_INDBLK_INVOICE_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/metadata.xml"
+				}
+			}
 		}
 	},
 	"sap.ui": {
 		"technology": "UI5",
+		"fullWidth": true,
 		"icons": {
 			"icon": "",
 			"favIcon": "",
@@ -36,18 +47,20 @@
 	},
 	"sap.ui5": {
 		"rootView": {
-			"viewName": "com.diageo.csd.bulkuploadzbulkupload.view.View1",
-			"type": "XML"
+			"viewName": "com.diageo.csd.bulkuploadzbulkupload.app.App",
+			"type": "XML",
+			"async": true,
+			"id": "app"
 		},
 		"dependencies": {
 			"minUI5Version": "1.30.0",
 			"libs": {
-				"sap.ui.core": {},
+				"sap.collaboration": {},
 				"sap.m": {},
+				"sap.ui.comp": {},
+				"sap.ui.core": {},
 				"sap.ui.layout": {},
 				"sap.ushell": {},
-				"sap.collaboration": {},
-				"sap.ui.comp": {},
 				"sap.uxap": {}
 			}
 		},
@@ -61,6 +74,16 @@
 				"settings": {
 					"bundleName": "com.diageo.csd.bulkuploadzbulkupload.i18n.i18n"
 				}
+			},
+			"": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneTime",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "ZDLT_INDBLK_INVOICE_SRV",
+				"preload": true
 			}
 		},
 		"resources": {
@@ -69,6 +92,38 @@
 					"uri": "css/style.css"
 				}
 			]
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "com.diageo.csd.bulkuploadzbulkupload",
+				"controlId": "app",
+				"controlAggregation": "pages",
+				"bypassed": {
+					"target": [
+						"notFound"
+					]
+				},
+				"async": true
+			},
+			"routes": [
+				{
+					"pattern": "",
+					"name": "bulkupload",
+					"target": [
+						"bulkupload"
+					]
+				}
+			],
+			"targets": {
+				"bulkupload": {
+					"viewName": "object.BulkOrderUpload",
+					"viewId": "BulkOrderUpload",
+					"viewLevel": 1,
+					"title": "Bulk Order Upload"
+				}
+			}
 		}
 	},
 	"sap.platform.abap": {

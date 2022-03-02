@@ -1,0 +1,38 @@
+{
+	"VIEW_MODES": {
+		"EDIT": "EDIT",
+		"GENERATE": "GENERATE"
+	},
+	"DistributionChannel": [{
+		"key": "11",
+		"text": "11 - Direct Sale"
+	}, {
+		"key": "12",
+		"text": "12 - CSD"
+	}],
+	"Division": [{
+		"key": "11",
+		"text": "11 - IMFL"
+	}, {
+		"key": "18",
+		"text": "18 - Wine"
+	}],
+	"SalesGroup": [{
+			"key": "011",
+			"text": "011"
+		}, {
+			"key": "012",
+			"text": "012"
+		}, {
+			"key": "013",
+			"text": "013"
+		}, {
+			"key": "014",
+			"text": "014"
+		}, {
+			"key": "015",
+			"text": "015"
+		}
+
+	]
+}

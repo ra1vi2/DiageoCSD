@@ -49,6 +49,7 @@ sap.ui.define([
 
 		_onObjectMatched: function(oEvent) {
 			that = this;
+			that.getView().getModel("this").setProperty("/IsCSDTokenFieldsVisible", false);
 			var view = this.getView().sId + "--";
 			var setkey = view + "__filter2";
 			var oIconTabBar = that.getView().byId("__bar1");
@@ -89,299 +90,319 @@ sap.ui.define([
 				});*/
 			//	var oFilters = "1006:JAN20:00003"; //DocketNum= ///DcktInvEditSet('1006:JAN20:00003')"
 			//	var oFilters = oEvent.getParameter("arguments");
-			oModel.read("/DcktInvEditSet", {
-				// filters: oFilters, // use sap.ui.model.Filter for filters
+
+			//Start of Code for Truck type dropdown
+			var odataModeltr = that.getView().getModel();
+			//Setting trucktype values based on Plant value
+			var filtervalue = v_Plant;
+			odataModeltr.read("/TruckTypeSet", {
 				filters: [
-					new sap.ui.model.Filter("DocketNum", sap.ui.model.FilterOperator.EQ, oFilters)
+					new sap.ui.model.Filter("Plant", sap.ui.model.FilterOperator.EQ, filtervalue)
 				],
-				urlParameters: {
-					"$expand": "DcktEditNavItem,DcktEditNavBat"
-				},
 				success: function(oData, oResponse) {
-					if (oResponse.statusCode == 200 && oData.MsgType == "E") {
-						var _errMsg = oData.Msg;
-						sap.m.MessageBox.show(_errMsg, sap.m.MessageBox.Icon.ERROR, "Error");
-						return;
-					}
-					//			alert("success"); 
-					var oDateFormat = DateFormat.getDateInstance({
-						source: {
-							pattern: "timestamp"
+					var aFiltersComboBoxData = oResponse.data.results;
+					var oJModeltr3 = new sap.ui.model.json.JSONModel();
+					oJModeltr3.setData(aFiltersComboBoxData);
+					that.getView().byId("Combtrcktyp").setModel(oJModeltr3, "namedmodel");
+
+					oModel.read("/DcktInvEditSet", {
+						// filters: oFilters, // use sap.ui.model.Filter for filters
+						filters: [
+							new sap.ui.model.Filter("DocketNum", sap.ui.model.FilterOperator.EQ, oFilters)
+						],
+						urlParameters: {
+							"$expand": "DcktEditNavItem,DcktEditNavBat"
 						},
-						pattern: "yyyy-MM-dd" //"dd/MM/yyyy"
-					});
-					var it = 0;
-					//Converts the dates and set back to oData
-
-					for (var i = 0; i < oData.results.length; i++) {
-						var odata1 = oData.results[i];
-						odata1.InvDate = (new Date(odata1.InvDate)).getTime() - (it % 10 * 4 * 24 * 60 * 60 * 1000);
-						odata1.InvDateStr = oDateFormat.format(new Date(odata1.InvDate));
-
-						odata1.TPermitDate = (new Date(odata1.TpPermitDate)).getTime() - (it % 10 * 4 * 24 * 60 * 60 * 1000);
-						odata1.TPermitDateStr = oDateFormat.format(new Date(odata1.TPermitDate));
-
-						odata1.ExpDate = (new Date(odata1.ExpDate)).getTime() - (it % 10 * 4 * 24 * 60 * 60 * 1000);
-						odata1.ExpDate = oDateFormat.format(new Date(odata1.ExpDate));
-						if (odata1.ExpOrdDate !== null) {
-							odata1.ExpOrdDate = (new Date(odata1.ExpOrdDate)).getTime() - (it % 10 * 4 * 24 * 60 * 60 * 1000);
-							odata1.ExpOrdDate = oDateFormat.format(new Date(odata1.ExpOrdDate));
-						}
-						if (odata1.TpOrderDate !== null) {
-							odata1.TpOrderDate = (new Date(odata1.TpOrderDate)).getTime() - (it % 10 * 4 * 24 * 60 * 60 * 1000);
-							odata1.TpOrderDate = oDateFormat.format(new Date(odata1.TpOrderDate));
-						}
-					}
-
-					that.getView().byId("Inpinvdate").setValue(oData.results[0].InvDateStr);
-					v_Plant = oData.results[0].Plant;
-
-					that.getView().getModel("this").setProperty("/TruckInd", oData.results[0].TruckInd);
-					if (oData.results[0].TruckInd === 'P' && oData.results[0].Status === 0) {
-						that.getView().getModel("this").setProperty("/TruckEditable", true);
-					}
-
-					//ra1vi2 for token38
-					if (oData.results[0].DistributChanId === '12' && oData.results[0].TokenInd === 'Y') {
-
-						that.getView().getModel("this").setProperty("/IsCSDTokenNoVisible", true);
-						that.getView().byId("idToken").setValue(oData.results[0].TokenNo);
-						that.getView().byId("idCSDTokenNumber").setValue(oData.results[0].TokenNo);
-						that.getView().byId("idForm38Input").setValue(oData.results[0].Form38);
-						if (oData.results[0].Status === 2) {
-							that.getView().getModel("this").setProperty("/IsCSDTokenFieldsVisible", true);
-							that.getView().byId("idToken").setEnabled(false);
-							if (that.getView().byId("idForm38Input").getValue()) {
-								that.getView().getModel("this").setProperty("/IsInvoiceCreated", true);
+						success: function(oData, oResponse) {
+							if (oResponse.statusCode == 200 && oData.MsgType == "E") {
+								var _errMsg = oData.Msg;
+								sap.m.MessageBox.show(_errMsg, sap.m.MessageBox.Icon.ERROR, "Error");
+								return;
 							}
-						} else {
-							//	that.getView().getModel("this").setProperty("/IsInvoiceCreated", true);
-							that.getView().getModel("this").setProperty("/IsCSDTokenFieldsVisible", false);
-							that.getView().getModel("this").setProperty("/IsInvoiceCreated", false);
-						}
-					}
-					//ra1vi2 for token38
+							//			alert("success"); 
+							var oDateFormat = DateFormat.getDateInstance({
+								source: {
+									pattern: "timestamp"
+								},
+								pattern: "yyyy-MM-dd" //"dd/MM/yyyy"
+							});
+							var it = 0;
+							//Converts the dates and set back to oData
 
-					that.getView().byId("Combplant").setSelectedKey(oData.results[0].Plant);
-					that.getView().byId("InpCompNam").setValue(oData.results[0].Bukrs);
-					that.getView().byId("Inpplntnam").setValue(oData.results[0].PlantName);
-					that.getView().byId("Inpdckt").setValue(oData.results[0].DocketNum);
-					that.getView().byId("Inpcust").setValue(oData.results[0].Customer);
-					that.getView().byId("Inptpnum").setValue(oData.results[0].TpPermitNum);
-					that.getView().byId("Inpordnum").setValue(oData.results[0].OrderNum);
-					that.getView().byId("Inpexpnum").setValue(oData.results[0].ExpNum);
-					that.getView().byId("Inpremarks").setValue(oData.results[0].Remarks);
-					that.getView().byId("Inpcustname").setValue(oData.results[0].CustName);
+							for (var i = 0; i < oData.results.length; i++) {
+								var odata1 = oData.results[i];
+								odata1.InvDate = (new Date(odata1.InvDate)).getTime() - (it % 10 * 4 * 24 * 60 * 60 * 1000);
+								odata1.InvDateStr = oDateFormat.format(new Date(odata1.InvDate));
 
-					that.getView().byId("Inpslsorg").setValue(oData.results[0].SalesOrganization);
-					that.getView().byId("Combdistr").setSelectedKey(oData.results[0].DistributChanId);
-					that.getView().byId("Combdiv").setSelectedKey(oData.results[0].DivisionId);
-					that.getView().byId("Combslsgrp").setSelectedKey(oData.results[0].SalesGrp);
+								odata1.TPermitDate = (new Date(odata1.TpPermitDate)).getTime() - (it % 10 * 4 * 24 * 60 * 60 * 1000);
+								odata1.TPermitDateStr = oDateFormat.format(new Date(odata1.TPermitDate));
 
-					that.getView().byId("Inptpdat").setValue(oData.results[0].TPermitDateStr);
-
-					that.getView().byId("Inpexdat").setValue(oData.results[0].ExpDate);
-					that.getView().byId("Inpexporddat").setValue(oData.results[0].ExpOrdDate);
-					v_Pricelist = oData.results[0].Pricelist; //v_Plant = oData.results[0].Plant;
-					that.getView().byId("Combprclst").setSelectedKey(oData.results[0].Pricelist);
-					that.getView().byId("Inpcashdcnt").setValue(oData.results[0].CashDiscount);
-
-					that.getView().byId("Inptrpordnum").setValue(oData.results[0].TpOrderNum);
-					that.getView().byId("Inptrporddate").setValue(oData.results[0].TpOrderDate);
-
-					that.getView().byId("Inptrpter").setValue(oData.results[0].Transporter);
-
-					that.getView().byId("Inptrpternam").setValue(oData.results[0].TrpName);
-
-					v_TruckType = oData.results[0].TruckType;
-					//	that.getView().byId("Combtrcktyp").setSelectedKey(oData.results[0].TruckType);
-					that.getView().byId("Inptrcknum").setValue(oData.results[0].TruckNumber);
-					that.getView().byId("Inplrnum").setValue(oData.results[0].LrNumber);
-					that.getView().byId("Combmilkrun").setSelectedKey(oData.results[0].MilkRun);
-					//Start of change by Ramesh Damera as part of New CR
-					if (oData.results[0].TpOrderNum == '') {
-						that.getView().byId("Idoc").setValue('N/A');
-					} else {
-						that.getView().byId("Idoc").setValue(oData.results[0].TpOrderNum);
-					}
-					//End of change
-
-					that.getView().byId("InpSaleOrder").setValue(oData.results[0].SoDocNo);
-					if (that.getView().byId("InpSaleOrder").getValue()) {
-						that.getView().byId("idToken").setEnabled(false);
-					}
-					that.getView().byId("InpDelivery").setValue(oData.results[0].DelDocno);
-					that.getView().byId("InpShipment").setValue(oData.results[0].ShipDocno);
-					that.getView().byId("InpPGINo").setValue(oData.results[0].PgiDocno);
-					that.getView().byId("InpInvNo").setValue(oData.results[0].InvDocno);
-					//if the status is 2  disalbe submit
-					if (oData.results[0].Status == 2) {
-						that.getView().byId("Idsubmit").setEnabled(false); //comb distr
-						//	var oTitle = that.getPage().getTitle();
-						that.getView().byId("Idtexth").setText("Display Invoice");
-						//	oTitle.setT("Display Invoice");
-					} else {
-						that.getView().byId("Idsubmit").setEnabled(true);
-						that.getView().byId("Idtexth").setText("Edit Invoice");
-					}
-					//if the plant type is DE disalbe stoage fetch
-					if (oData.results[0].PlantType !== "DE") {
-						that.getView().byId("BtSLoc").setEnabled(false); //Fetch Storage Loc
-						that.getView().byId("__filter3").setEnabled(false);
-						that.getView().byId("Combprclst").setEnabled(false);
-					} else {
-						that.getView().byId("BtSLoc").setEnabled(true); //Fetch storgage loc
-						that.getView().byId("__filter3").setEnabled(true); //sloc tab
-						that.getView().byId("Combprclst").setEnabled(true);
-
-					}
-					//Sale order validation
-					if (oData.results[0].SoDocNo !== "") {
-						that.getView().byId("Btadd").setEnabled(false); //Add Button
-						that.getView().byId("Btdelete").setEnabled(false);
-						//that.getView().byId("idQtyColumn").setEditable(false);
-						//	that.getView().byId("Inpinvdate").setEnabled(false);
-						that.getView().byId("Inpcust").setEnabled(false);
-						that.getView().getModel("this").setProperty("/SalesOrderCreated", false);
-						//Commented as per confirmation from Rajesh Shoney	on 17-09-2021		
-						/*						if (oData.results[0].DelDocno !== "") {
-													that.getView().byId("Inptpnum").setEnabled(false);
-												} else {
-													that.getView().byId("Inptpnum").setEnabled(true);
-												}*/
-						//End of Comment
-						//Start of new change by Ramesh on 17-09-2021
-						if (oData.results[0].InvDocno !== "") {
-							that.getView().byId("Inptpnum").setEnabled(false);
-						} else {
-							that.getView().byId("Inptpnum").setEnabled(true);
-						}
-						//End
-
-						that.getView().byId("Inpordnum").setEnabled(false);
-						that.getView().byId("Inpexpnum").setEnabled(false);
-						that.getView().byId("Inpremarks").setEnabled(false);
-
-						that.getView().byId("Combslsgrp").setEnabled(false);
-						// Start of Comment as part of New CR on 6th September 2021						
-						//that.getView().byId("Inptpdat").setEnabled(false);
-						//that.getView().byId("Inpexdat").setEnabled(false);
-						//End of Comment						
-						that.getView().byId("Inpexporddat").setEnabled(false);
-						that.getView().byId("Combprclst").setEnabled(false);
-						that.getView().byId("Inpcashdcnt").setEnabled(false);
-
-						that.getView().byId("Inptrpordnum").setEnabled(false);
-						that.getView().byId("Inptrporddate").setEnabled(false);
-						that.getView().byId("Inptrpter").setEnabled(false);
-						that.getView().byId("Combtrcktyp").setEnabled(false);
-						that.getView().byId("Inptrcknum").setEnabled(false);
-						that.getView().byId("Inplrnum").setEnabled(false);
-						that.getView().byId("Combmilkrun").setEnabled(false);
-					} else {
-						that.getView().byId("Btadd").setEnabled(true); //Add Button
-						that.getView().byId("Btdelete").setEnabled(true);
-						that.getView().getModel("this").setProperty("/SalesOrderCreated", true);
-						//	that.getView().byId("Inpinvdate").setEnabled(true);
-						that.getView().byId("Inpcust").setEnabled(true);
-						//	that.getView().byId("Inptpnum").setEnabled(false);
-						that.getView().byId("Inpordnum").setEnabled(true);
-						that.getView().byId("Inpexpnum").setEnabled(true);
-						that.getView().byId("Inpremarks").setEnabled(true);
-
-						that.getView().byId("Combslsgrp").setEnabled(true);
-						// Start of Comment as part of New CR on 6th September 2021
-						//	that.getView().byId("Inptpdat").setEnabled(true);
-						//	that.getView().byId("Inpexdat").setEnabled(true);
-						// End of Comment
-						that.getView().byId("Inpexporddat").setEnabled(true);
-						that.getView().byId("Combprclst").setEnabled(true);
-						that.getView().byId("Inpcashdcnt").setEnabled(true);
-
-						that.getView().byId("Inptrpordnum").setEnabled(true);
-						that.getView().byId("Inptrporddate").setEnabled(true);
-						that.getView().byId("Inptrpter").setEnabled(true);
-						that.getView().byId("Combtrcktyp").setEnabled(true);
-						that.getView().byId("Inptrcknum").setEnabled(true);
-						that.getView().byId("Inplrnum").setEnabled(true);
-						that.getView().byId("Combmilkrun").setEnabled(true);
-
-					} //end of Sale order validation
-					//Item Data	
-					//	oData.results[0].DcktEditNavItem.results
-					var tabledata = new sap.ui.model.json.JSONModel({
-						"Result": oData.results[0].DcktEditNavItem.results
-					});
-					var tab = that.getView().byId("table1");
-					var oJModel1 = tab.getModel();
-					var datamat = oData.results[0].DcktEditNavItem.results;
-					tab.setModel(tabledata);
-
-					tabledata.setData({
-						data: datamat
-					});
-					//calculation for total qty in cases
-					//	var v_iqty = 0;
-					var v_qty = 0;
-					for (var iq = 0; iq < oData.results[0].DcktEditNavItem.results.length; iq++) {
-						var v_qty1 = Math.abs(oData.results[0].DcktEditNavItem.results[iq].Quantity);
-						var v_qty2 = Math.abs(oData.results[0].DcktEditNavItem.results[iq].Umren);
-						var v_iquom = Math.abs(oData.results[0].DcktEditNavItem.results[iq].Uom);
-						if (v_iquom == "EA") {
-							if (oData.results[0].DcktEditNavItem.results[iq].Umren !== 0) {
-								v_qty1 = v_qty1 / v_qty2;
+								odata1.ExpDate = (new Date(odata1.ExpDate)).getTime() - (it % 10 * 4 * 24 * 60 * 60 * 1000);
+								odata1.ExpDate = oDateFormat.format(new Date(odata1.ExpDate));
+								if (odata1.ExpOrdDate !== null) {
+									odata1.ExpOrdDate = (new Date(odata1.ExpOrdDate)).getTime() - (it % 10 * 4 * 24 * 60 * 60 * 1000);
+									odata1.ExpOrdDate = oDateFormat.format(new Date(odata1.ExpOrdDate));
+								}
+								if (odata1.TpOrderDate !== null) {
+									odata1.TpOrderDate = (new Date(odata1.TpOrderDate)).getTime() - (it % 10 * 4 * 24 * 60 * 60 * 1000);
+									odata1.TpOrderDate = oDateFormat.format(new Date(odata1.TpOrderDate));
+								}
 							}
-						} //end of each condition
 
-						v_qty = Math.abs(v_qty1);
-						v_total_qty = Math.abs(v_total_qty);
-						v_total_qty = Math.abs(v_total_qty);
-						v_total_qty = v_total_qty + v_qty;
-					} //end for loop for totalqty calculation
+							that.getView().byId("Inpinvdate").setValue(oData.results[0].InvDateStr);
+							v_Plant = oData.results[0].Plant;
 
-					//  v_total_qty = v_total_qty.toFixed(3);
-					//calling add method
-					that.onAddqty(oEvent);
-					that.getView().byId("Txt1").setValue(v_total_qty);
+							that.getView().getModel("this").setProperty("/TruckInd", oData.results[0].TruckInd);
+							if (oData.results[0].TruckInd === 'P' && oData.results[0].Status === 0) {
+								that.getView().getModel("this").setProperty("/TruckEditable", true);
+							}
 
-					//Batch Item
-					var tabledata1 = new sap.ui.model.json.JSONModel({
-						"Result": oData.results[0].DcktEditNavBat.results
-					});
-					var tab1 = that.getView().byId("table2");
-					var oJModel2 = tab1.getModel();
-					var databatch = oData.results[0].DcktEditNavBat.results;
-					tab1.setModel(tabledata1);
+							//ra1vi2 for token38
+							if (oData.results[0].DistributChanId === '12' && oData.results[0].TokenInd === 'Y' && oData.results[0].CusttkInd === 'Y') {
 
-					tabledata1.setData({
-						data: databatch
-					});
+								that.getView().getModel("this").setProperty("/IsCSDTokenNoVisible", true);
+								that.getView().byId("idToken").setValue(oData.results[0].TokenNo);
+								that.getView().byId("idCSDTokenNumber").setValue(oData.results[0].TokenNo);
+								that.getView().byId("idForm38Input").setValue(oData.results[0].Form38);
+								if (oData.results[0].Status === 2) {
+									that.getView().getModel("this").setProperty("/IsCSDTokenFieldsVisible", true);
+									that.getView().byId("idToken").setEnabled(false);
+									if (that.getView().byId("idForm38Input").getValue()) {
+										that.getView().getModel("this").setProperty("/IsInvoiceCreated", true);
+									}
+								} else {
+									//	that.getView().getModel("this").setProperty("/IsInvoiceCreated", true);
+									that.getView().getModel("this").setProperty("/IsCSDTokenFieldsVisible", false);
+									that.getView().getModel("this").setProperty("/IsInvoiceCreated", false);
+								}
+							}
+							//ra1vi2 for token38
 
-					//Start of Code for Truck type dropdown
-					/*	var odataModeltr = this.getView().getModel();
-								//Setting trucktype values based on Plant value
+							//that.getView().byId("Combplant").setSelectedKey(oData.results[0].Plant);
+							that.getView().byId("Combplant").setValue(oData.results[0].Plant);
+							that.getView().byId("InpCompNam").setValue(oData.results[0].Bukrs);
+							that.getView().byId("Inpplntnam").setValue(oData.results[0].PlantName);
+							that.getView().byId("Inpdckt").setValue(oData.results[0].DocketNum);
+							that.getView().byId("Inpcust").setValue(oData.results[0].Customer);
+							that.getView().byId("Inptpnum").setValue(oData.results[0].TpPermitNum);
+							that.getView().byId("Inpordnum").setValue(oData.results[0].OrderNum);
+							that.getView().byId("Inpexpnum").setValue(oData.results[0].ExpNum);
+							that.getView().byId("Inpremarks").setValue(oData.results[0].Remarks);
+							that.getView().byId("Inpcustname").setValue(oData.results[0].CustName);
+
+							that.getView().byId("Inpslsorg").setValue(oData.results[0].SalesOrganization);
+							that.getView().byId("Combdistr").setSelectedKey(oData.results[0].DistributChanId);
+							that.getView().byId("Combdiv").setSelectedKey(oData.results[0].DivisionId);
+							that.getView().byId("Combslsgrp").setSelectedKey(oData.results[0].SalesGrp);
+
+							that.getView().byId("Inptpdat").setValue(oData.results[0].TPermitDateStr);
+
+							that.getView().byId("Inpexdat").setValue(oData.results[0].ExpDate);
+							that.getView().byId("Inpexporddat").setValue(oData.results[0].ExpOrdDate);
+							v_Pricelist = oData.results[0].Pricelist; //v_Plant = oData.results[0].Plant;
+							that.getView().byId("Combprclst").setSelectedKey(oData.results[0].Pricelist);
+							that.getView().byId("Inpcashdcnt").setValue(oData.results[0].CashDiscount);
+
+							//that.getView().byId("Inptrpordnum").setValue(oData.results[0].TpOrderNum);
+							//that.getView().byId("Inptrporddate").setValue(oData.results[0].TpOrderDate);
+
+							that.getView().byId("Inptrpter").setValue(oData.results[0].Transporter);
+
+							that.getView().byId("Inptrpternam").setValue(oData.results[0].TrpName);
+
+							v_TruckType = oData.results[0].TruckType;
+							that.getView().byId("Combtrcktyp").setSelectedKey(oData.results[0].TruckType);
+							that.getView().byId("Inptrcknum").setValue(oData.results[0].TruckNumber);
+							that.getView().byId("Inplrnum").setValue(oData.results[0].LrNumber);
+							that.getView().byId("Combmilkrun").setSelectedKey(oData.results[0].MilkRun);
+							//Start of change by Ramesh Damera as part of New CR
+							if (oData.results[0].TpOrderNum == '') {
+								that.getView().byId("Idoc").setValue('N/A');
+							} else {
+								that.getView().byId("Idoc").setValue(oData.results[0].TpOrderNum);
+							}
+							//End of change
+
+							that.getView().byId("InpSaleOrder").setValue(oData.results[0].SoDocNo);
+							if (that.getView().byId("InpSaleOrder").getValue()) {
+								that.getView().byId("idToken").setEnabled(false);
+							}else{
+								that.getView().byId("idToken").setEnabled(true);
+							}
+							that.getView().byId("InpDelivery").setValue(oData.results[0].DelDocno);
+							that.getView().byId("InpShipment").setValue(oData.results[0].ShipDocno);
+							that.getView().byId("InpPGINo").setValue(oData.results[0].PgiDocno);
+							that.getView().byId("InpInvNo").setValue(oData.results[0].InvDocno);
+							//if the status is 2  disalbe submit
+							if (oData.results[0].Status == 2) {
+								that.getView().byId("Idsubmit").setEnabled(false); //comb distr
+								//	var oTitle = that.getPage().getTitle();
+								that.getView().byId("Idtexth").setText("Display Invoice");
+								//	oTitle.setT("Display Invoice");
+							} else {
+								that.getView().byId("Idsubmit").setEnabled(true);
+								that.getView().byId("Idtexth").setText("Edit Invoice");
+							}
+							//if the plant type is DE disalbe stoage fetch
+							if (oData.results[0].PlantType !== "DE") {
+								that.getView().byId("BtSLoc").setEnabled(false); //Fetch Storage Loc
+								that.getView().byId("__filter3").setEnabled(false);
+								that.getView().byId("Combprclst").setEnabled(false);
+							} else {
+								that.getView().byId("BtSLoc").setEnabled(true); //Fetch storgage loc
+								that.getView().byId("__filter3").setEnabled(true); //sloc tab
+								that.getView().byId("Combprclst").setEnabled(true);
+
+							}
+							//Sale order validation
+							if (oData.results[0].SoDocNo !== "") {
+								that.getView().byId("Btadd").setEnabled(false); //Add Button
+								that.getView().byId("Btdelete").setEnabled(false);
+								//that.getView().byId("idQtyColumn").setEditable(false);
+								//	that.getView().byId("Inpinvdate").setEnabled(false);
+								that.getView().byId("Inpcust").setEnabled(false);
+								that.getView().getModel("this").setProperty("/SalesOrderCreated", false);
+								//Commented as per confirmation from Rajesh Shoney	on 17-09-2021		
+								/*						if (oData.results[0].DelDocno !== "") {
+															that.getView().byId("Inptpnum").setEnabled(false);
+														} else {
+															that.getView().byId("Inptpnum").setEnabled(true);
+														}*/
+								//End of Comment
+								//Start of new change by Ramesh on 17-09-2021
+								if (oData.results[0].InvDocno !== "") {
+									that.getView().byId("Inptpnum").setEnabled(false);
+								} else {
+									that.getView().byId("Inptpnum").setEnabled(true);
+								}
+								//End
+
+								that.getView().byId("Inpordnum").setEnabled(false);
+								that.getView().byId("Inpexpnum").setEnabled(false);
+								that.getView().byId("Inpremarks").setEnabled(false);
+
+								that.getView().byId("Combslsgrp").setEnabled(false);
+								// Start of Comment as part of New CR on 6th September 2021						
+								//that.getView().byId("Inptpdat").setEnabled(false);
+								//that.getView().byId("Inpexdat").setEnabled(false);
+								//End of Comment						
+								that.getView().byId("Inpexporddat").setEnabled(false);
+								that.getView().byId("Combprclst").setEnabled(false);
+								that.getView().byId("Inpcashdcnt").setEnabled(false);
+
+								//	that.getView().byId("Inptrpordnum").setEnabled(false);
+								//	that.getView().byId("Inptrporddate").setEnabled(false);
+								that.getView().byId("Inptrpter").setEnabled(false);
+								that.getView().byId("Combtrcktyp").setEnabled(false);
+								that.getView().byId("Inptrcknum").setEnabled(false);
+								that.getView().byId("Inplrnum").setEnabled(false);
+								that.getView().byId("Combmilkrun").setEnabled(false);
+							} else {
+								that.getView().byId("Btadd").setEnabled(true); //Add Button
+								that.getView().byId("Btdelete").setEnabled(true);
+								that.getView().getModel("this").setProperty("/SalesOrderCreated", true);
+								//	that.getView().byId("Inpinvdate").setEnabled(true);
+								that.getView().byId("Inpcust").setEnabled(true);
+								//	that.getView().byId("Inptpnum").setEnabled(false);
+								that.getView().byId("Inpordnum").setEnabled(true);
+								that.getView().byId("Inpexpnum").setEnabled(true);
+								that.getView().byId("Inpremarks").setEnabled(true);
+
+								that.getView().byId("Combslsgrp").setEnabled(true);
+								// Start of Comment as part of New CR on 6th September 2021
+								//	that.getView().byId("Inptpdat").setEnabled(true);
+								//	that.getView().byId("Inpexdat").setEnabled(true);
+								// End of Comment
+								that.getView().byId("Inpexporddat").setEnabled(true);
+								that.getView().byId("Combprclst").setEnabled(true);
+								that.getView().byId("Inpcashdcnt").setEnabled(true);
+
+								//	that.getView().byId("Inptrpordnum").setEnabled(true);
+								//		that.getView().byId("Inptrporddate").setEnabled(true);
+								that.getView().byId("Inptrpter").setEnabled(true);
+								that.getView().byId("Combtrcktyp").setEnabled(true);
+								that.getView().byId("Inptrcknum").setEnabled(true);
+								that.getView().byId("Inplrnum").setEnabled(true);
+								that.getView().byId("Combmilkrun").setEnabled(true);
+
+							} //end of Sale order validation
+							//Item Data	
+							//	oData.results[0].DcktEditNavItem.results
+							var tabledata = new sap.ui.model.json.JSONModel({
+								"Result": oData.results[0].DcktEditNavItem.results
+							});
+							var tab = that.getView().byId("table1");
+							var oJModel1 = tab.getModel();
+							var datamat = oData.results[0].DcktEditNavItem.results;
+							tab.setModel(tabledata);
+
+							tabledata.setData({
+								data: datamat
+							});
+							//calculation for total qty in cases
+							//	var v_iqty = 0;
+							var v_qty = 0;
+							for (var iq = 0; iq < oData.results[0].DcktEditNavItem.results.length; iq++) {
+								var v_qty1 = Math.abs(oData.results[0].DcktEditNavItem.results[iq].Quantity);
+								var v_qty2 = Math.abs(oData.results[0].DcktEditNavItem.results[iq].Umren);
+								var v_iquom = Math.abs(oData.results[0].DcktEditNavItem.results[iq].Uom);
+								if (v_iquom == "EA") {
+									if (oData.results[0].DcktEditNavItem.results[iq].Umren !== 0) {
+										v_qty1 = v_qty1 / v_qty2;
+									}
+								} //end of each condition
+
+								v_qty = Math.abs(v_qty1);
+								v_total_qty = Math.abs(v_total_qty);
+								v_total_qty = Math.abs(v_total_qty);
+								v_total_qty = v_total_qty + v_qty;
+							} //end for loop for totalqty calculation
+
+							//  v_total_qty = v_total_qty.toFixed(3);
+							//calling add method
+							that.onAddqty(oEvent);
+							that.getView().byId("Txt1").setValue(v_total_qty);
+
+							//Batch Item
+							var tabledata1 = new sap.ui.model.json.JSONModel({
+								"Result": oData.results[0].DcktEditNavBat.results
+							});
+							var tab1 = that.getView().byId("table2");
+							var oJModel2 = tab1.getModel();
+							var databatch = oData.results[0].DcktEditNavBat.results;
+							tab1.setModel(tabledata1);
+
+							tabledata1.setData({
+								data: databatch
+							});
+
+							//Start of Code for Truck type dropdown
+							var odataModeltr = that.getView().getModel();
+							//Setting trucktype values based on Plant value
 							var filtervalue = v_Plant;
-								odataModeltr.read("/TruckTypeSet", {
-									filters: [
-										new sap.ui.model.Filter("Plant", sap.ui.model.FilterOperator.EQ, filtervalue)
-									],
-									success: function(oData, oResponse) {
-										var aFiltersComboBoxData = oResponse.data.results;
-										var oJModeltr3 = new sap.ui.model.json.JSONModel();
-										oJModeltr3.setData(aFiltersComboBoxData);
+							odataModeltr.read("/TruckTypeSet", {
+								filters: [
+									new sap.ui.model.Filter("Plant", sap.ui.model.FilterOperator.EQ, filtervalue)
+								],
+								success: function(oData, oResponse) {
+									var aFiltersComboBoxData = oResponse.data.results;
+									var oJModeltr3 = new sap.ui.model.json.JSONModel();
+									oJModeltr3.setData(aFiltersComboBoxData);
 									that.getView().byId("Combtrcktyp").setModel(oJModeltr3, "namedmodel");
-									},
-									error: function(oError) {
-									}//end of error
-								});		*/
+								},
+								error: function(oError) {} //end of error
+							});
 
-					//end of truck type dropdown
+							//end of truck type dropdown
 
+						},
+						error: function(oError) {
+							alert("failure");
+						}
+					}); //end of read docket
 				},
-				error: function(oError) {
-					alert("failure");
-				}
-			}); //end of read docket
+				error: function(oError) {} //end of error
+			});
 
 		}, //end of onObjectMatched 
 		onSLoc: function(oEvent) {
@@ -1064,7 +1085,8 @@ sap.ui.define([
 				setkey = view + "__filter0";
 				var oIconTabBar = that.getView().byId("__bar0");
 				//Plant Validation
-				var plant1 = this.getView().byId("Combplant").getSelectedKey();
+				//var plant1 = this.getView().byId("Combplant").getSelectedKey();
+				var plant1 = this.getView().byId("Combplant").getValue();
 				if (plant1 === "") {
 					//	this.getView().byId("Combplant").focus();
 					oIconTabBar.fireSelect({
@@ -1234,12 +1256,16 @@ sap.ui.define([
 						var oJModeltr3 = new sap.ui.model.json.JSONModel();
 						oJModeltr3.setData(aFiltersComboBoxData);
 						that.getView().byId("Combtrcktyp").setModel(oJModeltr3, "namedmodel");
-						that.getView().byId("Combtrcktyp").setSelectedKey(v_TruckType);
-
+						if (!that.getView().byId("Combtrcktyp").getSelectedKey()) {
+							that.getView().byId("Combtrcktyp").setSelectedKey(v_TruckType);
+						}
 					},
 					error: function(oError) {} //end of error
 				});
-				//that.getView().byId("Combtrcktyp").setSelectedKey(v_TruckType);
+				if (!that.getView().byId("Combtrcktyp").getSelectedKey()) {
+					that.getView().byId("Combtrcktyp").setSelectedKey(v_TruckType);
+				}
+				v_TruckType = that.getView().byId("Combtrcktyp").getSelectedKey();
 				//end of code
 				//that.getView().byId("__filter1").setEnabled(true);
 			} //endif __filter1
@@ -1256,7 +1282,8 @@ sap.ui.define([
 		onEnterInvoice: function(oEvent) {
 			var that = this;
 			//Plant Validation
-			var plant1 = this.getView().byId("Combplant").getSelectedKey();
+			//	var plant1 = this.getView().byId("Combplant").getSelectedKey();
+			var plant1 = this.getView().byId("Combplant").getValue();
 			if (plant1 === "") {
 				//	this.getView().byId("Combplant").focus();
 				var _errMsg = "Plant can not be blank";
@@ -1360,7 +1387,8 @@ sap.ui.define([
 		onItemAdd: function() {
 			that = this;
 			//Header Data Validations
-			var plant1 = this.getView().byId("Combplant").getSelectedKey();
+			//	var plant1 = this.getView().byId("Combplant").getSelectedKey();
+			var plant1 = this.getView().byId("Combplant").getValue();
 			if (plant1 === "") {
 				//	this.getView().byId("Combplant").focus();
 				var _errMsg = "Plant can not be blank";
@@ -1686,6 +1714,24 @@ sap.ui.define([
 				return;
 			}
 
+			var bPlacementUsed = false;
+			if (this.byId("Inptrpter").getValue() ||
+				this.byId("Inptrcknum").getValue() ||
+				this.byId("Inplrnum").getValue()) {
+				bPlacementUsed = true;
+			}
+
+			if (bPlacementUsed) {
+				if (!this.byId("Inptrpter").getValue() ||
+					!this.byId("Inptrcknum").getValue() ||
+					!this.byId("Inplrnum").getValue()) {
+					BusyIndicator.hide();
+					var _errMsg = "Please provide all mandatory values for Placement tab";
+					sap.m.MessageBox.show(_errMsg, sap.m.MessageBox.Icon.ERROR, "Error");
+					return;
+				}
+			}
+
 			// Define an empty Array
 			var itemData = [];
 
@@ -1880,12 +1926,12 @@ sap.ui.define([
 
 			oEntry1.TrpName = this.getView().byId("Inptrpternam").getValue();
 			oEntry1.OrderNum = this.getView().byId("Inpordnum").getValue();
-			oEntry1.TpOrderNum = this.getView().byId("Inptrpordnum").getValue();
+			//	oEntry1.TpOrderNum = this.getView().byId("Inptrpordnum").getValue();
 
-			var tporddate = this.getView().byId("Inptrporddate").getValue();
-			if (tporddate !== "") {
-				oEntry1.TpOrderDate = tporddate + "T00:00:00";
-			}
+			//	var tporddate = this.getView().byId("Inptrporddate").getValue();
+			//	if (tporddate !== "") {
+			//	oEntry1.TpOrderDate = tporddate + "T00:00:00";
+			//}
 			oEntry1.ExpNum = this.getView().byId("Inpexpnum").getValue();
 
 			var exporddate = this.getView().byId("Inpexporddat").getValue();
@@ -1941,7 +1987,8 @@ sap.ui.define([
 					//alert("The backend SAP System is Connected Successfully");
 					that.getView().byId("Combtrcktyp").setSelectedKey(v_TruckType);
 					that.getView().byId("Combprclst").setSelectedKey(v_Pricelist);
-					that.getView().byId("Combplant").setSelectedKey(v_Plant);
+					//that.getView().byId("Combplant").setSelectedKey(v_Plant);
+					that.getView().byId("Combplant").setValue(v_Plant);
 					if (oResponse.statusCode == 201 && oData.MsgType == "E") {
 						var _errMsg = oData.Msg;
 						sap.m.MessageBox.show(_errMsg, sap.m.MessageBox.Icon.ERROR, "Error");

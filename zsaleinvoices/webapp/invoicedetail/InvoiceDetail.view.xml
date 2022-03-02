@@ -1,25 +1,25 @@
 <mvc:View controllerName="com.diageo.csd.saleinvoiceszsaleinvoices.invoicedetail.InvoiceDetail" xmlns:html="http://www.w3.org/1999/xhtml"
-	xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:fb="sap.ui.comp.filterbar" xmlns:l="sap.ui.layout"
-	xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
-	<Shell id="shell">
-		<App id="app">
-			<pages>
-				<Page id="page" title="{i18n>title}" showNavButton="true" navButtonPress="onNavBack">
-					<content>
-						<core:Fragment fragmentName="com.diageo.csd.saleinvoiceszsaleinvoices.invoicedetail.subsections.OrderHeader" type="XML"/>
-						<core:Fragment fragmentName="com.diageo.csd.saleinvoiceszsaleinvoices.invoicedetail.subsections.OrderItem" type="XML"/>
-					</content>
-					<footer>
-						<OverflowToolbar id="otbFooter">
-							<Button id="idMessagePopOver" icon="sap-icon://alert" text="{=${message>/}.length}" visible="{=${message>/}.length > 0}" type="Emphasized"
-								press="onMessagePopoverPress"></Button>
-							<ToolbarSpacer/>
-							<Button text="Cancel" press="onCancelGenerateDocket"  />
-							<Button text="Submit" press="onSubmitGenerateDocket" type="Accept"/>
-						</OverflowToolbar>
-					</footer>
-				</Page>
-			</pages>
-		</App>
-	</Shell>
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:fb="sap.ui.comp.filterbar" xmlns:l="sap.ui.layout" xmlns:f="sap.f"
+	xmlns:core="sap.ui.core">
+	<!--	<App id="app">
+		<pages> -->
+	<Page id="page" showHeader="false" floatingFooter="true" >
+		<!--	<Page fitContent="true" id="page">-->
+		<content>
+			<core:Fragment fragmentName="com.diageo.csd.saleinvoiceszsaleinvoices.invoicedetail.subsections.OrderHeader" type="XML"/>
+			<core:Fragment fragmentName="com.diageo.csd.saleinvoiceszsaleinvoices.invoicedetail.subsections.OrderItem" type="XML"/>
+		</content>
+		<footer >
+			<OverflowToolbar id="otbFooter">
+				<Button id="idMessagePopOver" icon="sap-icon://alert" text="{=${message>/}.length}" visible="{=${message>/}.length > 0}" type="Emphasized"
+					press="onMessagePopoverPress"></Button>
+				<ToolbarSpacer/>
+				<Button text="Cancel" press="onCancelGenerateDocket"/>
+				<Button text="Submit" press="onSubmitGenerateDocket" type="Accept"/>
+			</OverflowToolbar>
+		</footer>
+	</Page>
+	<!--	</pages>
+	</App>-->
+	<!--</f:DynamicPage>-->
 </mvc:View>

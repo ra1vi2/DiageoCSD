@@ -29,10 +29,10 @@
 					<!--Header Details-->
 					<Panel expandable="false" width="auto" headerText="Header Details" class="sapUiResponsiveMargin">
 						<!--Startof tabstrip	-->
-						<IconTabBar selectedKey="__filter0" id="__bar0" select="onSelectChanged" expandable="false" headerMode="Inline">
+						<IconTabBar selectedKey="__filter0" id="__bar0" select="onSelectChanged" headerMode="Inline">
 							<items>
 								<!--Tabstrip Invoice-->
-								<IconTabFilter text="Invoice" showAll="true" id="__filter0" design="Horizontal" press="onEnterInvoice">
+								<IconTabFilter text="Invoice" icon="sap-icon://monitor-payments" id="__filter0"  press="onEnterInvoice"  showAll="true"  design="Horizontal"  >
 									<content>
 										<f:SimpleForm id="SimpleFormChange1" editable="true" layout="ResponsiveGridLayout" labelSpanL="4" labelSpanM="4" labelSpanS="12"
 											adjustLabelSpan="false" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsL="2" columnsM="1" singleContainerFullSize="false">
@@ -99,20 +99,20 @@
 								</IconTabFilter>
 								<!--Tabstrip Transport-->
 								<!--Commented by Ramesh D as part of new changes-->
-								<IconTabFilter text="Placement" visible="{= ${this>/TruckInd} === 'P' }" showAll="true" id="__filter1" design="Horizontal" textDirection="RTL">
+								<IconTabFilter text="Placement" icon="sap-icon://inventory"  visible="{= ${this>/TruckInd} === 'P' }"  design="Horizontal" id="__filter1" showAll="true"   >
 									<content>
 										<f:SimpleForm id="SimpleFormChange3" visible="true" layout="ResponsiveGridLayout" labelSpanL="4" labelSpanM="4" labelSpanS="12"
 											adjustLabelSpan="false" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsL="2" columnsM="1" singleContainerFullSize="false">
 											<f:content>
-											<!--	<Label text="Transport Order Number" id="Lbltrpordnum"/>
-												<Input id="Inptrpordnum" value="" editable="false" maxLength="50"/>
-												<Label text="Transport Order Date" id="Lbltrporddate"/>
-												<DatePicker id="Inptrporddate" valueFormat="yyyy-MM-dd" displayFormat="long" value="" editable="false"/>
-												-->
+												<Label text="Transport Order Number" id="Lbltrpordnum" visible="false"/>
+												<Input id="Inptrpordnum" value="" editable="false" maxLength="50" visible="false"/>
+												<Label text="Transport Order Date" id="Lbltrporddate" visible="false"/>
+												<DatePicker id="Inptrporddate" valueFormat="yyyy-MM-dd" displayFormat="long" value="" editable="false" visible="false"/>
+												
 												<Label text="Vendor" id="Lbltrpter"/>
 												<Input id="Inptrpter" value="" editable="true" maxLength="12" submit="onTransporterInput" change="onTransporterInput"/>
 												<Label text="Vendor Name" id="Lbltrpternam"/>
-												<Input id="Inptrpternam" value="" editable="true" maxLength="40"/>
+												<Input id="Inptrpternam" value="" editable="false" maxLength="40"/>
 												<Label text="Truck Type" id="Lbltrcktyp"/>
 												<ComboBox id="Combtrcktyp" editable="true" items="{namedmodel>/}">
 													<items>

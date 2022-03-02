@@ -22,9 +22,10 @@
 									<l:GridData span="L5"/>
 								</layoutData>
 							</Label>
-							<ComboBox items="{ path: '/GetPlantsSet', sorter: { path: 'Plant' } }" id="Combplant" change="onEnterPlant" width="50%" editable="false">
+						<!--	<ComboBox items="{ path: '/GetPlantsSet', sorter: { path: 'Plant' } }" id="Combplant" change="onEnterPlant" width="50%" editable="false">
 								<core:Item key="{Plant}" text="{path:'Plant'} "/>
-							</ComboBox>
+							</ComboBox>-->
+								<Input id="Combplant"  editable="false" width="50%" />
 							<Label text="Docket No" id="LblDckt">
 								<layoutData>
 									<l:GridData span="L5"/>
@@ -99,22 +100,21 @@
 											<Label text="CashDiscount" id="Lblcashdcnt"/>
 											<Input id="Inpcashdcnt" value="0.00" maxLength="12" change="onEnterCash"/>
 											<Label text="Token No" id="idLabelToken" required="true" visible="{this>/IsCSDTokenNoVisible}"/>
-											<Input id="idToken" maxLength="25" visible="{this>/IsCSDTokenNoVisible}"/>
+											<Input id="idToken" enabled="true" maxLength="25" visible="{this>/IsCSDTokenNoVisible}"/>
 										</f:content>
 									</f:SimpleForm>
 								</content>
 							</IconTabFilter>
 							<!--Tabstrip Transport-->
-							<IconTabFilter text="Transport" showAll="true"  visible="{= ${this>/TruckInd} === 'P' }" id="__filter1" design="Horizontal" textDirection="RTL">
+							<IconTabFilter text="Placement" icon="sap-icon://inventory" wrapping="true" showAll="true"  visible="{= ${this>/TruckInd} === 'P' }" id="__filter1" design="Horizontal" textDirection="RTL">
 								<content>
 									<f:SimpleForm id="SimpleFormChange3" editable="true" layout="ResponsiveGridLayout" labelSpanL="4" labelSpanM="4" labelSpanS="12"
 										adjustLabelSpan="false" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsL="2" columnsM="1" singleContainerFullSize="false">
 										<f:content>
-											<Label text="Transport Order Number" id="Lbltrpordnum" visible="true"/>
 											<Label text="Vendor" id="Lbltrpter"/>
 											<Input id="Inptrpter" value="" editable="{this>/TruckEditable}" maxLength="12" submit="onTransporterInput" change="onTransporterInput"/>
 											<Label text="Vendor Name" id="Lbltrpternam"/>
-											<Input id="Inptrpternam" value="" editable="{this>/TruckEditable}" maxLength="40"/>
+											<Input id="Inptrpternam" value="" editable="false" maxLength="40"/>
 											<Label text="Truck Type" id="Lbltrcktyp"/>
 											<ComboBox id="Combtrcktyp" editable="{this>/TruckEditable}" items="{namedmodel>/}">
 												<items>

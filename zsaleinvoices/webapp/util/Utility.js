@@ -1,4 +1,6 @@
-sap.ui.define([], function() {
+sap.ui.define([
+	"sap/base/util/merge"
+], function(merge) {
 	"use strict";
 	return {
 		odataRead: function(oModel, sPath, mParameters) {
@@ -67,7 +69,35 @@ sap.ui.define([], function() {
 			return aData;
 		},
 		getDateinOffsetFormat: function(oDate) {
-			return oDate.getFullYear() + "-" + oDate.getMonth()+1 + "-" + oDate.getDate();
+			return oDate.getFullYear() + "-" + oDate.getMonth() + 1 + "-" + oDate.getDate();
+		},
+		merge: function(oTarget, oSource1, oSource2) {
+			return merge(oTarget, oSource1, oSource2);
+		},
+		removeMetadata: function(oObject) {
+			// Delete metadata from Object directly
+			if (oObject) {
+				if (oObject.constructor === Array) {
+					oObject.map(this.removeMetadata.bind(this));
+				} else if (oObject.constructor === Object) {
+					delete oObject.__metadata;
+				}
+
+				// Loop through all properties of the object
+				for (var oProperty in oObject) {
+					if (oObject.hasOwnProperty(oProperty) && typeof oObject[oProperty] === "object" && oObject[oProperty]) {
+						if (oObject[oProperty].hasOwnProperty("__deferred")) {
+							delete oObject[oProperty];
+						} else {
+							// Remove metadata tag
+							// Call method recursively
+							this.removeMetadata(oObject[oProperty]);
+						}
+					}
+				}
+			}
+
+			return oObject;
 		}
 	};
 });

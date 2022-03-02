@@ -1,1 +1,14 @@
 /* Enter your custom styles here */
+
+
+.mainFilterBar .sapUiVlt{
+ 	width:13rem !important;
+ }
+ 
+ .mainFilterBar .sapMLabel{
+ 	color:#fff !important;
+ }
+ 
+ .textFontClass{
+ 	font-size:0.7rem !important;
+ }
