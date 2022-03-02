@@ -1,9 +1,57 @@
-<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:fb="sap.ui.comp.filterbar"
 	controllerName="com.diageo.csdzindactrep.controller.IndentActual" xmlns:html="http://www.w3.org/1999/xhtml">
-			<Page showHeader="false">
-				<content>
-					
-				</content>
-			</Page>
-	
+	<Page showHeader="false">
+		<content>
+			<fb:FilterBar id="indentFilterID" useToolbar="false" search="onFilterSearch" showFilterConfiguration="false" showClearButton="false"
+				showClearOnFB="false" class="filter-bar-calss">
+				<fb:filterGroupItems>
+					<fb:FilterGroupItem name="G" groupName="Indent" label="{i18n>REGION}" visibleInFilterBar="true" mandatory="true">
+						<fb:control>
+							<Select id="regionID" items="{path:'RegionModel>/', templateShareable:true}" busyIndicatorDelay="0" change="onReasonChange">
+								<core:Item text="{RegionModel>Region}-{RegionModel>Description}" key="{RegionModel>Region}"/>
+							</Select>
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem name="G1" groupName="Indent" label="{i18n>SALES_OFFICE}" visibleInFilterBar="true" mandatory="true">
+						<fb:control>
+							<Select id="salesOfficeID" items="{path:'SalesOfficeModel>/', templateShareable:false}" busyIndicatorDelay="0">
+								<core:Item text="{SalesOfficeModel>Salesoffice}-{SalesOfficeModel>Description}" key="{SalesOfficeModel>Salesoffice}"/>
+							</Select>
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem name="G2" groupName="Indent" label="{i18n>DC}" visibleInFilterBar="true" mandatory="true">
+						<fb:control>
+							<Select id="DCID" items="{local>/DistributionChannel}">
+								<core:Item text="{local>text}" key="{local>key}"/>
+							</Select>
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem name="G3" groupName="Indent" label="{i18n>DATE_RANGE}" visibleInFilterBar="true" mandatory="true">
+						<fb:control>
+							<DateRangeSelection id="DateRangeID" displayFormat="dd.MM.yyyy" change="onDateRangeChange" valueStateText="{i18n>DATE_RANGE_VALIDATION}"/>
+						</fb:control>
+					</fb:FilterGroupItem>
+				</fb:filterGroupItems>
+			</fb:FilterBar>
+			<core:Fragment fragmentName="com.diageo.csdzindactrep.fragments.IndentActualtable" type="XML"/>
+		</content>
+		<footer>
+			<Toolbar>
+				<HBox class="sapUiSmallMarginBegin" visible="{=${TableModel>/}.length>0 }">
+				<Label text="{i18n>TOTAL_INDENT_QUANTITY}:" class="sapUiTinyMarginEnd"/>
+				<Text text="{local>/totalIndentQuantity}"/>
+			</HBox>
+			<ToolbarSpacer/>
+			<HBox visible="{=${TableModel>/}.length>0 }">
+				<Label text="{i18n>TOTAL_BALANCE_QUANTITY}:" class="sapUiTinyMarginEnd"/>
+				<Text text="{local>/totalBalanceQuantity}"/>
+			</HBox>
+			<ToolbarSpacer/>
+			<HBox class="sapUiSmallMarginEnd" visible="{=${TableModel>/}.length>0 }">
+				<Label text="{i18n>TOTAL_INVOICE_QUANTITY}:" class="sapUiTinyMarginEnd"/>
+				<Text text="{local>/totalInvoiceQuantity}"/>
+			</HBox>	
+			</Toolbar>
+		</footer>
+	</Page>
 </mvc:View>
