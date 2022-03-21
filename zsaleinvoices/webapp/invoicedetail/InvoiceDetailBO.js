@@ -46,18 +46,18 @@ sap.ui.define([
 			return Utility.odataCreate(viewmodel, "/BulkOrderHeaderSet", aHeaderData);
 
 		},
-		initialiseFields: function(sSelectedDistributionChannelKey, oView) {
-			this.initialiseByDistributionChannel(oView, sSelectedDistributionChannelKey);
+		initialiseFields: function(sSelectedDistributionChannelKey, oView, sTokenIndicator) {
+			this.initialiseByDistributionChannel(oView, sSelectedDistributionChannelKey, sTokenIndicator);
+			this.setAllowedDateRange(oView, true);
 		},
-		initialiseByDistributionChannel: function(oView, sDistributionChannel) {
+		initialiseByDistributionChannel: function(oView, sDistributionChannel, sTokenIndicator) {
 
-			var oContext = oView.byId("idOrderDetailHeaderFormPlant").getSelectedItem().getBindingInfo("key").binding.getContext();
-			var sPath = oContext.getPath();
-			var oData = oContext.getObject(sPath);
+			/*	var oContext = oView.byId("idOrderDetailHeaderFormPlant").getSelectedItem().getBindingInfo("key").binding.getContext();
+				var sPath = oContext.getPath();
+				var oData = oContext.getObject(sPath);*/
 
 			if (sDistributionChannel === '12' &&
-				oData.TokenInd === 'Y') {
-				//	oView.getModel("this").getProperty("/CustomerTokenInd") === 'Y') {
+				sTokenIndicator === 'Y') {
 				oView.getModel("this").setProperty("/IsCSDTokenFieldsVisible", true);
 			} else {
 				oView.getModel("this").setProperty("/IsCSDTokenFieldsVisible", false);
@@ -68,7 +68,17 @@ sap.ui.define([
 		},
 		valiadate: function(oView) {
 			if (oView.getModel("this").getProperty("/IsCSDTokenFieldsVisible") && !oView.byId("idHeaderFormExportTokenNo").getValue()) {
-				oView.byId("idHeaderFormExportTokenNo").sestValueState('Error');
+				oView.byId("idHeaderFormExportTokenNo").setValueState("Error");
+				return false;
+			}
+
+			if (!oView.byId("idOrderHeaderExpiryDate").getValue()) {
+				oView.byId("idOrderHeaderExpiryDate").setValueState("Error");
+				return false;
+			}
+
+			if (!oView.byId("idOrderHeaderPermitDate").getValue()) {
+				oView.byId("idOrderHeaderPermitDate").setValueState("Error");
 				return false;
 			}
 			return true;
@@ -76,6 +86,22 @@ sap.ui.define([
 		validateEnteredQuantity: function(oSelectedObject) {
 			if (parseInt(oSelectedObject.Quantity, 10) > parseInt(oSelectedObject.BalanceQuantity, 10)) {
 				return true;
+			}
+		},
+		setAllowedDateRange: function(oView, IsInitialLoad) {
+			this.setMinMaxDate(oView.byId("idOrderHeaderPermitDate"), false, oView.byId("idOrderHeaderInvoiceDate").getDateValue());
+			this.setMinMaxDate(oView.byId("idOrderHeaderExpiryDate"), oView.byId("idOrderHeaderPermitDate").getDateValue(), false);
+			
+			if(!IsInitialLoad){
+			this.setMinMaxDate(oView.byId("idOrderHeaderInvoiceDate"), false, oView.byId("idOrderHeaderExpiryDate").getDateValue());
+			}
+		},
+		setMinMaxDate: function(oControl, oMinDate, oMaxDate) {
+			if (oMinDate) {
+				oControl.setMinDate(oMinDate);
+			}
+			if (oMaxDate) {
+				oControl.setMaxDate(oMaxDate);
 			}
 		}
 	};

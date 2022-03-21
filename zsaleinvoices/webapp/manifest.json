@@ -111,9 +111,11 @@
 			}
 		},
 		"resources": {
-			"css": [{
-				"uri": "css/style.css"
-			}]
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
 		},
 		"routing": {
 			"config": {
@@ -125,19 +127,22 @@
 				"controlId": "app",
 				"clearControlAggregation": false
 			},
-			"routes": [{
-				"name": "listView",
-				"pattern": "",
-				"target": [
-					"listView"
-				]
-			}, {
-				"name": "GenerateDocket",
-				"pattern": "generateSaleDocket",
-				"target": [
-					"GenerateDocket"
-				]
-			}],
+			"routes": [
+				{
+					"name": "listView",
+					"pattern": "",
+					"target": [
+						"listView"
+					]
+				},
+				{
+					"name": "GenerateDocket",
+					"pattern": "generateSaleDocket",
+					"target": [
+						"GenerateDocket"
+					]
+				}
+			],
 			"targets": {
 				"GenerateDocket": {
 					"viewType": "XML",

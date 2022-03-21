@@ -29,6 +29,7 @@ sap.ui.define([
 			this.getView().setModel(new JSONModel({
 				totalQty: 0
 			}), "Total");
+
 			this.getView().getModel("this").setProperty("/CurrViewMode", "GENERATE");
 			var aSelectedOrders = this.getOwnerComponent().getModel("SelectedOrders").getData() || [];
 			if (aSelectedOrders.length === 0) {
@@ -53,7 +54,8 @@ sap.ui.define([
 
 			//get owner component to load plant VH
 			this.getView().setModel(this.getOwnerComponent().getModel("PlantVH"), "PlantVH");
-			BO.initialiseFields(oResponse.results[0].DistributChanId, this.getView());
+			BO.initialiseFields(oResponse.results[0].DistributChanId, this.getView(), oResponse.results[0].TokenInd);
+
 			BO.loadPriceList(this.getModel(), "/GetPriceListSet")
 				.then(function(oPriceListResponse) {
 					this.getView().setModel(new JSONModel(oPriceListResponse.results), "PriceListVH");
@@ -71,26 +73,26 @@ sap.ui.define([
 		onSubmitGenerateDocket: function() {
 			var oHeader = this.getView().getModel("orderdetailsheader");
 			var oItem = this.getView().getModel("orderdetailsItem");
-			if (this.getModel("message").getData().length === 0) {
-				if (BO.valiadate(this.getView())) {
-					BusyIndicator.show();
-					BO.GenerateDocket(oHeader, oItem, this.getModel())
-						.then(function(oResponse) {
-							BusyIndicator.hide();
-							var oSuccessMessageDialog = this.getDocketSuccessDialog(oResponse.DocketNum);
-							oSuccessMessageDialog.open();
-							this.showMessagePopover(this.getMessageIndicatorButton());
+			//if (this.getModel("message").getData().length === 0) {
+			if (BO.valiadate(this.getView())) {
+				BusyIndicator.show();
+				BO.GenerateDocket(oHeader, oItem, this.getModel())
+					.then(function(oResponse) {
+						BusyIndicator.hide();
+						var oSuccessMessageDialog = this.getDocketSuccessDialog(oResponse.DocketNum);
+						oSuccessMessageDialog.open();
+						this.showMessagePopover(this.getMessageIndicatorButton());
 
-						}.bind(this))
-						.fail(function() {
-							BusyIndicator.hide();
-						}.bind(this));
-				} else {
-					this.removeAllMessages();
-					this.addMessage(this.getI18NModelText("generateDocketValidationError"));
-					this.openMessagePopOver(this.getMessageIndicatorButton());
-				}
+					}.bind(this))
+					.fail(function() {
+						BusyIndicator.hide();
+					}.bind(this));
+			} else {
+				this.removeAllMessages();
+				this.addMessage(this.getI18NModelText("generateDocketValidationError"));
+				this.openMessagePopOver(this.getMessageIndicatorButton());
 			}
+			//}
 		},
 		getMessageIndicatorButton: function() {
 			return this.getView().byId("idMessagePopOver");
@@ -108,7 +110,7 @@ sap.ui.define([
 			var oDialogContent = new HBox({
 				items: [
 					new Text({
-						text: sDocketNumber
+						text: sDocketNumber + " _"
 					}),
 					new Text({
 						text: this.getI18NModelText("generateDocketSucess")
@@ -120,6 +122,8 @@ sap.ui.define([
 		onChangeItemQuantity: function(oEvent) {
 			this.removeAllMessages();
 			this.TotalQuantity = 0;
+			this.TotalQuantity = this.getView().getModel("Total").getData().totalQty;
+
 			var oBindingContext = oEvent.getSource().getBindingContext("orderdetailsItem");
 			var sPath = oBindingContext.getPath();
 			var oSelectedObject = oBindingContext.getModel().getObject(sPath);
@@ -130,15 +134,15 @@ sap.ui.define([
 				oEvent.getSource().setValueStateText(this.getI18NModelText("enteredQuantityValidationFail"));
 			} else {
 				oEvent.getSource().setValueState("None");
-				/*	var aItems = this.getView().getModel("orderdetailsItem").getData();
-					var TotalQuantity = 0;
-					aItems.forEach(function(item) {
-						this.TotalQuantity = parseInt(this.TotalQuantity, 10) + parseInt(item.Quantity, 10);
-					});*/
+				var aItems = this.getView().getModel("orderdetailsItem").getData();
+				var TotalQuantity = 0;
+				aItems.forEach(function(item) {
+					TotalQuantity = parseInt(TotalQuantity, 10) + parseInt(item.Quantity, 10);
+				});
 				this.TotalQuantity = parseInt(this.TotalQuantity, 10) + parseInt(oSelectedObject.Quantity, 10);
 
 				this.getView().setModel(new JSONModel({
-					totalQty: this.TotalQuantity
+					totalQty: TotalQuantity
 				}), "Total");
 			}
 		},
@@ -147,6 +151,9 @@ sap.ui.define([
 				this.removeAllMessages();
 				oEvent.getSource().setValueState("None");
 			}
+		},
+		onSetDate: function() {
+			BO.setAllowedDateRange(this.getView(), false);
 		}
 	});
 });

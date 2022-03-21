@@ -3,8 +3,10 @@ sap.ui.define([
 	"sap/m/MessageToast",
 	"sap/ui/core/BusyIndicator",
 	"./BulkOrderUploadBO",
-	"sap/ui/model/json/JSONModel"
-], function(BaseController, MessageToast, BusyIndicator, BO, JSONModel) {
+	"sap/ui/model/json/JSONModel",
+	"sap/m/HBox",
+	"sap/m/Text"
+], function(BaseController, MessageToast, BusyIndicator, BO, JSONModel, HBox, Text) {
 	"use strict";
 
 	return BaseController.extend("com.diageo.csd.bulkuploadzbulkupload.object.BulkOrderUpload", {
@@ -17,12 +19,18 @@ sap.ui.define([
 			this.getOwnerComponent().initializeMessagePopover(
 				this.getView(), this.getMessageIndicatorButton()
 			);
+			this.getView().setModel(new JSONModel(), "this");
+			this.getModel("this").setProperty("/isValidaionSuccess", false);
+			this.oWizard = this.byId("UploadWizard");
+
+			this.getModel("this").setProperty("/IsValidationError", true);
+			
+			
 			// activate automatic message generation for complete view
 			oMessageManager.registerObject(this.getView(), true);
 			this.getRouter().getRoute("bulkupload").attachPatternMatched(this._onBulkUpload, this);
 			this.getRouter().attachBypassed(this.onBypassed, this);
 
-			this.oWizard = this.byId("UploadWizard");
 		},
 		_onBulkUpload: function() {
 
@@ -35,6 +43,10 @@ sap.ui.define([
 				BusyIndicator.hide();
 				return;
 			}
+		},
+		onPressSampleDownload: function() {
+			BO.exportToExcel(this.getModel("sample"), BO.SampleColumns(), this.getModel("sample").getProperty("/sample") );
+			//window.open(sap.ui.require.toUrl("com/diageo/csd/bulkuploadzbulkupload/model/sample_upload_format.xlsx"));
 		},
 		onBeforeUploadStart: function() {
 			//set the upload url 
@@ -54,6 +66,7 @@ sap.ui.define([
 			if (BO.validateUploadFields(this.getView())) {
 				this.oWizard.validateStep(this.byId("UploadFileStep"));
 				this.oWizard.nextStep();
+				this.byId("idUploadStepCompleteButton").setEnabled(false);
 			} else {
 				this.oWizard.invalidateStep(this.byId("UploadFileStep"));
 			}
@@ -85,18 +98,46 @@ sap.ui.define([
 						BusyIndicator.hide();
 						this.showMessagePopover();
 					}.bind(this));
-				this.oWizard.nextStep();
 			} else {
-				BusyIndicator.show();
+				BusyIndicator.hide();
 				that.showMessagePopover(this.getMessageIndicatorButton());
 			}
 		},
 		_handlevalidateDataFromAPISuccess: function(oResponse) {
-			this.getView().setModel(new JSONModel(oResponse.results), "ValidatedDataModel");
+			this.oWizard.nextStep();
+			this.getView().setModel(new JSONModel(oResponse), "ValidatedDataModel");
+			this.getModel("this").setProperty("/IsValidationError", oResponse.IsValidationError);
+			BusyIndicator.hide();
 		},
-		onPressCancel: function() {
+		handleWizardCancel: function() {
+			this.byId("idUploadStepCompleteButton").setEnabled(true);
+			var oFirstStep = this.oWizard.getSteps()[0];
+			this.oWizard.discardProgress(oFirstStep);
+			this.oWizard.goToStep(oFirstStep);
+			this.oWizard.setValidated(false);
+		},
+		onSubmitOrderUpload: function() {
+			var oDataModel = this.getView().getModel("ValidatedDataModel");
+			BO.submitOrderUpload(this.getModel(), oDataModel.getData())
+				.then(function() {
+					this._handleValidateDataUploadSuccess.apply(this, arguments);
+				}.bind(this))
+				.fail(function() {
+					BusyIndicator.hide();
+					this.showMessagePopover();
+				}.bind(this));
+		},
 
+		_handleValidateDataUploadSuccess: function() {
+			BusyIndicator.hide();
+			var oSuccessMessageDialog = this.getDocketSuccessDialog();
+			oSuccessMessageDialog.open();
 		},
+
+		onExportValidatedList: function() {
+			BO.exportToExcel(this.getModel("ValidatedDataModel"), BO.ValidatedTableColumns(), this.getModel("ValidatedDataModel").getProperty("/IndHdrUpldNav/results"));
+		},
+
 		onUploadDateChange: function(oEvent) {
 			if (oEvent.getParameter('valid')) {
 				oEvent.getSource().setValueState("None");
@@ -106,6 +147,25 @@ sap.ui.define([
 		},
 		getMessageIndicatorButton: function() {
 			return this.byId("idMessagePopOver");
+		},
+		getDocketSuccessDialog: function(sDocketNumber) {
+			var oDialogContent = new HBox({
+				items: [
+					new Text({
+						text: "File Uploaded Successfully!"
+					})
+				]
+			});
+			return this.getSuccessDialog(oDialogContent);
+		},
+		onChangeDC: function() {
+			var sSelectedDC = this.byId("idUploadDC").getSelectedKey();
+			if (sSelectedDC === '11') {
+				this.byId("idSalesGroup").setSelectedKey("015");
+			}
+			if (sSelectedDC === '12') {
+				this.byId("idSalesGroup").setSelectedKey("014");
+			}
 		}
 	});
 });

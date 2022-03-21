@@ -50,11 +50,11 @@
     "targetFolder": "dist",
     "excludedFolders": [],
     "excludedFiles": [],
-    "lastBuildDateTime": "Mon, 17 Jan 2022 08:07:02 GMT"
+    "lastBuildDateTime": "Mon, 21 Mar 2022 10:25:53 GMT"
   },
   "deploy": {
     "destination": "UWD",
-    "name": "zbulkupload"
+    "name": "ZBULKUPLOAD"
   },
   "mockpreview": {
     "mockUri": "/sap/opu/odata/sap/ZDLT_INDBLK_INVOICE_SRV",

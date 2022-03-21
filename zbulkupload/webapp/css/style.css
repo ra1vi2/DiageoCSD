@@ -1,1 +1,14 @@
 /* Enter your custom styles here */
+
+.mainFilterBar .sapUiVlt{
+ 	width:13rem !important;
+ }
+ 
+ .wizardStep  .sapMWizardProgressNavAnchorTitle {
+ 	color:#fff !important;
+ }
+ 
+ .textFontClass{
+ 	font-size:0.7rem !important;
+ }
+

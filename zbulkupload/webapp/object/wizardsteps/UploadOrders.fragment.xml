@@ -1,12 +1,17 @@
-<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:u="sap.ui.unified">
-	<f:Form id="idOrderDetailHeaderForm" editable="true" >
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:u="sap.ui.unified">
+	<Toolbar>
+		<ToolbarSpacer/>
+		<Button icon="sap-icon://download" text="Download Sample Format" press="onPressSampleDownload" type="Transparent"/>
+	</Toolbar>
+	<f:Form id="idOrderDetailHeaderForm" editable="true">
 		<f:layout>
 			<f:ResponsiveGridLayout id="idUploadFormLayout" columnsM="2" columnsL="3" columnsXL="3" labelSpanM="12" labelSpanL="12" labelSpanXL="12"
 				emptySpanXL="1" emptySpanL="3" emptySpanM="1"/>
 		</f:layout>
-		<f:title>
+		<!--	<f:title>
 			<core:Title id="idUploadFormTitle" text="Bulk Upload"/>
-		</f:title>
+		</f:title>-->
 		<f:formContainers>
 			<f:FormContainer id="idUploadFormContainer">
 				<f:FormElement label="Plant">
@@ -25,23 +30,25 @@
 			<f:FormContainer id="idUploadFormContainer2" class="sapUiMediumMarginTop">
 				<f:FormElement id="idUploadFormElement" label="DC" class="sapUiMediumMarginTop">
 					<f:fields>
-						<Select id="idUploadDC">
+						<Select id="idUploadDC" change="onChangeDC">
 							<core:Item key="11" text="11 - Direct Sale"/>
 							<core:Item key="12" text="12 - CSD"/>
 						</Select>
 					</f:fields>
 				</f:FormElement>
-				<f:FormElement label="Upload File" class="sapUiMediumMarginTop">
+				<f:FormElement label="Upload File" class="sapUiLargeMarginTop">
 					<f:fields>
 						<u:FileUploader id="idTokenFileUploader" fileType="XLSX,xlsx" change="onUpload" uploadComplete="onUploadComplete"
-							uploadStart="onBeforeUploadStart" />
+							uploadStart="onBeforeUploadStart" width="100%"/>
 					</f:fields>
 				</f:FormElement>
 			</f:FormContainer>
 			<f:FormContainer>
-				<f:FormElement>
+				<f:FormElement label="Sales Group" class="sapUiMediumMarginTop">
 					<f:fields>
-						<Button icon="sap-icon://download" text="Download Sample Format" press="onPressSampleDownload" type="Transparent"/>
+						<Select id="idSalesGroup" items="{constants>/SalesGroup}" selectedKey="015">
+							<core:Item key="{constants>key}" text="{constants>text}"/>
+						</Select>
 					</f:fields>
 				</f:FormElement>
 			</f:FormContainer>

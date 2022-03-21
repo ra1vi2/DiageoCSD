@@ -4,8 +4,8 @@
 		<pages>
 			<Page id="wizardContentPage" showHeader="false">
 				<content>
-					<Wizard id="UploadWizard" complete="wizardCompletedHandler" showNextButton="false">
-						<WizardStep id="UploadFileStep" title="Upload" validated="true" complete="onUploadCompleteStep">
+					<Wizard id="UploadWizard" complete="wizardCompletedHandler" showNextButton="false" class="wizardStep">
+						<WizardStep id="UploadFileStep" title="Upload" validated="true" complete="onUploadCompleteStep" class="wizardStep">
 							<core:Fragment fragmentName="com.diageo.csd.bulkuploadzbulkupload.object.wizardsteps.UploadOrders" type="XML"/>
 							<Button text="Upload Data" id="idUploadStepCompleteButton" press="onUploadStepComplete" visible="false"/>
 						</WizardStep>
@@ -19,12 +19,26 @@
 						</WizardStep>
 					</Wizard>
 				</content>
-				<footer visible="{= ${message>/}.length > 0}">
+				<footer >
 					<OverflowToolbar id="otbFooter">
 						<Button id="idMessagePopOver" icon="sap-icon://alert" text="{=${message>/}.length}" visible="{=${message>/}.length > 0}" type="Emphasized"
-							press="onMessagePopoverPress"></Button>
+							press="onMessagePopoverPress">
+							<layoutData>
+								<OverflowToolbarLayoutData priority="NeverOverflow"/>
+							</layoutData>
+						</Button>
+						<Text text="{i18n>errorCodes}"/>
 						<ToolbarSpacer/>
-						<Button text="Cancel" press="handleWizardCancel"/>
+						<Button text="Cancel" press="handleWizardCancel">
+							<layoutData>
+								<OverflowToolbarLayoutData priority="NeverOverflow"/>
+							</layoutData>
+						</Button>
+						<Button text="Submit" type="Accept" press="onSubmitOrderUpload" enabled="{=! ${this>/IsValidationError}}">
+							<layoutData>
+								<OverflowToolbarLayoutData priority="NeverOverflow"/>
+							</layoutData>
+						</Button>
 					</OverflowToolbar>
 				</footer>
 			</Page>

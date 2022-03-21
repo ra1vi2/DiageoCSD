@@ -1,0 +1,180 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Toolbar>
+		<content>
+			<HBox>
+				<Label text="{i18n>REPORT_VIEW_TYPE}:" class="sapUiTinyMarginTop"/>
+				<RadioButtonGroup selectedIndex="{local>/DefaultViewType}" columns="2" select="onFilterSearch">
+					<RadioButton text="{i18n>SUMMARY}"/>
+					<RadioButton text="{i18n>DETAIL}"/>
+				</RadioButtonGroup>
+			</HBox>
+			<ToolbarSpacer/>
+			<ToolbarSpacer/>
+			<Button text="{i18n>PRINT}"  press="onPDFPrint" type="Emphasized" enabled="{local>/printEnabled}"/>
+			<Button text="{i18n>EXPORT}" icon="sap-icon://download" press="onTableExportPress" type="Emphasized" enabled="{=${TableModel>/}.length>0 }"/>
+		</content>
+	</Toolbar>
+	<ScrollContainer horizontal="true" vertical="true" height="77%">
+		<Table id="indentTableID" fixedLayout="false"  mode="SingleSelectMaster"
+			items="{path:'TableModel>/', sorter:[{path:'IndDocket', descending:false},{path:'IndRefno', descending:false},{path:'Customer', descending:false},{path:'OrderNum', descending:false},{path:'Werks', descending:false},
+			{path:'Brand', descending:false},{path:'Matnr', descending:false},{path:'BulkOrdNo', descending:false},{path:'RequestType', descending:false}]}" itemPress="onTableItemPress" updateFinished="onTableUpdateFinish"
+			noDataText="{i18n>FILTER_NODATA_MES}">
+			<columns>
+				<Column mergeDuplicates="true" hAlign="Center">
+					<header >
+						<Text text="{i18n>INDENT_NUM}" width="9rem"/>
+					</header>
+				</Column>
+				<Column mergeDuplicates="true" hAlign="Center">
+					<header>
+						<Text text="{i18n>INDENT_DATE}" width="6rem"/>
+					</header>
+				</Column>
+				<Column mergeDuplicates="true" hAlign="Center">
+					<header>
+						<Text text="{i18n>INDENT_REFERENCE_NUMBER}" width="9rem"/>
+					</header>
+				</Column>
+				<Column mergeDuplicates="true" hAlign="Center">
+					<header>
+						<Text text="{i18n>DC}"/>
+					</header>
+				</Column>
+				<Column mergeDuplicates="true" hAlign="Center">
+					<header>
+						<Text text="{i18n>DIVISION}" width="4rem"/>
+					</header>
+				</Column>
+				<Column mergeDuplicates="true" hAlign="Center">
+					<header>
+						<Text text="{i18n>CUSTOMER_CODE}" width="6rem"/>
+					</header>
+				</Column>
+				<Column mergeDuplicates="true" hAlign="Center">
+					<header>
+						<Text text="{i18n>CUSTOMER_NAME}" width="10rem"/>
+					</header>
+				</Column>
+				<Column mergeDuplicates="true" hAlign="Center">
+					<header>
+						<Text text="{i18n>ORDER_NUM}" width="6rem"/>
+					</header>
+				</Column>
+				<Column mergeDuplicates="true" hAlign="Center">
+					<header>
+						<Text text="{i18n>ORDER_DATE}" width="6rem"/>
+					</header>
+				</Column>
+				<Column mergeDuplicates="{=${local>/DefaultViewType}===1?true:false}" hAlign="Center">
+					<header>
+						<Text text="{i18n>PLANT}" width="3rem"/>
+					</header>
+				</Column>
+				<Column mergeDuplicates="{=${local>/DefaultViewType}===1?true:false}" hAlign="Center">
+					<header>
+						<Text text="{i18n>BRAND}" width="5rem"/>
+					</header>
+				</Column>
+				<Column mergeDuplicates="{=${local>/DefaultViewType}===1?true:false}" hAlign="Center">
+					<header>
+						<Text text="{i18n>MATCD}" width="6rem"/>
+					</header>
+				</Column>
+				<Column mergeDuplicates="{=${local>/DefaultViewType}===1?true:false}" hAlign="Center">
+					<header>
+						<Text text="{i18n>MATERIAL_DESCRIPTION}" width="16rem"/>
+					</header>
+				</Column>
+				<Column mergeDuplicates="{=${local>/DefaultViewType}===1?true:false}" hAlign="Center">
+					<header>
+						<Text text="{i18n>PACK}" width="5rem"/>
+					</header>
+				</Column>
+				<Column mergeDuplicates="{=${local>/DefaultViewType}===1?true:false}" hAlign="Center">
+					<header>
+						<Text text="{i18n>INDENT_QUANTITY}" width="5rem"/>
+					</header>
+				</Column>
+				<Column mergeDuplicates="{=${local>/DefaultViewType}===1?true:false}" hAlign="Center">
+					<header>
+						<Text text="{i18n>BULK_ORDER_NUM}" width="9rem"/>
+					</header>
+				</Column>
+				<Column mergeDuplicates="{=${local>/DefaultViewType}===1?true:false}" hAlign="Center">
+					<header>
+						<Text text="{i18n>BALANCE_QUANTITY}" width="5rem"/>
+					</header>
+				</Column>
+				<Column mergeDuplicates="{=${local>/DefaultViewType}===1?true:false}" hAlign="Center">
+					<header>
+						<Text text="{i18n>INVOICE_QUANTITY}" width="5rem"/>
+					</header>
+				</Column>
+				<Column visible="{=${local>/DefaultViewType}===1?true:false}" hAlign="Center">
+					<header>
+						<Text text="{i18n>INVOICE_NUMBER}" width="9rem"/>
+					</header>
+				</Column>
+				<Column visible="{=${local>/DefaultViewType}===1?true:false}" hAlign="Center">
+					<header>
+						<Text text="{i18n>INVOICE_DATE}" width="5rem"/>
+					</header>
+				</Column>
+				<Column visible="{=${local>/DefaultViewType}===1?true:false}" hAlign="Center">
+					<header>
+						<Text text="{i18n>QUANTITY}" width="5rem"/>
+					</header>
+				</Column>
+				<Column visible="{=${local>/DefaultViewType}===1?true:false}" hAlign="Center">
+					<header>
+						<Text text="{i18n>PERMIT_NUM}" width="6rem"/>
+					</header>
+				</Column>
+				<Column visible="{=${local>/DefaultViewType}===1?true:false}" hAlign="Center">
+					<header>
+						<Text text="{i18n>PERMIT_DATE}" width="5rem"/>
+					</header>
+				</Column>
+				<Column visible="{=${local>/DefaultViewType}===1?true:false}" hAlign="Center">
+					<header>
+						<Text text="{i18n>DOCKET_NUMBER}" width="9rem"/>
+					</header>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem vAlign="Middle" type="Active">
+					<cells>
+						<Text text="{TableModel>IndDocket}" wrapping="true" class="textFontClass"/>
+						<Text text="{path:'TableModel>IndDate',type:'sap.ui.model.odata.type.DateTimeOffset',formatOptions:{pattern:'dd/MM/yyyy'}}" wrapping="true"
+							class="textFontClass"/>
+						<Text text="{TableModel>IndRefno}" wrapping="true" class="textFontClass"/>
+						<Text text="{TableModel>DcId}" wrapping="true" class="textFontClass"/>
+						<Text text="{TableModel>DivisionId}" wrapping="true" class="textFontClass"/>
+						<Text text="{TableModel>Customer}" wrapping="true" class="textFontClass"/>
+						<Text text="{TableModel>CustomerName}" wrapping="true" class="textFontClass"/>
+						<Text text="{TableModel>OrderNum}" wrapping="true" class="textFontClass"/>
+						<Text text="{path:'TableModel>OrderDate',type:'sap.ui.model.odata.type.DateTimeOffset',formatOptions:{pattern:'dd/MM/yyyy'}}"
+							wrapping="true" class="textFontClass"/>
+						<Text text="{TableModel>Werks}" wrapping="true" class="textFontClass"/>
+						<Text text="{TableModel>Brand}" wrapping="true" class="textFontClass"/>
+						<Text text="{TableModel>Matnr}" wrapping="true" class="textFontClass"/>
+						<Text text="{TableModel>Maktx}" wrapping="true" class="textFontClass"/>
+						<Text text="{TableModel>Pack}" wrapping="true" class="textFontClass"/>
+						<Text text="{TableModel>IndQuantity}" wrapping="true" class="textFontClass"/>
+						<Text text="{TableModel>BulkOrdNo}" wrapping="true" class="textFontClass"/>
+						<Text text="{TableModel>BalQuantity}" wrapping="true" class="textFontClass"/>
+						<Text text="{TableModel>InvQuantity}" wrapping="true" class="textFontClass"/>
+						<Text text="{TableModel>RequestType}" wrapping="true" class="textFontClass"/>
+						<Text text="{path:'TableModel>InvDate',type:'sap.ui.model.odata.type.DateTimeOffset',formatOptions:{pattern:'dd/MM/yyyy'}}" wrapping="true"
+							class="textFontClass"/>
+						<Text text="{TableModel>Quantity}" wrapping="true" class="textFontClass"/>
+						<Text text="{TableModel>TpPermitNum}" wrapping="true" class="textFontClass"/>
+						<Text text="{path:'TableModel>TpPermitDate',type:'sap.ui.model.odata.type.DateTimeOffset',formatOptions:{pattern:'dd/MM/yyyy'}}"
+							wrapping="true" class="textFontClass"/>
+						<Text text="{TableModel>DocketNum}" wrapping="true" class="textFontClass"/>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+	</ScrollContainer>
+</core:FragmentDefinition>

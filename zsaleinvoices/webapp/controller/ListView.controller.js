@@ -10,7 +10,6 @@ sap.ui.define([
 
 	return BaseController.extend("com.diageo.csd.saleinvoiceszsaleinvoices.controller.ListView", {
 		onInit: function() {
-			this._loadVH();
 			this.getView().setModel(new JSONModel({}, true), "this");
 			this.getView().getModel("this").setProperty("/selectedOrderIndex", {});
 			this.getView().getModel("this").setProperty("/selectedOrders", {});
@@ -21,6 +20,10 @@ sap.ui.define([
 				this.getView(), this.getMessageIndicatorButton()
 			);
 
+			var oCurrentDate = new Date();
+			this.getView().byId("idFilterFromToDate").setDateValue(new Date(oCurrentDate.getFullYear(), oCurrentDate.getMonth(), 1));
+			this.getView().byId("idFilterFromToDate").setSecondDateValue(new Date(oCurrentDate.getFullYear(), oCurrentDate.getMonth() + 1, 0));
+			this._loadVH();
 			this.getOwnerComponent().setModel(new JSONModel({}), "SelectedOrders");
 
 			oMessageManager.registerObject(this.getView(), true);
@@ -101,9 +104,9 @@ sap.ui.define([
 				this.getView().getModel("this").setProperty("/selectedOrderIndex", {});
 			}
 		},
-		onPressRequestInvoice:function(){
+		onPressRequestInvoice: function() {
 			var oOutbound = this.getOwnerComponent().getManifestEntry("/sap.app/crossNavigation/outbounds/requestInvoice");
-				this.crossAppNav(oOutbound.semanticObject, oOutbound.action);
+			this.crossAppNav(oOutbound.semanticObject, oOutbound.action);
 		},
 
 		_handleOrderListLoadSuccess: function(oResponse) {
@@ -112,11 +115,11 @@ sap.ui.define([
 		},
 
 		_loadVH: function(isCustomerToLoad) {
-			if (!isCustomerToLoad) {
-				BO.loadPlant(this.getView(), this.getOwnerComponent().getModel(), this.getOwnerComponent());
-			} else {
-				BO.loadCustomer(this.getView(), this.getOwnerComponent().getModel());
-			}
+			//if (!isCustomerToLoad) {
+			BO.loadPlant(this.getView(), this.getOwnerComponent().getModel(), this.getOwnerComponent());
+			//} else {
+			BO.loadCustomer(this.getView(), this.getOwnerComponent().getModel());
+			//}
 		},
 		getMessageIndicatorButton: function() {
 			return this.byId("idMessagePopOver");

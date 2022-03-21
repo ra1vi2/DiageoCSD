@@ -21,7 +21,7 @@
 				<form:FormElement label="Customer">
 					<form:fields>
 						<Input id="idHeaderFormCustomer" value="{orderdetailsheader>/Customer}" change="onChangeCustomerName"
-							fieldGroupIds="idCustomerProfileValidationGroupNames"/>
+							fieldGroupIds="idCustomerProfileValidationGroupNames" enabled="false"/>
 					</form:fields>
 				</form:FormElement>
 				<form:FormElement label="TP/ Permit Number">
@@ -53,7 +53,8 @@
 					<form:fields>
 						<VBox id="idFormCompanyNameVBox">
 							<!--	<Input id="idFormCompanyName" value="{orderdetailsheader>/InvDate}"/>-->
-							<DatePicker value="{path : 'orderdetailsheader>/InvDate' , type : 'sap.ui.model.type.Date'}"></DatePicker>
+							<DatePicker id="idOrderHeaderInvoiceDate" value="{path : 'orderdetailsheader>/InvDate' , type : 'sap.ui.model.type.Date'}"
+								change="onSetDate"></DatePicker>
 						</VBox>
 					</form:fields>
 				</form:FormElement>
@@ -65,13 +66,15 @@
 				<form:FormElement label="TP/Permit Date">
 					<form:fields>
 						<!--	<Input id="idHederFormTPDate" value="{orderdetailsheader>/TpPermitDate}"/>-->
-						<DatePicker value="{path : 'orderdetailsheader>/TpPermitDate' , type : 'sap.ui.model.type.Date'}"></DatePicker>
+						<DatePicker id="idOrderHeaderPermitDate" required="true"
+							value="{path : 'orderdetailsheader>/TpPermitDate' , type : 'sap.ui.model.type.Date'}" change="onSetDate"></DatePicker>
 					</form:fields>
 				</form:FormElement>
 				<form:FormElement label="TP/Expiry Date">
 					<form:fields>
 						<!--<Input id="idHeaderFormTPExpiryDate" value="{orderdetailsheader>/TpExpDate}"/>-->
-						<DatePicker value="{path : 'orderdetailsheader>/TpExpDate' , type : 'sap.ui.model.type.Date'}"></DatePicker>
+						<DatePicker id="idOrderHeaderExpiryDate" required="true" value="{path : 'orderdetailsheader>/TpExpDate' , type : 'sap.ui.model.type.Date'}"
+							change="onSetDate"></DatePicker>
 					</form:fields>
 				</form:FormElement>
 				<form:FormElement label="Export Order Date">
@@ -124,8 +127,9 @@
 				<form:FormElement label="Price List">
 					<form:fields>
 						<!--	<Input id="idHeaderFormPriceList" value="{orderdetailsheader>/Pricelist}"/>-->
-						<ComboBox id="idHeaderFormPriceList" items="{PriceListVH>/}" selectedKey="{orderdetailsheader>/Pricelist}" change="onFilterValueChange" busy="true">
-							<core:Item key="{PriceListVH>PriceListID}" text="{PriceListVH>PriceListName}"/>
+						<ComboBox id="idHeaderFormPriceList" items="{PriceListVH>/}" selectedKey="{orderdetailsheader>/Pricelist}" change="onFilterValueChange"
+							busy="true">
+							<core:Item key="{PriceListVH>PriceListID}" text="{PriceListVH>PriceListName} ({PriceListVH>PriceListID})"/>
 						</ComboBox>
 					</form:fields>
 				</form:FormElement>

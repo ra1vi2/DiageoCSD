@@ -10,12 +10,23 @@
 		"title": "{{appTitle}}",
 		"description": "{{appDescription}}",
 		"sourceTemplate": {
-			"id": "ui5template.basicSAPUI5ApplicationProject",
-			"version": "1.40.12"
+			"id": "servicecatalog.connectivityComponent",
+			"version": "0.0.0"
+		},
+		"dataSources": {
+			"ZDLT_INDBLK_INVOICE_SRV": {
+				"uri": "/sap/opu/odata/sap/ZDLT_INDBLK_INVOICE_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/metadata.xml"
+				}
+			}
 		}
 	},
 	"sap.ui": {
 		"technology": "UI5",
+		"fullWidth": true,
 		"icons": {
 			"icon": "",
 			"favIcon": "",
@@ -29,25 +40,22 @@
 			"tablet": true,
 			"phone": true
 		},
-		"supportedThemes": [
-			"sap_hcb",
-			"sap_belize"
-		]
+		"supportedThemes": ["sap_hcb", "sap_belize"]
 	},
 	"sap.ui5": {
 		"rootView": {
-			"viewName": "com.diageo.csd.indentuploadzindentupload.view.View1",
+			"viewName": "com.diageo.csd.indentuploadzindentupload.app.App",
 			"type": "XML"
 		},
 		"dependencies": {
 			"minUI5Version": "1.30.0",
 			"libs": {
-				"sap.ui.core": {},
+				"sap.collaboration": {},
 				"sap.m": {},
+				"sap.ui.comp": {},
+				"sap.ui.core": {},
 				"sap.ui.layout": {},
 				"sap.ushell": {},
-				"sap.collaboration": {},
-				"sap.ui.comp": {},
 				"sap.uxap": {}
 			}
 		},
@@ -61,14 +69,60 @@
 				"settings": {
 					"bundleName": "com.diageo.csd.indentuploadzindentupload.i18n.i18n"
 				}
+			},
+			"": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneTime",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "ZDLT_INDBLK_INVOICE_SRV",
+				"preload": true
+			},
+			"constants": {
+				"type": "sap.ui.model.json.JSONModel",
+				"settings": {},
+				"uri": "model/constants.json",
+				"preload": true
+			},
+			"sample": {
+				"type": "sap.ui.model.json.JSONModel",
+				"settings": {},
+				"uri": "model/sample_upload.json",
+				"preload": true
 			}
 		},
 		"resources": {
-			"css": [
-				{
-					"uri": "css/style.css"
+			"css": [{
+				"uri": "css/style.css"
+			}]
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "com.diageo.csd.indentuploadzindentupload",
+				"controlId": "app",
+				"controlAggregation": "pages",
+				"bypassed": {
+					"target": ["notFound"]
+				},
+				"async": true
+			},
+			"routes": [{
+				"pattern": "",
+				"name": "indentupload",
+				"target": ["indentupload"]
+			}],
+			"targets": {
+				"indentupload": {
+					"viewName": "object.IndentUpload",
+					"viewId": "IndentUpload",
+					"viewLevel": 1,
+					"title": "Indent Upload"
 				}
-			]
+			}
 		}
 	},
 	"sap.platform.abap": {

@@ -6,8 +6,10 @@ sap.ui.define([
 	"sap/ui/core/library",
 	"sap/m/Dialog",
 	"sap/m/Button",
-	"sap/m/ButtonType"
-], function(Controller, History, Fragment, Message, library, Dialog, Button, ButtonType) {
+	"sap/m/ButtonType",
+	"sap/m/DialogType",
+	"sap/ui/core/ValueState"
+], function(Controller, History, Fragment, Message, library, Dialog, Button, ButtonType, DialogType, ValueState) {
 	"use strict";
 
 	return Controller.extend("com.diageo.csd.bulkuploadzbulkupload.app.BaseController", {
@@ -111,7 +113,25 @@ sap.ui.define([
 		},
 		showMessagePopover: function(oMessageButton) {
 			this.getOwnerComponent().showMessagePopover(oMessageButton);
-		}
+		},
+		getSuccessDialog: function(oDialogContent) {
+			var oSuccessMessageDialog = new Dialog({
+				type: DialogType.Message,
+				title: ValueState.Success,
+				state: ValueState.Success,
+				content: oDialogContent,
+				beginButton: new Button({
+					type: ButtonType.Emphasized,
+					text: "OK",
+					press: function() {
+						oSuccessMessageDialog.close();
+						oSuccessMessageDialog.destroy();
+						this.onNavBack();
+					}.bind(this)
+				})
+			});
 
+			return oSuccessMessageDialog;
+		}
 	});
 });

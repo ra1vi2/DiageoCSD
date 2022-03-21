@@ -4,23 +4,20 @@
 	<!--	<App id="app">
 		<pages>
 	<Page title="{i18n>title}" floatingFooter="true" showFooter="{= ${message>/}.length > 0}"> -->
-	<Page  id="page" showHeader="false" floatingFooter="true" showFooter="{= ${message>/}.length > 0}">
+	<Page id="page" showHeader="false" floatingFooter="true" showFooter="{= ${message>/}.length > 0}">
 		<content>
 			<l:VerticalLayout width="100%">
-				<fb:FilterBar id="indentFilterID" 
-				 showFilterConfiguration="false" showClearButton="false"
-				showClearOnFB="false"
-				search="onSearchOrders"
-				class="mainFilterBar">
+				<fb:FilterBar id="indentFilterID" useToolbar="false" showFilterConfiguration="false" showClearButton="false" showClearOnFB="false"
+					search="onSearchOrders" class="mainFilterBar">
 					<fb:filterGroupItems>
-						<fb:FilterGroupItem groupName="__$INTERNAL$" name="A" label="Plant" visibleInFilterBar="true" mandatory="true">
+						<fb:FilterGroupItem groupName="filterGroupSale" name="A" label="Plant" visibleInFilterBar="true" mandatory="true">
 							<fb:control>
 								<Select id="idFilterPlant" items="{path : 'plantVH>/'}" change="onFilterValueChange">
 									<core:Item key="{plantVH>Plant}" text="{plantVH>Plant}"/>
 								</Select>
 							</fb:control>
 						</fb:FilterGroupItem>
-						<fb:FilterGroupItem groupName="__$INTERNAL$" name="A1" label="DC" visibleInFilterBar="true" mandatory="true">
+						<fb:FilterGroupItem groupName="filterGroupSale" name="A1" label="DC" visibleInFilterBar="true" mandatory="true">
 							<fb:control>
 								<Select id="idFilterDC" change="onFilterValueChange">
 									<core:Item key="11" text="11 - Direct Sale"/>
@@ -28,12 +25,12 @@
 								</Select>
 							</fb:control>
 						</fb:FilterGroupItem>
-						<fb:FilterGroupItem groupName="__$INTERNAL$" name="B" label="Date" mandatory="true" visibleInFilterBar="true">
+						<fb:FilterGroupItem groupName="filterGroupSale" name="B" label="Date" mandatory="true" visibleInFilterBar="true">
 							<fb:control>
 								<DateRangeSelection id="idFilterFromToDate" change="onFilterValueChange"/>
 							</fb:control>
 						</fb:FilterGroupItem>
-						<fb:FilterGroupItem groupName="__$INTERNAL$" name="B1" label="Customer" visibleInFilterBar="true">
+						<fb:FilterGroupItem groupName="filterGroupSale" name="B1" label="Customer" visibleInFilterBar="true">
 							<fb:control>
 								<Select id="idFilterCustomer" items="{path : 'customerVH>/'}">
 									<core:Item key="{customerVH>Customer}" text="{customerVH>Customer} - {customerVH>CustomerName}"/>

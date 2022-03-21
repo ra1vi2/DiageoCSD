@@ -1,0 +1,83 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:u="sap.ui.unified">
+	<Table id="idValidatedTable" items="{ValidatedDataModel>/IndHdrUpldNav/results}">
+		<headerToolbar>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button id="idExportValidatedList" text="Export" press="onExportValidatedList"></Button>
+			</OverflowToolbar>
+		</headerToolbar>
+		<columns>
+			<Column >
+				<Text text="Distribution Channel"/>
+			</Column>
+			<Column >
+				<Text text="Division"/>
+			</Column>
+			<Column >
+				<Text text="Customer"/>
+			</Column>
+			<Column >
+				<Text text="Customer Name"/>
+			</Column>
+			<Column >
+				<Text text="Order"/>
+			</Column>
+			<Column >
+				<Text text="Date"/>
+			</Column>
+			<Column >
+				<Text text="Sales Office"/>
+			</Column>
+			<Column >
+				<Text text="Plant"/>
+			</Column>
+			<Column >
+				<Text text="Plant Name"/>
+			</Column>
+			<Column >
+				<Text text="Index"/>
+			</Column>
+			<Column >
+				<Text text="Quantity"/>
+			</Column>
+			<Column >
+				<Text text="Material Code"/>
+			</Column>
+			<Column >
+				<Text text="Material Description"/>
+			</Column>
+			<Column >
+				<Text text="Brand"/>
+			</Column>
+			<Column >
+				<Text text="Pack"/>
+			</Column>
+			<Column >
+				<Text text="Error"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Text text="{ValidatedDataModel>DC}"/>
+					<Text text="{ValidatedDataModel>DIV}"/>
+					<Text text="{ValidatedDataModel>CUSTOMER}"/>
+					<Text text="{ValidatedDataModel>CustName}"/>
+					<Text text="{ValidatedDataModel>ORDER}"/>
+					<Text text="{ValidatedDataModel>DATE}"/>
+					<Text text="{ValidatedDataModel>SalesOffice}"/>
+					<Text text="{ValidatedDataModel>PLANT}"/>
+					<Text text="{ValidatedDataModel>PlantName}"/>
+					<Text text="{ValidatedDataModel>INDEX}"/>
+					<Text text="{ValidatedDataModel>QTY}"/>
+					<Text text="{ValidatedDataModel>MATERIAL}"/>
+					<Text text="{ValidatedDataModel>MaterialDescription}"/>
+					<Text text="{ValidatedDataModel>Brand}"/>
+					<Text text="{ValidatedDataModel>Pack}"/>
+					<Text text="{ValidatedDataModel>Remarks}"/>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>
