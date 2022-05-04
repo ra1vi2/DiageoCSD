@@ -14,32 +14,34 @@
 		</f:title>-->
 		<f:formContainers>
 			<f:FormContainer id="idUploadFormContainer">
-				<f:FormElement label="Sales Office">
+				<f:FormElement label="Region">
 					<f:fields>
-						<Select id="idUploadFormSalesOffice" items="{/PlantSet}" change="onFilterValueChange">
+						<!--	<Select id="idUploadFormSalesOffice" items="{/PlantSet}" change="onFilterValueChange">
 							<core:Item key="{Plant}" text="{Plant}"/>
+						</Select>-->
+						<Select id="idRegion" items="{RegionModel>/}" change="onRegionChange" selectedKey="1">
+							<core:Item text="{RegionModel>Region}-{RegionModel>Description}" key="{RegionModel>Region}"/>
 						</Select>
 					</f:fields>
 				</f:FormElement>
-				<f:FormElement label="Date">
-					<f:fields>
-						<DatePicker id="idUploadDate" placeholder="Enter Date ..." change="onUploadDateChange"/>
-					</f:fields>
-				</f:FormElement>
-			</f:FormContainer>
-			<f:FormContainer id="idUploadFormContainer2" class="sapUiMediumMarginTop">
 				<f:FormElement id="idUploadFormElement" label="DC" class="sapUiMediumMarginTop">
 					<f:fields>
-						<Select id="idUploadDC">
+						<Select id="idUploadDC" change="onChangeDC">
 							<core:Item key="11" text="11 - Direct Sale"/>
 							<core:Item key="12" text="12 - CSD"/>
 						</Select>
 					</f:fields>
 				</f:FormElement>
-				<f:FormElement label="Upload File" class="sapUiLargeMarginTop">
+			</f:FormContainer>
+			<f:FormContainer id="idUploadFormContainer2" class="sapUiMediumMarginTop">
+				<f:FormElement label="Sales Office" class="sapUiMediumMarginTop">
+					<Select id="idSalesOffice" items="{path:'SalesOfficeModel>/'}">
+						<core:Item text="{SalesOfficeModel>Salesoffice}-{SalesOfficeModel>Description}" key="{SalesOfficeModel>Salesoffice}"/>
+					</Select>
+				</f:FormElement>
+				<f:FormElement label="Date">
 					<f:fields>
-						<u:FileUploader id="idTokenFileUploader" fileType="XLSX,xlsx" change="onUpload" uploadComplete="onUploadComplete"
-							uploadStart="onBeforeUploadStart" width="100%"/>
+						<DatePicker id="idUploadDate" placeholder="Enter Date ..." change="onUploadDateChange"/>
 					</f:fields>
 				</f:FormElement>
 			</f:FormContainer>
@@ -49,6 +51,12 @@
 						<Select id="idSalesGroup" items="{constants>/SalesGroup}" selectedKey="015">
 							<core:Item key="{constants>key}" text="{constants>text}"/>
 						</Select>
+					</f:fields>
+				</f:FormElement>
+				<f:FormElement label="Upload File" class="sapUiLargeMarginTop">
+					<f:fields>
+						<u:FileUploader id="idTokenFileUploader" fileType="XLSX,xlsx" change="onUpload" uploadComplete="onUploadComplete"
+							uploadStart="onBeforeUploadStart" width="100%"/>
 					</f:fields>
 				</f:FormElement>
 			</f:FormContainer>

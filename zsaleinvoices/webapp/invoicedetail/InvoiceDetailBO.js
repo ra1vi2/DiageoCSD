@@ -46,6 +46,40 @@ sap.ui.define([
 			return Utility.odataCreate(viewmodel, "/BulkOrderHeaderSet", aHeaderData);
 
 		},
+		EditDocket: function(headermodel, itemmodel, viewmodel) {
+			var aHeaderData = headermodel.getData();
+			aHeaderData = Utility.removeMetadata(aHeaderData);
+			var aItemData = itemmodel.getData();
+			var aDeleteditems = aItemData.DeletedOrderItemTableData;
+
+			aItemData = Utility.removeMetadata(aItemData);
+
+			if (aHeaderData) {
+				delete aHeaderData.BulkHedItemNav;
+			}
+			if (aItemData) {
+				delete aItemData.DeletedOrderItemTableData;
+			}
+			aItemData = aItemData.concat(aDeleteditems);
+			aHeaderData.Action = "EDIT";
+			aHeaderData.BulkHedItemNav = aItemData;
+			//	var aPayload = Utility.merge({},  aHeaderData, aItemData);
+			return Utility.odataCreate(viewmodel, "/BulkOrderHeaderSet", aHeaderData);
+		},
+		DeleteDocket: function(headermodel, itemmodel, viewmodel) {
+			var aHeaderData = headermodel.getData();
+			aHeaderData = Utility.removeMetadata(aHeaderData);
+			var aItemData = itemmodel.getData();
+			aItemData = Utility.removeMetadata(aItemData);
+
+			if (aHeaderData) {
+				delete aHeaderData.BulkHedItemNav;
+			}
+			aHeaderData.Action = "DELETE";
+			aHeaderData.BulkHedItemNav = aItemData;
+			//	var aPayload = Utility.merge({},  aHeaderData, aItemData);
+			return Utility.odataCreate(viewmodel, "/BulkOrderHeaderSet", aHeaderData);
+		},
 		initialiseFields: function(sSelectedDistributionChannelKey, oView, sTokenIndicator) {
 			this.initialiseByDistributionChannel(oView, sSelectedDistributionChannelKey, sTokenIndicator);
 			this.setAllowedDateRange(oView, true);
@@ -84,16 +118,26 @@ sap.ui.define([
 			return true;
 		},
 		validateEnteredQuantity: function(oSelectedObject) {
-			if (parseInt(oSelectedObject.Quantity, 10) > parseInt(oSelectedObject.BalanceQuantity, 10)) {
+			if (Math.abs(parseInt(oSelectedObject.Quantity, 10)) > parseInt(oSelectedObject.BalanceQuantity, 10)) {
+				return true;
+			}
+		},
+		validateEnteredReleaseQuantity: function(oSelectedObject) {
+			if (Math.abs(parseInt(oSelectedObject.ReleaseQuantity, 10)) > parseInt(oSelectedObject.BalanceQuantity, 10)) {
+				return true;
+			}
+		},
+		validateEnteredRelocateQuantity: function(oSelectedObject) {
+			if (Math.abs(parseInt(oSelectedObject.RelocateQuantity, 10)) > parseInt(oSelectedObject.BalanceQuantity, 10)) {
 				return true;
 			}
 		},
 		setAllowedDateRange: function(oView, IsInitialLoad) {
 			this.setMinMaxDate(oView.byId("idOrderHeaderPermitDate"), false, oView.byId("idOrderHeaderInvoiceDate").getDateValue());
 			this.setMinMaxDate(oView.byId("idOrderHeaderExpiryDate"), oView.byId("idOrderHeaderPermitDate").getDateValue(), false);
-			
-			if(!IsInitialLoad){
-			this.setMinMaxDate(oView.byId("idOrderHeaderInvoiceDate"), false, oView.byId("idOrderHeaderExpiryDate").getDateValue());
+
+			if (!IsInitialLoad) {
+				this.setMinMaxDate(oView.byId("idOrderHeaderInvoiceDate"), false, oView.byId("idOrderHeaderExpiryDate").getDateValue());
 			}
 		},
 		setMinMaxDate: function(oControl, oMinDate, oMaxDate) {

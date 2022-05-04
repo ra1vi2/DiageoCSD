@@ -27,7 +27,7 @@
 				<form:FormElement label="TP/ Permit Number">
 					<form:fields>
 						<Input id="idHeaderFormTPPermitNumber" value="{orderdetailsheader>/TpPermitNum}" change="onChangeCustomerName"
-							fieldGroupIds="idCustomerProfileValidationGroupNames"/>
+							fieldGroupIds="idCustomerProfileValidationGroupNames" maxLength="35"/>
 					</form:fields>
 				</form:FormElement>
 				<form:FormElement label="Order Number">

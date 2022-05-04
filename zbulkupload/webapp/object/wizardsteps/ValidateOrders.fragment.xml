@@ -19,9 +19,9 @@
 			<Column >
 				<Text text="Plant"/>
 			</Column>
-			<Column >
+			<!--<Column >
 				<Text text="Index"/>
-			</Column>
+			</Column>-->
 			<Column >
 				<Text text="Quantity"/>
 			</Column>
@@ -38,7 +38,7 @@
 					<Text text="{uploadData>ORDER}"/>
 					<Text text="{uploadData>DATE}"/>
 					<Text text="{uploadData>PLANT}"/>
-					<Text text="{uploadData>INDEX}"/>
+					<!--<Text text="{uploadData>INDEX}"/>-->
 					<Text text="{uploadData>QTY}"/>
 					<Text text="{uploadData>MATERIAL}"/>
 				</cells>

@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns:m="sap.m" xmlns:core="sap.ui.core" xmlns="sap.ui.table">
 	<Table id="idOrdersListTable" rows="{OrdersListModel>/}" selectionMode="MultiToggle" visibleRowCount="12" ariaLabelledBy="title"
-		rowSelectionChange="onOrdersRowSelectionChange" rowActionCount="0">
+		rowSelectionChange="onOrdersRowSelectionChange" rowActionCount="1">
 		<extension>
 			<m:OverflowToolbar>
 				<m:Title id="title" text="Orders({= ${OrdersListModel>/}.length})"/>

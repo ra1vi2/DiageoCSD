@@ -4,8 +4,8 @@
 		<pages>
 			<Page id="wizardContentPage" showHeader="false">
 				<content>
-					<Wizard id="UploadWizard" complete="wizardCompletedHandler" showNextButton="false">
-						<WizardStep id="UploadFileStep" title="Upload" validated="true" complete="onUploadCompleteStep">
+					<Wizard id="UploadWizard" complete="wizardCompletedHandler" showNextButton="false" class="wizardStep">
+						<WizardStep id="UploadFileStep" title="Upload" validated="true" complete="onUploadCompleteStep" class="wizardStep">
 							<core:Fragment fragmentName="com.diageo.csd.indentuploadzindentupload.object.wizardsteps.UploadOrders" type="XML"/>
 							<Button text="Upload Data" id="idUploadStepCompleteButton" press="onUploadStepComplete" visible="false"/>
 						</WizardStep>

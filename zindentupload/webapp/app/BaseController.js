@@ -64,7 +64,7 @@ sap.ui.define([
 			if (sPreviousHash !== undefined) {
 				history.go(-1);
 			} else {
-				this.getRouter().navTo("master", {}, true);
+				this.getRouter().navTo("indentupload", {}, true);
 			}
 		},
 		openMessagePopOver: function(oSource) {

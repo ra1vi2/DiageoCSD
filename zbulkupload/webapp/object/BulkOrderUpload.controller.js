@@ -24,8 +24,7 @@ sap.ui.define([
 			this.oWizard = this.byId("UploadWizard");
 
 			this.getModel("this").setProperty("/IsValidationError", true);
-			
-			
+
 			// activate automatic message generation for complete view
 			oMessageManager.registerObject(this.getView(), true);
 			this.getRouter().getRoute("bulkupload").attachPatternMatched(this._onBulkUpload, this);
@@ -45,7 +44,9 @@ sap.ui.define([
 			}
 		},
 		onPressSampleDownload: function() {
-			BO.exportToExcel(this.getModel("sample"), BO.SampleColumns(), this.getModel("sample").getProperty("/sample") );
+			BO.exportToExcel(this.getModel("sample"), BO.SampleColumns(), this.getModel("sample").getProperty("/sample"),
+				"Order Upload Template"
+			);
 			//window.open(sap.ui.require.toUrl("com/diageo/csd/bulkuploadzbulkupload/model/sample_upload_format.xlsx"));
 		},
 		onBeforeUploadStart: function() {
@@ -72,6 +73,7 @@ sap.ui.define([
 			}
 		},
 		onValidateStepComplete: function() {
+			this.removeAllMessages();
 			var oView = this.getView();
 			BusyIndicator.show();
 			var oModel = oView.getModel("uploadData");
@@ -114,9 +116,12 @@ sap.ui.define([
 			var oFirstStep = this.oWizard.getSteps()[0];
 			this.oWizard.discardProgress(oFirstStep);
 			this.oWizard.goToStep(oFirstStep);
-			this.oWizard.setValidated(false);
+			//this.oWizard.setValidated(false);
+			this.byId("idTokenFileUploader").setValue();
+			this.removeAllMessages();
 		},
 		onSubmitOrderUpload: function() {
+			this.removeAllMessages();
 			var oDataModel = this.getView().getModel("ValidatedDataModel");
 			BO.submitOrderUpload(this.getModel(), oDataModel.getData())
 				.then(function() {
@@ -135,7 +140,8 @@ sap.ui.define([
 		},
 
 		onExportValidatedList: function() {
-			BO.exportToExcel(this.getModel("ValidatedDataModel"), BO.ValidatedTableColumns(), this.getModel("ValidatedDataModel").getProperty("/IndHdrUpldNav/results"));
+			BO.exportToExcel(this.getModel("ValidatedDataModel"), BO.ValidatedTableColumns(), this.getModel("ValidatedDataModel").getProperty(
+				"/IndHdrUpldNav/results"), "Order Upload Validation");
 		},
 
 		onUploadDateChange: function(oEvent) {

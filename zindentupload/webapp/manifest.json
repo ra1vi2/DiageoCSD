@@ -40,7 +40,10 @@
 			"tablet": true,
 			"phone": true
 		},
-		"supportedThemes": ["sap_hcb", "sap_belize"]
+		"supportedThemes": [
+			"sap_hcb",
+			"sap_belize"
+		]
 	},
 	"sap.ui5": {
 		"rootView": {
@@ -94,9 +97,11 @@
 			}
 		},
 		"resources": {
-			"css": [{
-				"uri": "css/style.css"
-			}]
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
 		},
 		"routing": {
 			"config": {
@@ -106,15 +111,21 @@
 				"controlId": "app",
 				"controlAggregation": "pages",
 				"bypassed": {
-					"target": ["notFound"]
+					"target": [
+						"notFound"
+					]
 				},
 				"async": true
 			},
-			"routes": [{
-				"pattern": "",
-				"name": "indentupload",
-				"target": ["indentupload"]
-			}],
+			"routes": [
+				{
+					"pattern": "",
+					"name": "indentupload",
+					"target": [
+						"indentupload"
+					]
+				}
+			],
 			"targets": {
 				"indentupload": {
 					"viewName": "object.IndentUpload",

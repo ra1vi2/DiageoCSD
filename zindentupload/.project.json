@@ -45,11 +45,11 @@
     "targetFolder": "dist",
     "excludedFolders": [],
     "excludedFiles": [],
-    "lastBuildDateTime": "Mon, 17 Jan 2022 08:05:16 GMT"
+    "lastBuildDateTime": "Mon, 11 Apr 2022 13:46:33 GMT"
   },
   "deploy": {
     "destination": "UWD",
-    "name": "zindentupload"
+    "name": "ZINDENTUPLOAD"
   },
   "mockpreview": {
     "mockUri": "/sap/opu/odata/sap/ZDLT_INDBLK_INVOICE_SRV",

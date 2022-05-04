@@ -34,9 +34,9 @@
 			<Column >
 				<Text text="Plant Name"/>
 			</Column>
-			<Column >
+		<!--	<Column >
 				<Text text="Index"/>
-			</Column>
+			</Column>-->
 			<Column >
 				<Text text="Quantity"/>
 			</Column>
@@ -68,7 +68,7 @@
 					<Text text="{ValidatedDataModel>SalesOffice}"/>
 					<Text text="{ValidatedDataModel>PLANT}"/>
 					<Text text="{ValidatedDataModel>PlantName}"/>
-					<Text text="{ValidatedDataModel>INDEX}"/>
+				<!--	<Text text="{ValidatedDataModel>INDEX}"/>-->
 					<Text text="{ValidatedDataModel>QTY}"/>
 					<Text text="{ValidatedDataModel>MATERIAL}"/>
 					<Text text="{ValidatedDataModel>MaterialDescription}"/>

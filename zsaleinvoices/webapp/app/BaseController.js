@@ -132,6 +132,26 @@ sap.ui.define([
 
 			return oSuccessMessageDialog;
 		},
+		getDocketDeleteDialog: function(oDialogContent, beginButton) {
+			var oDocketDeleteDialog = new Dialog({
+				type: DialogType.Message,
+				title: ValueState.Warning,
+				state: ValueState.Warning,
+				content: oDialogContent,
+				beginButton: beginButton,
+					endButton: new Button({
+					type: ButtonType.Default,
+					text: "Cancel",
+					press: function() {
+						oDocketDeleteDialog.close();
+						oDocketDeleteDialog.destroy();
+					
+					}
+				})
+			});
+
+			return oDocketDeleteDialog;
+		},
 		showMessagePopover: function(oMessageButton) {
 			this.getOwnerComponent().showMessagePopover(oMessageButton);
 		},

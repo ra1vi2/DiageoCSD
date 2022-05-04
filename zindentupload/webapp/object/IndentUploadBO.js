@@ -72,10 +72,10 @@ sap.ui.define([
 		prepareUploadPayload: function(oView, aData, sBOAction) {
 			var aHeaderData = {};
 			aHeaderData.Action = sBOAction;
-			aHeaderData.Plant = oView.byId("idUploadFormPlant").getSelectedKey();
+			aHeaderData.Region = oView.byId("idRegion").getSelectedKey();
 			aHeaderData.DC = oView.byId("idUploadDC").getSelectedKey();
 			aHeaderData.Date = oView.byId("idUploadDate").getDateValue();
-			//aHeaderData.Salesoffice = oView.byId("idSalesOffice").getValue();
+			aHeaderData.Salesoffice = oView.byId("idSalesOffice").getSelectedKey();
 			aHeaderData.SalesGroup = oView.byId("idSalesGroup").getSelectedKey();
 			aHeaderData.UploadType = "INDENT";
 			var oItemData = {};
@@ -93,7 +93,7 @@ sap.ui.define([
 			return Utility.odataCreate(oModel, "/IndUpldHdrSet", aData);
 		},
 
-		exportToExcel: function(oModel, oColumns, oModelProperty) {
+		exportToExcel: function(oModel, oColumns, oModelProperty, sFileName) {
 			var that = this,
 				oExcelData, oSettings, oSheet;
 
@@ -107,13 +107,13 @@ sap.ui.define([
 				workbook: {
 					columns: oColumns,
 					context: {
-						application: "Order Upload Validation",
-						title: "Order Upload Validation",
-						sheetName: "Order Upload Validation"
+						application: sFileName,
+						title: sFileName,
+						sheetName: sFileName
 					}
 				},
 
-				fileName: "Order Upload Validation",
+				fileName: sFileName,
 				dataSource: oExcelData
 			};
 

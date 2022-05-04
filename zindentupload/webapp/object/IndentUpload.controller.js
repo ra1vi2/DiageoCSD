@@ -22,6 +22,7 @@ sap.ui.define([
 			this.getView().setModel(new JSONModel(), "this");
 			this.getModel("this").setProperty("/isValidaionSuccess", false);
 			this.oWizard = this.byId("UploadWizard");
+			//this.onRegionChange();
 
 			this.getModel("this").setProperty("/IsValidationError", true);
 			// activate automatic message generation for complete view
@@ -30,8 +31,28 @@ sap.ui.define([
 			this.getRouter().attachBypassed(this.onBypassed, this);
 
 		},
-		_onIndentUpload: function() {
 
+		_onIndentUpload: function() {
+            this.onRegionAPICall(); 
+		},
+		onRegionAPICall:function(){
+				var that = this;
+			this.getView().byId("idRegion").setBusy(true);
+			this.getView().getModel().read("/RegionListSet", {
+				success: function(oData) {
+					var oModel = new JSONModel();
+					that.getView().byId("idRegion").setBusy(false);
+					oModel.setData(oData.results);
+					that.setModel(oModel, "RegionModel");
+					if (oData.results.length > 0) {
+						that.getView().byId("idRegion").setSelectedKey(oData.results[0].Region);
+						that.onRegionChange();
+					}
+				},
+				error: function(oError) {
+					that.getView().byId("idRegion").setBusy(false);
+				}
+			});
 		},
 		onPressSaveFileButton: function(oEvent) {
 			BusyIndicator.show();
@@ -43,7 +64,8 @@ sap.ui.define([
 			}
 		},
 		onPressSampleDownload: function() {
-			BO.exportToExcel(this.getModel("sample"), BO.SampleColumns(), this.getModel("sample").getProperty("/sample") );
+			BO.exportToExcel(this.getModel("sample"), BO.SampleColumns(), this.getModel("sample").getProperty("/sample"),
+				"Indent Upload Sample");
 			//window.open(sap.ui.require.toUrl("com/diageo/csd/indentuploadzindentupload/model/sample_upload_format.xlsx"));
 		},
 		onBeforeUploadStart: function() {
@@ -112,10 +134,12 @@ sap.ui.define([
 			var oFirstStep = this.oWizard.getSteps()[0];
 			this.oWizard.discardProgress(oFirstStep);
 			this.oWizard.goToStep(oFirstStep);
-			this.oWizard.setValidated(false);
+			//this.oWizard.setValidated(false);
+			this.byId("idTokenFileUploader").setValue();
 		},
 		onSubmitOrderUpload: function() {
 			var oDataModel = this.getView().getModel("ValidatedDataModel");
+			BusyIndicator.show();
 			BO.submitOrderUpload(this.getModel(), oDataModel.getData())
 				.then(function() {
 					this._handleValidateDataUploadSuccess.apply(this, arguments);
@@ -133,7 +157,8 @@ sap.ui.define([
 		},
 
 		onExportValidatedList: function() {
-			BO.exportToExcel(this.getModel("ValidatedDataModel"), BO.ValidatedTableColumns() , this.getModel("ValidatedDataModel").getProperty("/IndHdrUpldNav/results"));
+			BO.exportToExcel(this.getModel("ValidatedDataModel"), BO.ValidatedTableColumns(), this.getModel("ValidatedDataModel").getProperty(
+				"/IndHdrUpldNav/results"), "Indent Upload Validation");
 		},
 
 		onUploadDateChange: function(oEvent) {
@@ -146,7 +171,7 @@ sap.ui.define([
 		getMessageIndicatorButton: function() {
 			return this.byId("idMessagePopOver");
 		},
-		getDocketSuccessDialog: function(sDocketNumber) {
+		getDocketSuccessDialog: function() {
 			var oDialogContent = new HBox({
 				items: [
 					new Text({
@@ -155,6 +180,46 @@ sap.ui.define([
 				]
 			});
 			return this.getSuccessDialog(oDialogContent);
+		},
+		onRegionChange: function() {
+			var that = this,
+				oModel = new JSONModel(),
+				aFilters = [],
+				oRegionKey = this.getView().byId("idRegion").getSelectedKey();
+			if (oRegionKey === "5") {
+				this.getView().byId("idUploadDC").setSelectedKey("12");
+			} else {
+				this.getView().byId("idUploadDC").setSelectedKey("11");
+			}
+			this.onChangeDC();
+			aFilters.push(new sap.ui.model.Filter({
+				path: "Region",
+				operator: sap.ui.model.FilterOperator.EQ,
+				value1: oRegionKey
+			}));
+
+			this.getView().byId("idSalesOffice").setBusy(true);
+			this.getOwnerComponent().getModel().read("/SalesOfficeSet", {
+				filters: aFilters,
+				success: function(oData) {
+					that.getView().byId("idSalesOffice").setBusy(false);
+					oModel.setData(oData.results);
+					that.setModel(oModel, "SalesOfficeModel");
+
+				},
+				error: function(oError) {
+					that.getView().byId("idSalesOffice").setBusy(false);
+				}
+			});
+		},
+		onChangeDC: function() {
+			var sSelectedDC = this.byId("idUploadDC").getSelectedKey();
+			if (sSelectedDC === '11') {
+				this.byId("idSalesGroup").setSelectedKey("015");
+			}
+			if (sSelectedDC === '12') {
+				this.byId("idSalesGroup").setSelectedKey("014");
+			}
 		}
 	});
 });

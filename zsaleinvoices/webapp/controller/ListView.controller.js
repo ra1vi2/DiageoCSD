@@ -63,10 +63,10 @@ sap.ui.define([
 			}
 		},
 		onPressEditOrder: function(oEvent) {
-			var sBulkOrderNo = oEvent.getSource().getBindingContext().getObject().BulkOrderNo;
-			var sPlant = oEvent.getSource().getBindingContext().getObject().Plant;
-			this.getOwnerComponent().getRouter().navTo("BulkOrderdetail", {
-				plant: sPlant,
+			var sPath = oEvent.getSource().getBindingContext("OrdersListModel").getPath();
+			var oObject = oEvent.getSource().getBindingContext("OrdersListModel").getModel().getObject(sPath);
+			var sBulkOrderNo = oObject.BulkOrderNo;
+			this.getOwnerComponent().getRouter().navTo("EditDocket", {
 				bulkOrderNo: sBulkOrderNo
 			});
 		},

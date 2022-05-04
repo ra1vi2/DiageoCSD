@@ -1,7 +1,9 @@
 {
 	"VIEW_MODES": {
 		"EDIT": "EDIT",
-		"GENERATE": "GENERATE"
+		"GENERATE": "GENERATE",
+		"EDIT_RELEASE": "EDIT_RELEASE",
+		"EDIT_RELOCATE": "EDIT_RELOCATE"
 	},
 	"DistributionChannel": [{
 		"key": "11",

@@ -141,6 +141,13 @@
 					"target": [
 						"GenerateDocket"
 					]
+				},
+				{
+					"name": "EditDocket",
+					"pattern": "edit/{bulkOrderNo}",
+					"target": [
+						"EditDocket"
+					]
 				}
 			],
 			"targets": {
@@ -158,6 +165,14 @@
 					"viewId": "ListView",
 					"viewLevel": 1,
 					"title": "Sale Invoices"
+				},
+				"EditDocket": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewId": "invoicedetail.InvoiceDetail",
+					"viewName": "invoicedetail.InvoiceDetail",
+					"title": "Edit Docket"
 				}
 			}
 		}

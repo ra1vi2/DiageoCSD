@@ -60,9 +60,9 @@ sap.ui.define([
 				!data.QTY) {
 				return "mandatoryValidationFailed";
 			}
-			if (data.DC === "12" && !data.INDEX) {
-				return "indexValidationFailed";
-			}
+		//	if (data.DC === "12" && !data.INDEX) {
+		//		return "indexValidationFailed";
+		//	}
 			if (data.DC === "11" && !data.MATERIAL) {
 				return "materialCodeValidationFailed";
 			}
@@ -92,7 +92,8 @@ sap.ui.define([
 			return Utility.odataCreate(oModel, "/IndUpldHdrSet", aData);
 		},
 
-		exportToExcel: function(oModel, oColumns, oModelProperty) {
+		exportToExcel: function(oModel, oColumns, oModelProperty, sFileName) {
+		
 			var that = this,
 				oExcelData, oSettings, oSheet;
 
@@ -106,13 +107,13 @@ sap.ui.define([
 				workbook: {
 					columns: oColumns,
 					context: {
-						application: "Order Upload Validation",
-						title: "Order Upload Validation",
-						sheetName: "Order Upload Validation"
+						application: sFileName,
+						title: sFileName,
+						sheetName: sFileName
 					}
 				},
 
-				fileName: "Order Upload Validation",
+				fileName: sFileName,
 				dataSource: oExcelData
 			};
 
@@ -230,10 +231,10 @@ sap.ui.define([
 				label: "PLANT",
 				property: "PLANT"
 			});
-			oColumns.push({
+		/*	oColumns.push({
 				label: "INDEX",
 				property: "INDEX"
-			});
+			});*/
 			oColumns.push({
 				label: "QTY",
 				property: "QTY"

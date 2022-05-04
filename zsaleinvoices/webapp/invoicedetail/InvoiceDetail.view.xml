@@ -14,6 +14,7 @@
 				<Button id="idMessagePopOver" icon="sap-icon://alert" text="{=${message>/}.length}" visible="{=${message>/}.length > 0}" type="Emphasized"
 					press="onMessagePopoverPress"></Button>
 				<ToolbarSpacer/>
+				<Button text="Delete Docket"  press="onDeleteDocketConfirmation" visible="{=  ${orderdetailsheader>/IsDocketDeletable}}" type="Reject" />
 				<Button text="Cancel" press="onCancelGenerateDocket"/>
 				<Button text="Submit" press="onSubmitGenerateDocket" type="Accept"/>
 			</OverflowToolbar>

@@ -45,12 +45,12 @@
     }
   },
   "build": {
-    "buildRequired": true,
+    "buildRequired": false,
     "sourceFolder": "webapp",
     "targetFolder": "dist",
     "excludedFolders": [],
     "excludedFiles": [],
-    "lastBuildDateTime": "Mon, 21 Mar 2022 10:25:53 GMT"
+    "lastBuildDateTime": "Fri, 01 Apr 2022 11:26:16 GMT"
   },
   "deploy": {
     "destination": "UWD",

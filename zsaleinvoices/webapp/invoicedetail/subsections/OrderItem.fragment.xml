@@ -1,18 +1,29 @@
 <core:FragmentDefinition xmlns:m="sap.m" xmlns:core="sap.ui.core" xmlns="sap.ui.table">
-	<Table id="table1" rows="{orderdetailsItem>/}" selectionMode="Single" visibleRowCount="7" ariaLabelledBy="title">
+	<Table id="idOrderItemTable" rows="{path:'orderdetailsItem>/'}" selectionMode="Single" visibleRowCount="7" ariaLabelledBy="title"
+		rowActionCount="1">
 		<extension>
 			<m:OverflowToolbar>
 				<m:Title id="title" text="Order Item"/>
 				<m:ToolbarSpacer/>
-				<m:Button icon="sap-icon://my-sales-order" tooltip="Generate Sales Docket" press="onGenerateSalesDocket" text="Add"
+				<m:Text text="Total Quantity : {Total>/totalQty}"/>
+				<!--	<m:Button icon="sap-icon://my-sales-order" tooltip="Generate Sales Docket" press="onGenerateSalesDocket" text="Add"
 					enabled="{= ${this>/selectedOrders}.length > 0}" visible="{= ${this>/CurrViewMode} === ${constants>/VIEW_MODES/EDIT} }"/>
 				<m:Button icon="sap-icon://my-sales-order" tooltip="Generate Sales Docket" press="onGenerateSalesDocket" text="Delete"
-					enabled="{= ${this>/selectedOrders}.length > 0}" visible="{= ${this>/CurrViewMode} === ${constants>/VIEW_MODES/EDIT} }"/>
-				<m:Text text="Total Quantity : {Total>/totalQty}"/>
+					enabled="{= ${this>/selectedOrders}.length > 0}" visible="{= ${this>/CurrViewMode} === ${constants>/VIEW_MODES/EDIT} }"/>-->
+			<!--	<m:Switch id="idSwitchQuantityType" tooltip="Release/Relocate Quantity" change="onReleaseQtySwitch" customTextOff="Release" customTextOn="ReAllocate"
+					enabled="{= ${this>/selectedOrders}.length > 0}" visible="{this>/IsSwitchVisible}">
+					<m:layoutData>
+						<m:FlexItemData growFactor="1"/>
+					</m:layoutData>
+				</m:Switch>-->
+				<m:RadioButtonGroup id="idRadioButtonGroup" visible="{this>/IsSwitchVisible}" select="onReleaseQtyRadio" columns="2">
+					<m:RadioButton id="idReleaseRadioButton" text="Release"></m:RadioButton>
+					<m:RadioButton id="idRelocateRadioButton" text="Reallocate"></m:RadioButton>
+				</m:RadioButtonGroup>
 			</m:OverflowToolbar>
 		</extension>
-		<columns>
-			<Column width="11rem">
+		<columns>	
+			<Column width="18rem">
 				<m:Label text="Docket Number"/>
 				<template>
 					<m:Text text="{orderdetailsItem>DocketNum}" wrapping="false"/>
@@ -24,37 +35,37 @@
 					<m:Text text="{orderdetailsItem>Material}" wrapping="false"></m:Text>
 				</template>
 			</Column>
-			<Column width="6rem" hAlign="End">
+			<Column width="20rem" hAlign="End">
 				<m:Label text="Material Description"/>
 				<template>
 					<m:Text text="{orderdetailsItem>MaterialDescription}" wrapping="false"/>
 				</template>
 			</Column>
-			<Column width="9rem">
+			<Column width="6rem">
 				<m:Label text="Brand"/>
 				<template>
 					<m:Text text="{orderdetailsItem>Brand}" wrapping="false"/>
 				</template>
 			</Column>
-			<Column width="9rem">
+			<Column width="6rem">
 				<m:Label text="Pack"/>
 				<template>
 					<m:Text text="{orderdetailsItem>Pack}" wrapping="false"/>
 				</template>
 			</Column>
-			<Column width="12rem">
+			<Column width="8rem">
 				<m:Label text="Actual Quantity"/>
 				<template>
-					<m:Text text="{orderdetailsItem>ActualQuantity}" wrapping="false" visible="{= ${this>/CurrViewMode} === ${constants>/VIEW_MODES/GENERATE} }"/>
+					<m:Text text="{orderdetailsItem>ActualQuantity}" wrapping="false"/>
 				</template>
 			</Column>
-			<Column width="12rem">
+			<Column width="8rem">
 				<m:Label text="Balance Quantity"/>
 				<template>
 					<m:Text text="{orderdetailsItem>BalanceQuantity}" wrapping="false"/>
 				</template>
 			</Column>
-			<Column width="12rem">
+			<Column width="8rem" visible="{= ${this>/CurrViewMode} === ${constants>/VIEW_MODES/GENERATE} }">
 				<m:Label text="Quantity"/>
 				<template>
 					<m:Text text="{orderdetailsItem>Quantity}" wrapping="false" visible="{= ${this>/CurrViewMode} === ${constants>/VIEW_MODES/EDIT} }"/>
@@ -62,31 +73,39 @@
 						change="onChangeItemQuantity"/>
 				</template>
 			</Column>
-			<Column width="12rem" visible="{= ${this>/CurrViewMode} === ${constants>/VIEW_MODES/EDIT} }">
+			<Column width="8rem" visible="{= ${this>/CurrViewModeQty} === ${constants>/VIEW_MODES/EDIT_RELEASE} }">
 				<m:Label text="Release Quantity" visible="{= ${this>/CurrViewMode} === ${constants>/VIEW_MODES/EDIT} }"/>
 				<template>
-					<m:Text text="{orderdetailsItem>ReleaseQuantity}" wrapping="false" />
+					<!--	<m:Text text="{orderdetailsItem>ReleaseQuantity}" wrapping="false" visible=""/>-->
+					<m:Input value="{orderdetailsItem>ReleaseQuantity}" change="onChangeItemReleaseQuantity"/>
 				</template>
 			</Column>
-			<Column width="12rem">
+			<Column width="8rem" visible="{= ${this>/CurrViewModeQty} === ${constants>/VIEW_MODES/EDIT_RELOCATE} }">
+				<m:Label text="Reallocate Quantity" visible="{= ${this>/CurrViewMode} === ${constants>/VIEW_MODES/EDIT} }"/>
+				<template>
+					<m:Input value="{orderdetailsItem>RelocateQuantity}" change="onChangeItemRelocateQuantity"/>
+				</template>
+			</Column>
+			<Column width="5rem">
 				<m:Label text="UOM"/>
 				<template>
 					<m:Text text="{orderdetailsItem>UOM}" wrapping="false"/>
 				</template>
 			</Column>
-			<Column width="11rem">
+			<Column >
 				<m:Label text="Ref No"/>
 				<template>
 					<m:Text text="{orderdetailsItem>RefNo}" wrapping="false"/>
 				</template>
 			</Column>
 		</columns>
-		<!--	<rowActionTemplate>
+		<rowActionTemplate>
 			<RowAction id="idOrderTableRowAction">
 				<items>
-					<RowActionItem id="idOrderTableRowActionItem" type="Navigation" press="onPressEditOrder"></RowActionItem>
+					<RowActionItem id="idOrderTableRowActionItem" type="Delete" press="onPressDeleteOrderItem"
+						visible="{= ${orderdetailsItem>IsOrderItemDeletable}}"></RowActionItem>
 				</items>
 			</RowAction>
-		</rowActionTemplate>-->
+		</rowActionTemplate>
 	</Table>
 </core:FragmentDefinition>
